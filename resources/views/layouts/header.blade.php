@@ -1,15 +1,15 @@
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-light fixed-top" style="background-color:#8f3319">
+<nav class="main-header navbar navbar-expand navbar-light fixed-top" style="background-color:#fafafa">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color:white"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color:#3e3e3e"></i></a>
     </li>
 </ul>
 <!-- Right navbar links -->
 <ul class="navbar-nav ml-auto">
     <li class="nav-item">
-        <a class="nav-link" role="button" style="color:white">
+        <a class="nav-link" role="button" style="color:#3e3e3e">
             <?php
             $user = App\Models\User::where('name',Session::get('name'))->first();
 
@@ -24,7 +24,7 @@
         <a class="nav-link" role="button" 
         href="{{ route('logout') }}"
         onclick="event.preventDefault();
-        document.getElementById('logout-form').submit();" style="color:white">
+        document.getElementById('logout-form').submit();" style="color:#3e3e3e">
         <i class="fas fa-sign-out-alt"> Logout</i>
     </a>
 </li>

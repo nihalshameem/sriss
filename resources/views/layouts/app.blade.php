@@ -73,8 +73,12 @@
             transition: all 0.4s ease 0s;
         }
         .content-wrapper{
-            background-color: #FFFFB7;
+            background-color: #fafafa;
         }
+        .info-box .info-box-icon{color: #3a3a3a; border-color: #fafafa; }
+        .info-box{ background-color: #fafafa; border-color: #3a3a3a; border: 1px solid;}
+        .info-box .info-box-text { color: #3a3a3a; }
+        .info-box .info-box-number { color: #3a3a3a; }
         .table-borderless{
            border: 1px solid #ddd;
        }
@@ -160,11 +164,7 @@ td{
     padding: 40px;
     text-decoration: none;
 }
-.title-head{
-  font-weight: bold;
-  color: #8f3319;
-  font-size: 17px;
-}
+.title-head{ font-weight: bold; color: #3a3a3a; font-size: 17px; }
 .example::-webkit-scrollbar {
     display: none;
 }
@@ -181,6 +181,9 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-appearance: none;
     appearance: none;
     margin: 0; 
+}
+label{
+  background-color: #3f3f3f;
 }
 
 

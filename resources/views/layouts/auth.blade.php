@@ -34,7 +34,7 @@
     <style>
         body {
             font-family: 'Lato';
-            background-color: #8f3319;
+            background-color: #fafafa;
         }   
         .dropdown-toggle{
             background-color:;
@@ -48,20 +48,9 @@
         .btn-link:hover{
             color:white;
         }
-        .btn-primary
-        {
-
-            background-color: white;
-            color:#8f3319;
-            border:1px solid white;
-        }
-        .btn-primary:hover
-        {
-
-            background-color: #8f3319;
-            color:white;
-            border:1px solid #ffffff;
-        }
+        .btn-primary { background-color: white; color: #434343; border: 1px solid #9b9b9b; }
+        .btn-primary:hover{ background-color: #9c9c9c; color: #fff; border: 1px solid #9b9b9b; }
+        label{ color: #3f3f3f }
     </style>
 
 </head>
@@ -69,7 +58,7 @@
 
 
 <body>
- <div style="background-color:#8f3319 ">
+ <div style="background-color:#fafafa ">
     <nav class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
