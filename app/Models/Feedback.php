@@ -13,5 +13,5 @@ class Feedback extends Model
         'Feedback_desc'
     ];
 
-    protected $table = 'drs_feedback_tbl';
+    protected $table = 'sss_feedback_tbl';
 }

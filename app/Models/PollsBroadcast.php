@@ -13,5 +13,5 @@ class PollsBroadcast extends Model
         'Polls_id','State_id','State_Division_id','Greater_Zones_id','Zone_id','District_id','Union_id'
     ];
 
-    protected $table = 'drs_polls_broadcast_tbl';
+    protected $table = 'sss_polls_broadcast_tbl';
 }

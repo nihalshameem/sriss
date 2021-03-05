@@ -16,5 +16,5 @@ class OfflineContribution extends Model
         'postal_address','Realised_amount','Due_amount'
     ];
 
-    protected $table = 'drs_offline_contribution_tbl';
+    protected $table = 'sss_offline_contribution_tbl';
 }

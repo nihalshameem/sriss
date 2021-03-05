@@ -13,7 +13,7 @@ class PollsAnswers extends Model
         'Polls_Answers_Options'
     ];
 
-    protected $table = 'drs_polls_answers_tbl';
+    protected $table = 'sss_polls_answers_tbl';
 
      public function PollsResult()
     {

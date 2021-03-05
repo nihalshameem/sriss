@@ -12,5 +12,5 @@ class Panchayat extends Model
      protected $fillable = [
         'Panchayat_desc','Panchayat_active'
     ];
-    protected $table = 'drs_panchayat_tbl';
+    protected $table = 'sss_panchayat_tbl';
 }

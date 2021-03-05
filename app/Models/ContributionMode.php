@@ -13,5 +13,5 @@ class ContributionMode extends Model
         'Contribution_Mode_code','Contribution_Mode_desc','Contribution_Mode_active'
     ];
 
-    protected $table = 'drs_contribution_mode_tbl';
+    protected $table = 'sss_contribution_mode_tbl';
 }

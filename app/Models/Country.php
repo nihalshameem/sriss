@@ -13,5 +13,5 @@ class Country extends Model
         'Country_desc','Country_active'
     ];
 
-    protected $table = 'drs_country_tbl';
+    protected $table = 'sss_country_tbl';
 }

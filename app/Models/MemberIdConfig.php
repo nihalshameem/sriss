@@ -11,6 +11,6 @@ class MemberIdConfig extends Model
         'MemberIdFormat'
         ];
 
-    protected $table = 'drs_memberid_config_tbl';
+    protected $table = 'sss_memberid_config_tbl';
 
 }

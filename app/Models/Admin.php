@@ -25,5 +25,5 @@ class Admin extends Authenticatable
         'Mobile_No',
     ];
 
-    protected $table = 'drs_admins_tbl';
+    protected $table = 'sss_admins_tbl';
 }

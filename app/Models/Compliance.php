@@ -13,6 +13,6 @@ class Compliance extends Model
         'Compliance_desc','Compliance_text','Compliance_active','Version_no'
     ];
 
-    protected $table = 'drs_compliance_tbl';
+    protected $table = 'sss_compliance_tbl';
 
 }

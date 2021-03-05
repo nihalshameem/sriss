@@ -12,5 +12,5 @@ class Union extends Model
     protected $fillable = [
         'Union_desc','Union_active'
     ];
-    protected $table = 'drs_union_tbl';
+    protected $table = 'sss_union_tbl';
 }

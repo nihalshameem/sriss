@@ -14,5 +14,5 @@ class Notification extends Model
         'Notification_mesage','Notification_start_date','Notification_end_date','Notification_image_path','Notification_active','Notification_approved','Notification_delete','Notification_text'
     ];
 
-    protected $table = 'drs_notification_tbl';
+    protected $table = 'sss_notification_tbl';
 }

@@ -11,5 +11,5 @@ class NewsLetter extends Model
         'Newsletter_desc','Newsletter_date','Newsletter'
     ];
 
-    protected $table = 'drs_newsletter_tbl';
+    protected $table = 'sss_newsletter_tbl';
 }

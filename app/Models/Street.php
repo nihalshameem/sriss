@@ -13,5 +13,5 @@ class Street extends Model
         'Street_desc','Street_active'
     ];
     
-    protected $table = 'drs_street_tbl';
+    protected $table = 'sss_street_tbl';
 }

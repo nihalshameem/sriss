@@ -12,5 +12,5 @@ class Zones extends Model
         protected $fillable = [
         'Zone_desc','Zone_active'
     ];
-    protected $table = 'drs_zones_tbl';
+    protected $table = 'sss_zones_tbl';
 }

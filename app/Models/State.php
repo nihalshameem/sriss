@@ -12,5 +12,5 @@ class State extends Model
      protected $fillable = [
         'State_desc','State_active'
     ];
-    protected $table = 'drs_state_tbl';
+    protected $table = 'sss_state_tbl';
 }

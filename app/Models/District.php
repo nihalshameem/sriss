@@ -12,5 +12,5 @@ class District extends Model
      protected $fillable = [
         'District_desc','District_active'
     ];
-    protected $table = 'drs_district_tbl';
+    protected $table = 'sss_district_tbl';
 }

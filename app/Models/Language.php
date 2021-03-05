@@ -11,5 +11,5 @@ class Language extends Model
         'Language_name','Language_description','Language_active', 'Language_lock'
     ];
 
-    protected $table = 'drs_language_tbl';
+    protected $table = 'sss_language_tbl';
 }

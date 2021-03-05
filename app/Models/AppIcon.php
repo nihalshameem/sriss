@@ -13,5 +13,5 @@ class AppIcon extends Model
         'AppIcon_desc','AppIcon_image_path','AppIcon_image_width','AppIcon_text','AppIcon_visible'
     ];
 
-    protected $table = 'drs_app_icon_tbl';
+    protected $table = 'sss_app_icon_tbl';
 }

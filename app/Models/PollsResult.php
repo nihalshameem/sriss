@@ -12,7 +12,7 @@ class PollsResult extends Model
      protected $fillable = [
         'Member_id','response_count','Questions_id'];
 
-    protected $table = 'drs_polls_result_tbl';
+    protected $table = 'sss_polls_result_tbl';
 
 
     public function PollsAnswers()

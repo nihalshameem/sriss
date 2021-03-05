@@ -12,5 +12,5 @@ class StateDivision extends Model
     protected $fillable = [
         'State_Division_desc','State_Division_active'
     ];
-    protected $table = 'drs_state_division_tbl';
+    protected $table = 'sss_state_division_tbl';
 }

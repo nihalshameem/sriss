@@ -13,5 +13,5 @@ class MemberProfile extends Model
         'field_name','active'
     ];
 
-    protected $table = 'drs_member_profile_tbl';
+    protected $table = 'sss_member_profile_tbl';
 }

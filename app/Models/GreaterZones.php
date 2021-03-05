@@ -12,5 +12,5 @@ class GreaterZones extends Model
     protected $fillable = [
         'Greater_Zones_desc','Greater_Zones_active'
     ];
-    protected $table = 'drs_greater_zones_tbl';
+    protected $table = 'sss_greater_zones_tbl';
 }

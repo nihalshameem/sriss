@@ -13,7 +13,7 @@ class AppImage extends Model
         'App_image_cat_name','App_image_cat_desc'
     ];
 
-    protected $table = 'drs_app_images_cat_tbl';
+    protected $table = 'sss_app_images_cat_tbl';
 
     
 }

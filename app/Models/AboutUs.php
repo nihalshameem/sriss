@@ -10,5 +10,5 @@ class AboutUs extends Model
         'Aboutus_description'
     ];
 
-    protected $table = 'drs_aboutus_tbl';
+    protected $table = 'sss_aboutus_tbl';
 }

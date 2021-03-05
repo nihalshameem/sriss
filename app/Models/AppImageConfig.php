@@ -13,7 +13,7 @@ class AppImageConfig extends Model
         'App_image_path','App_image_text','App_image_visible_lock'
     ];
 
-    protected $table = 'drs_app_images_tbl';
+    protected $table = 'sss_app_images_tbl';
 
      public function AppImage()
     {

@@ -13,5 +13,5 @@ class Village extends Model
         'Village_desc','Village_active'
     ];
     
-    protected $table = 'drs_village_tbl';
+    protected $table = 'sss_village_tbl';
 }

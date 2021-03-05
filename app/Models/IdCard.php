@@ -13,5 +13,5 @@ class IdCard extends Model
         'Member_Image'
     ];
 
-    protected $table = 'drs_idcard_tbl';
+    protected $table = 'sss_idcard_tbl';
 }
