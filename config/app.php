@@ -52,15 +52,15 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://sriss.in/samithi'),
 
-    'emailurl' => env('EMAIL_URL', 'http://localhost/'),
+    'emailurl' => env('EMAIL_URL', 'http://samithi.sriss.in/'),
 
     'asset_url' => env('ASSET_URL', null),
 
-    'key_id' => env('KEY_ID', 'rzp_test_XwNqM3WW8KHWg2'),
+    'key_id' => env('KEY_ID', ''),
 
-    'key_secret' => env('KEY_SECRET', 'PA12FiUmPVFk3rb96jINwYDU'),
+    'key_secret' => env('KEY_SECRET', ''),
 
     /*
     |--------------------------------------------------------------------------

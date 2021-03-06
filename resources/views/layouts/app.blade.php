@@ -70,6 +70,7 @@
         .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{ background-color: #ffffff; border-color: #3a3a3a #3a3a3a #d1dde7; }
         label:not(.form-check-label):not(.custom-file-label){ background-color: #fafafa; }
         .bootstrap-select .dropdown-toggle .filter-option{ background-color: #c6d4e5; color: #212543; }
+        .card-primary:not(.card-outline) > .card-header {background-color: #edf6fe; }
 
 </style>
 
