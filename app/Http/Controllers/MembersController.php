@@ -129,7 +129,7 @@ class MembersController extends ApiController
             $user->save();
         
             $user = User::where('mobile_number', $request['mobile_number'])->first();
-            $language = DB::table('drs_language_tbl')->where('Language_lock', 'Y')->value('Language_lock');
+            $language = DB::table('sss_language_tbl')->where('Language_lock', 'Y')->value('Language_lock');
             $member = Member::where('Mobile_No',$request['mobile_number'])->value('Profile_Picture');
 
                         return Response([
@@ -176,7 +176,7 @@ class MembersController extends ApiController
                                 $user->save();
                                 $user = User::where('mobile_number', $request['mobile_number'])->first();
                                 $member = Member::where('mobile_number', $request['mobile_number'])->value('Profile_Picture');
-                                $language = DB::table('drs_language_tbl')->where('Language_lock', 'Y')->value('Language_lock');
+                                $language = DB::table('sss_language_tbl')->where('Language_lock', 'Y')->value('Language_lock');
                                 return Response([
                                     'status' => 'success',
                                     'code' => $this->getStatusCode(),
@@ -217,7 +217,7 @@ class MembersController extends ApiController
         $user->api_token = $token;
         $user->save();
         $user = User::where('mobile_number','LIKE','%'.$mobile_number.'%')->first();
-        $language = DB::table('drs_language_tbl')->value('Language_lock');
+        $language = DB::table('sss_language_tbl')->value('Language_lock');
         $member = Member::where('Mobile_No', $mobile_number)->value('Profile_Picture');
         return Response([
             'status' => 'success',
