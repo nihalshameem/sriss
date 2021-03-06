@@ -238,7 +238,7 @@ class ContributionController extends ApiController
         {
             if($user=$this->is_valid_token($request['token']))
             {
-                $api = new Api(env('KEY_ID'),env('KEY_SECRET'));
+                $api = new Api(config('app.key_id'),config('app.key_secret'));
                 $order  = $api->order->create(array('receipt' => '123', 'amount' => $request->amount*100, 'currency' => 'INR')); // Creates order
                 $orderId = $order['id']; // Get the created Order ID
                 if($orderId)
@@ -254,7 +254,7 @@ class ContributionController extends ApiController
                         'code' => $this->getStatusCode(),
                         'data' => [
                             "orderId" => $orderId,
-                            "razorpaykey" => env('KEY_ID'),
+                            "razorpaykey" => config('app.key_id'),
                             "id" => $OnlineContribution->id
                         ],
                         'message' => 'Success',

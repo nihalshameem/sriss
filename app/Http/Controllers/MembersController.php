@@ -12,6 +12,7 @@ use App\Models\MemberProfile;
 use App\Models\Volunteer;
 use App\Models\District;
 use App\Models\Compliance;
+use App\Models\Language;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
 use JWTAuth;
@@ -129,7 +130,7 @@ class MembersController extends ApiController
             $user->save();
         
             $user = User::where('mobile_number', $request['mobile_number'])->first();
-            $language = DB::table('sss_language_tbl')->where('Language_lock', 'Y')->value('Language_lock');
+            $language = Language::where('Language_lock', 'Y')->value('Language_lock');
             $member = Member::where('Mobile_No',$request['mobile_number'])->value('Profile_Picture');
 
                         return Response([
@@ -175,8 +176,8 @@ class MembersController extends ApiController
                                 $user->api_token = $token;
                                 $user->save();
                                 $user = User::where('mobile_number', $request['mobile_number'])->first();
-                                $member = Member::where('mobile_number', $request['mobile_number'])->value('Profile_Picture');
-                                $language = DB::table('sss_language_tbl')->where('Language_lock', 'Y')->value('Language_lock');
+                                $member = Member::where('Mobile_No', $request['mobile_number'])->value('Profile_Picture');
+                                $language = Language::where('Language_lock', 'Y')->value('Language_lock');
                                 return Response([
                                     'status' => 'success',
                                     'code' => $this->getStatusCode(),
@@ -217,7 +218,7 @@ class MembersController extends ApiController
         $user->api_token = $token;
         $user->save();
         $user = User::where('mobile_number','LIKE','%'.$mobile_number.'%')->first();
-        $language = DB::table('sss_language_tbl')->value('Language_lock');
+        $language = Language::value('Language_lock');
         $member = Member::where('Mobile_No', $mobile_number)->value('Profile_Picture');
         return Response([
             'status' => 'success',
@@ -622,6 +623,7 @@ class MembersController extends ApiController
                 {   
                     
                     $members = Member::where("Mobile_No", "=",$request['mobile_number'])->first();
+
 
                     if($request['first_name']){
                     $members->First_Name = $request['first_name'];

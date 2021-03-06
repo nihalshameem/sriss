@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Samithi 2.0'),
+    'name' => env('APP_NAME', 'Samithi'),
 
     /*
     |--------------------------------------------------------------------------
@@ -58,9 +58,9 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
-    'key_id' => env('KEY_ID', ''),
+    'key_id' => 'rzp_live_tcYBm3Sdz0cBi8',
 
-    'key_secret' => env('KEY_SECRET', ''),
+    'key_secret' => 'm2D2lgKFsaBoGROOhUxH0OtR',
 
     /*
     |--------------------------------------------------------------------------
