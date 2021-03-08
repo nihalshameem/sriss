@@ -588,7 +588,7 @@ $.ajax({
 $.ajax({
     type : 'get',
     url : '{{URL::to('LoadZones')}}',
-    data : {'greaterzone_id':result},
+    data : {'State_id':result},
     success:function(response){
      $('#zone').empty();
      $('#zone').append('<option value="">Select Zone</option>');

@@ -29,12 +29,12 @@
             <div class="modal-body">
 
               <div class="form-group">
-               <label for="exampleInputPassword1">Greater Zones </label>
-               <select class="form-control" name="GreaterZoneId" required>
-                <option value="">Select Greater Zones</option>
-                @if(isset($GreaterZones))
-                @foreach($GreaterZones as $Greaterzone) 
-                <option value="{{$Zones->Greater_Zones_id}}" @if($Greaterzone->Greater_Zones_id == $Zones->Greater_Zones_id) selected @endif>{{ $Greaterzone->Greater_Zones_desc}}</option>
+               <label for="exampleInputPassword1">State </label>
+               <select class="form-control" name="StateId" required>
+                <option value="">Select State</option>
+                @if(isset($State))
+                @foreach($State as $State) 
+                <option value="{{$State->State_id}}" @if($State->State_id == $Zones->State_id) selected @endif>{{ $State->State_desc}}</option>
                 @endforeach
                 @endif
               </select>

@@ -745,7 +745,7 @@ class NotificationController extends ApiController
         }
         public function LoadZones(Request $request)
         {
-            $Zones = Zones::whereIN('Greater_Zones_id',$request->greaterzone_id)->get();
+            $Zones = Zones::whereIN('State_id',$request->State_id)->get();
             return response()->json($Zones);
         }
 

@@ -33,12 +33,12 @@
                 <form role="form" id="zoneForm" method="post"  class="col-md-6 was-validated"  action="{{ route('AddZone') }}" enctype="multipart/form-data" style="margin: 0 auto;padding-top: 10px;padding-bottom:20px">
                   @csrf
                   <div class="form-group">
-                      <label for="exampleInputPassword1">Greater Zones </label>
-                      <select class="form-control" name="GreaterZoneId" required>
-                        <option value="">Greater Zones</option>
-                        @if(isset($GreaterZones))
-                        @foreach($GreaterZones as $Greaterzone) 
-                        <option value="{{$Greaterzone->Greater_Zones_id}}">{{ $Greaterzone->Greater_Zones_desc}}</option>
+                      <label for="exampleInputPassword1">State</label>
+                      <select class="form-control" name="StateId" required>
+                        <option value="" disabled="">State</option>
+                        @if(isset($states))
+                        @foreach($states as $states) 
+                        <option value="{{$states->State_id}}">{{ $states->State_desc}}</option>
                         @endforeach
                         @endif
                     </select>

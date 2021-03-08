@@ -16,9 +16,9 @@ class DRSZonesTBL extends Migration
         Schema::create('DRS_Zones_Tbl', function (Blueprint $table) {
             $table->increments('Zone_id');
             $table->unsignedInteger('Greater_Zones_id')->nullable();
-            $table->foreign('Greater_Zones_id')
-                ->references('Greater_Zones_id')
-                ->on('drs_greater_zones_tbl');
+            $table->foreign('State_id')
+                ->references('State_id')
+                ->on('drs_state_tbl');
             $table->string('Zone_desc');
             $table->enum('Zone_active', [ 'Y', 'N'])->default('Y');
             $table->timestamps();

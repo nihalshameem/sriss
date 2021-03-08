@@ -29,10 +29,10 @@
 		<tr>
 			<td>{{ $i+1 }}</td>
 			<?php
-			$GreaterZone = App\Models\GreaterZones::where('Greater_Zones_id',$Zones->Greater_Zones_id)->orderBy('Greater_Zones_desc')->first();
+			$State = App\Models\State::where('State_id',$Zones->State_id)->orderBy('State_desc')->first();
 			?>
-			@if($GreaterZone!=null)
-			<td>{{ $GreaterZone->Greater_Zones_desc }}</td>
+			@if($State!=null)
+			<td>{{ $State->State_desc }}</td>
 			@else
 			<td>-</td>
 			@endif

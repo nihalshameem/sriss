@@ -78,13 +78,8 @@ class MembersController extends ApiController
                 $member->Pan_No = $request->pan_number;
                 $member->Whatsapp_No = $request->whatsapp_number;
                 $member->State_Id = $Member->State_Id;
-                $member->State_Division_Id = $Member->State_Division_Id;
-                $member->Greater_Zones_Id = $Member->Greater_Zones_Id;
                 $member->Zones_Id = $Member->Zones_Id;
                 $member->Union_Id = $Member->Union_Id;
-                $member->Panchayat_Id = $Member->Panchayat_Id;
-                $member->Village_Id = $Member->Village_Id;
-                $member->Street_Id = $Member->Street_Id;
                 if($member->save())
                 {
                     $user = User::find($user->id);

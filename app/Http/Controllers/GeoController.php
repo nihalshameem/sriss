@@ -186,14 +186,14 @@ class GeoController extends ApiController
 
 	public function	ShowZone()
 	{
-		$GreaterZones = GreaterZones::where('Greater_Zones_active','Y')->orderBy('Greater_Zones_desc')->get();
-	    return view('geo.create.zones',compact('GreaterZones'));
+		$states = State::get();
+	    return view('geo.create.zones',compact('states'));
 	}
 
 	public function	CreateZone(Request $request)
 	{
 		$Zones = new Zones();
-		$Zones->Greater_Zones_id = $request->GreaterZoneId;
+		$Zones->State_id = $request->StateId;
 		$Zones->Zone_desc = $request->name;
 		$Zones->Zone_active = $request->Status;
 		$Zones->save();
@@ -203,7 +203,7 @@ class GeoController extends ApiController
 
 	public function	EditZone($Zoneid)
 	{
-		$GreaterZones = GreaterZones::orderBy('Greater_Zones_desc')->get();
+		$State = State::orderBy('State_desc')->get();
 		$Zones = Zones::where('Zone_id',$Zoneid)->first();
 
 		 return view('geo.edit.zoneedit',compact('GreaterZones'))->with([
@@ -216,7 +216,7 @@ class GeoController extends ApiController
 	public function	UpdateZone(Request $request)
 	{
 		$Zones = Zones::where('Zone_id',$request->ZoneId)->
-		update(['Greater_Zones_id'=> $request->GreaterZoneId,'Zone_desc'=> $request->name,'Zone_active'=> $request->Status]);
+		update(['State_id'=> $request->StateId,'Zone_desc'=> $request->name,'Zone_active'=> $request->Status]);
 		return redirect(route('listGeo'))->withInput(['tab'=>'custom-tabs-three-messages']);
 	}
 

@@ -16,7 +16,7 @@
             <div class="col-sm-3">
             </div>
             <div class="col-sm-5">
-              <h3 class="title-head">Add Union</h3>
+              <h3 class="title-head">Add Area</h3>
             </div>
             <div class="col-sm-3">
             </div>
@@ -45,7 +45,7 @@
                   
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Number Of union</label>
+                  <label for="exampleInputPassword1">Number Of Area</label>
                   <input type="Number" class="form-control" onfocus="this.oldvalue = this.value;"     onkeyup ="responses(this);this.oldvalue = this.value;"  id="response" required>
 
                 </div>
@@ -93,7 +93,7 @@
       for (i = 0; i < value; i++) 
       {
         j=i+1;
-        $('<div id="row'+value+'">'+'<div class="form-group">'+'<label class="form-lable">Union Name</label>'+
+        $('<div id="row'+value+'">'+'<div class="form-group">'+'<label class="form-lable">Area Name</label>'+
           '<input class="form-control" name="name[]" type="text">'+
           '</div></div>').appendTo('#link-list');
       }

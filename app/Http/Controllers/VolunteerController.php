@@ -97,14 +97,10 @@ class VolunteerController extends ApiController
         'DRS_Service_Joining_Date' => $request->joining_date,'DRS_Service_Experience' => $difference->y]);
         
         Member::where("Member_Id", '=', $user->Member_Id)
-                                        ->update(['State_Id'=> $request->State_id,'State_Division_Id'=>$request->State_Division_id,
-                                            'Greater_Zones_Id'=>$request->Greater_Zones_id,
+                                        ->update(['State_Id'=> $request->State_id,
                                             'Zones_Id'=>$request->Zone_id,
                                             'District_Id'=>$request->District_id,
                                             'Union_Id'=>$request->Union_id,
-                                            'Panchayat_Id'=>$request->Panchayat_id,
-                                            'Village_Id'=>$request->Village_id,
-                                            'Street_Id'=>$request->Street_id,
                                             'Member_Designation'=>$request->member_designation,
                                             ]);
         return redirect(route('Volunteer'));
