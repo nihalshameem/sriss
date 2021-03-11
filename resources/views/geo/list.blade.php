@@ -31,16 +31,16 @@
 							<div class="card-header p-0 border-bottom-0">
 								<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist" style="border-top:1px solid #ffffb7">
 									<li class="nav-item">
-										<a class="nav-link{{old('tab') == 'state-tabs-tab' ? ' active' : null}}" id="state-tab" data-toggle="pill" href="#state-tabs-tab" role="tab" aria-controls="state-tabs" aria-selected="true" style="color:#8f3319;font-weight:bold" >State</a>
+										<a class="nav-link{{old('tab') == 'state-tabs-tab' ? ' active' : null}}" id="state-tab" data-toggle="pill" href="#state-tabs-tab" role="tab" aria-controls="state-tabs" aria-selected="true" style="color:#3a3a3a;font-weight:bold" >State</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link {{old('tab') == 'custom-tabs-three-messages' ? ' active' : null}}" id="zones-tabs" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false" style="color:#8f3319;font-weight:bold">Zones</a>
+										<a class="nav-link {{old('tab') == 'custom-tabs-three-messages' ? ' active' : null}}" id="zones-tabs" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false" style="color:#3a3a3a;font-weight:bold">Zones</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link {{old('tab') == 'custom-tabs-three-settings' ? ' active' : null}}" id="district-tabs" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="false" style="color:#8f3319;font-weight:bold">District</a>
+										<a class="nav-link {{old('tab') == 'custom-tabs-three-settings' ? ' active' : null}}" id="district-tabs" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="false" style="color:#3a3a3a;font-weight:bold">District</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link {{old('tab') == 'custom-tabs-three-union' ? ' active' : null}}" id="Union-tabs" data-toggle="pill" href="#custom-tabs-three-union" role="tab" aria-controls="custom-tabs-three-union" aria-selected="false" style="color:#8f3319;font-weight:bold"  onclick="DistrictReset();">Area</a>
+										<a class="nav-link {{old('tab') == 'custom-tabs-three-union' ? ' active' : null}}" id="Union-tabs" data-toggle="pill" href="#custom-tabs-three-union" role="tab" aria-controls="custom-tabs-three-union" aria-selected="false" style="color:#3a3a3a;font-weight:bold"  onclick="DistrictReset();">Area</a>
 									</li>
 								</ul>
 							</div>

@@ -89,7 +89,7 @@
 <script>
 	function Delete	(value) {
 		console.log(value);
-		if (confirm("Are your sure you want to delete the record")) {
+		if (confirm("Are your sure you want to delete the record?")) {
 			$.ajax({
 				type : 'get',
 				url : '{{URL::to('NewsLetterDelete')}}',
@@ -106,7 +106,7 @@
 </script>
 <script>
 	function DeleteAll() {
-		if (confirm("Are your sure you want to delete all the record")) {
+		if (confirm("Are your sure you want to delete all the record?")) {
 			$.ajax({
 				type : 'get',
 				url : '{{URL::to('NewsLetterMassDelete')}}',

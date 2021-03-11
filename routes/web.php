@@ -493,3 +493,23 @@ Route::get('/KaryakarthaContribution/Filter', [App\Http\Controllers\ReportsContr
 });
 
 Route::get('/forgotpassword',[App\Http\Controllers\ReportsController::class, 'forgotpassword']);
+
+/*Member Group */
+
+Route::get('/memberGroup', [App\Http\Controllers\MemberGroupController::class, 'ShowMemberGroup'])->name('list.memberGroup');
+
+Route::get('/AddMemberGroup', [App\Http\Controllers\MemberGroupController::class, 'AddMemberGroup'])->name('add.memberGroup');
+
+Route::POST('/memberGroup', [App\Http\Controllers\MemberGroupController::class, 'SaveMemberGroup'])->name('save.memberGroup');
+
+Route::get('/EditMemberGroup/{memberGroupId}', [App\Http\Controllers\MemberGroupController::class, 'EditMemberGroup'])->name('edit.memberGroup');
+
+Route::post('/UpdateMemberGroup', [App\Http\Controllers\MemberGroupController::class, 'UpdateMemberGroup'])->name('update.memberGroup');
+
+Route::get('/DeleteMemberGroup', [App\Http\Controllers\MemberGroupController::class, 'DeleteMemberGroup'])->name('delete.memberGroup');
+
+/*Add Member to Group */
+Route::get('/groupMember', [App\Http\Controllers\MemberGroupController::class, 'ShowGroupMember'])->name('add.groupMember');
+
+Route::POST('/groupMember', [App\Http\Controllers\MemberGroupController::class, 'SaveSingleGroupMember'])->name('save.singleGroupMember');
+
