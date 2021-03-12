@@ -66,26 +66,54 @@ class MemberGroupController extends Controller
     public function SaveSingleGroupMember(Request $request){
     	
     	$member_reg_id=Member::where('id',$request->member_id)->pluck('Member_Id');
-        $GroupMembers = new GroupMembers();
-        $GroupMembers->Group_id = $request->Group_id;
-        $GroupMembers->Member_tbl_id = $request->member_id;
-        $GroupMembers->Member_Id = $member_reg_id[0];
-        $GroupMembers->active = 'Y';
-        $GroupMembers->save();
-        return view('MemberGroup.create');
+    	$count = GroupMembers::where('Group_id', $request->Group_id)
+	    				->where('Member_tbl_id',$request->member_id)
+	    				->count();
+		if($count>0){
+			return redirect()->back()->with('warning1','Already Exist!');
+		}else if($count==0){
+	        $GroupMembers = new GroupMembers();
+	        $GroupMembers->Group_id = $request->Group_id;
+	        $GroupMembers->Member_tbl_id = $request->member_id;
+	        $GroupMembers->Member_Id = $member_reg_id[0];
+	        $GroupMembers->active = 'Y';
+	        $GroupMembers->save();
+	    }
+        
+        return redirect()->back()->withSuccess('Successfully Updated!');
     }
 
     public function SaveMultiGroupMember(Request $request){
-    	foreach (explode(',',$request->member_id) as $row){
-	    	$member_reg=Member::where('Mobile_No',$row)->first();
-	        $GroupMembers = new GroupMembers();
-	        $GroupMembers->Group_id = $request->Group_id;
-	        $GroupMembers->Member_tbl_id = $member_reg->member_id;
-	        $GroupMembers->Member_Id = $member_reg->Member_Id;
-	        $GroupMembers->active = 'Y';
-	        $GroupMembers->save();
-    	}
-        return view('MemberGroup.create');
+		$warn="";
+		$added="";
+    	foreach (explode(',',$request->multi_member_id) as $row){
+    		if($row!=""){
+    			$member_reg=Member::where('Mobile_No',$row)->first();
+		    	$count = GroupMembers::where('Group_id', $request->multi_Group_id)
+		    				->where('Member_tbl_id',$member_reg->id)->count();		
+		    	if($count>0){
+		    		$warn=$warn.$row.", ";
+		    	}else if($count==0){
+		    		$added.=$row.", ";
+		    		$GroupMembers = new GroupMembers();
+			        $GroupMembers->Group_id = $request->multi_Group_id;
+			        $GroupMembers->Member_tbl_id = $member_reg->id;
+			        $GroupMembers->Member_Id = $member_reg->Member_Id;
+			        $GroupMembers->active = 'Y';
+			        $GroupMembers->save();
+		    	}
+		    	}
+        }
+        if($warn==""){
+	    		return redirect()->back()->with('warning2',$warn.'Success');
+	    	}else{
+	    		if($added==""){
+	    			return redirect()->back()->with('warning2',$warn.' Already Exist!');
+	    		}else{
+	    			return redirect()->back()->with('warning2',$warn.' Already Exist!')->with('warning3',$added.' Updated!');
+	    		}
+	    		
+	    	}
     }
 
     public function ShowGroupMember(){

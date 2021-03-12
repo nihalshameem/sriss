@@ -130,6 +130,14 @@
   </a>
 </li> 
 @endif
+@if($role->hasPermission('39',$role->role_id))
+<li class="nav-item">
+    <a href="{{ route('add.groupMember') }}" class="nav-link {{ (request()->segment(2) == 'groupMember') ? 'active' : '' }}" style="color:#3e3e3e">
+      <i class="nav-icon fa fa-user fa-lg"></i>
+      <p> Add Group Members</p>
+  </a>
+</li> 
+@endif
 @if($role->hasPermission('14',$role->role_id))
 <li class="nav-item">
     <a href="{{ route('listfeedback') }}" class="nav-link {{ (request()->segment(2) == 'listfeedback') ? 'active' : '' }}" style="color:#3e3e3e">
@@ -198,6 +206,8 @@
   </a>
 </li>
 @endif
+
+
 
 
 

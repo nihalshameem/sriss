@@ -511,5 +511,7 @@ Route::get('/DeleteMemberGroup', [App\Http\Controllers\MemberGroupController::cl
 /*Add Member to Group */
 Route::get('/groupMember', [App\Http\Controllers\MemberGroupController::class, 'ShowGroupMember'])->name('add.groupMember');
 
-Route::POST('/groupMember', [App\Http\Controllers\MemberGroupController::class, 'SaveSingleGroupMember'])->name('save.singleGroupMember');
+Route::POST('/groupSingleMember', [App\Http\Controllers\MemberGroupController::class, 'SaveSingleGroupMember'])->name('save.singleGroupMember');
+
+Route::POST('/groupMultiMember', [App\Http\Controllers\MemberGroupController::class, 'SaveMultiGroupMember'])->name('save.multiGroupMember');
 
