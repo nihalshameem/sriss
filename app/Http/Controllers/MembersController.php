@@ -761,8 +761,307 @@ class MembersController extends ApiController
     } 
     }
 
-    
-    
+    public function MemberReferal(Request $request)
+    {
+        $rules = array (
+            'token' => 'required',
+            'member_id' => 'required',
+            );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator-> fails())
+        {
+            return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+        }
+        else
+        {
+            if($user=$this->is_valid_token($request['token']))
+            {
+                $Member = Member::where('Member_Id', $request->member_id)->first();
+                $referredBy = Member::where('Mobile_No', $Member->ReferedBy)->select('First_Name as Name','Mobile_No','Member_Id','Profile_Picture')->first();
+                $referredByCount = Member::where('Mobile_No', $Member->ReferedBy)->select('First_Name as Name','Mobile_No','Member_Id','Profile_Picture')->count();
+                $referrals = Member::where('ReferedBy', $Member->Mobile_No)->select('First_Name as Name','Mobile_No','Member_Id','Profile_Picture')->get();
+
+                $referralsCount = Member::where('ReferedBy', $Member->Mobile_No)->select('First_Name as Name','Mobile_No','Member_Id','Profile_Picture')->count();
+
+                if($referralsCount>0 && $referredByCount>0)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'data'=>array(
+                            'Referred_By'=>$referredBy,
+                            'Referrals'=>$referrals
+                        ),
+                        'message'=>'Success',   
+                        ]);
+                }
+                elseif($referredByCount>0)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'data'=>array(
+                            'Referred_By'=>$referredBy,
+                            'Referrals'=>null
+                        ),
+                        'message'=>'Success',   
+                        ]);
+                }
+                elseif( $referralsCount>0)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'data'=>array(
+                            'Referred_By'=>null,
+                            'Referrals'=>$referrals
+                        ),
+                        'message'=>'Success',   
+                        ]);
+                }
+                else
+                {
+                    return $this->respond([
+                        'status' => 'failure',
+                        'code' => 400,
+                        'data' =>array(
+                            'Referred_By'=>null,
+                            'Referrals'=>null
+                        ),
+                        'message' => 'Member Not Found',
+                        ]);
+                }
+            }
+            else
+            {
+                    return $this->respondTokenError("Token Mismatched");
+            }
+        }
+    }
+
+    public function MemberApprovalPending(Request $request)
+    {
+        $rules = array (
+            'token' => 'required',
+            'member_id' => 'required',
+            );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator-> fails())
+        {
+            return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+        }
+        else
+        {
+            if($user=$this->is_valid_token($request['token']))
+            {
+                $Member = Member::whereIn('Is_Approved', ['N','R'])->select('Member_Id','First_Name as Name','Mobile_No','Is_Approved')->get();
+
+                if($Member->count()>0)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'data'=>$Member,
+                        'message'=>'Success',   
+                        ]);
+                }
+                else
+                {
+                    return $this->respond([
+                        'status' => 'failure',
+                        'code' => 400,
+                        'message' => 'Member Not found',
+                        ]);
+                }
+            }
+            else
+            {
+                    return $this->respondTokenError("Token Mismatched");
+            }
+        }
+    }
+
+    public function UpdateMemberApproval(Request $request)
+    {
+        $rules = array (
+            'token' => 'required',
+            'member_id' => 'required',
+            'approval_id' => 'required',
+            'status' => 'required',
+            );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator-> fails())
+        {
+            return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+        }
+        else
+        {
+            if($user=$this->is_valid_token($request['token']))
+            {
+                $myString = $request->approval_id;
+                $myArray = explode(',', $myString);
+                $MemberUpdate = Member::whereIn('Member_Id',$myArray)->update(['Is_Approved'=>$request->status,'Approval_Id'=>$request->member_id]);
+
+                $Members = Member::whereIn('Member_Id',$myArray)->get();
+
+                if($Members->count()>0)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'message'=>'Updated Successfully',   
+                        ]);
+                }
+                else
+                {
+                    return $this->respond([
+                        'status' => 'failure',
+                        'code' => 400,
+                        'message' => 'Failed to update',
+                        ]);
+                }
+            }
+            else
+            {
+                    return $this->respondTokenError("Token Mismatched");
+            }
+        }
+    }
+
+    public function UpdateMemberReferal(Request $request)
+    {
+        $rules = array (
+            'token' => 'required',
+            'member_id' => 'required',
+            'referred_by'=> 'required',
+            );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator-> fails())
+        {
+            return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+        }
+        else
+        {
+            if($user=$this->is_valid_token($request['token']))
+            {
+                $MemberUpdate = Member::where('Member_Id',$request->member_id)->first();
+                $referredBycheck = Member::where('Mobile_No',$request->referred_by)->count();
+                
+                    if($referredBycheck>0)
+                    {
+                        $MemberUpdate->ReferedBy = $request->referred_by;
+                    }
+                    else
+                    {
+                        return $this->respond([
+                        'status' => 'Failed',
+                        'status_code' => 400,
+                        'message' => 'Enter Valid Member Mobile Number',
+                        ]);
+                    }
+                if($MemberUpdate->save())
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'data' =>$MemberUpdate,
+                        'message'=>'Updated Successfully',   
+                        ]);
+                }
+                else
+                {
+                    return $this->respond([
+                        'status' => 'failure',
+                        'code' => 400,
+                        'message' => 'Failed to update',
+                        ]);
+                }
+            }
+            else
+            {
+                    return $this->respondTokenError("Token Mismatched");
+            }
+        }
+    }
+
+    public function getCounts(Request $request)
+    {
+        $rules = array (
+            'member_id' => 'required',
+            'token' => 'required',
+            );
+            
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator-> fails())
+        {
+            return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+        }
+        else
+        {   
+            if($user=$this->is_valid_token($request['token']))
+            {
+                $Member = Member::where('Member_Id', $request->member_id)->first();
+
+                $referralsCount = Member::where('ReferedBy', $Member->Mobile_No)->count();
+
+                $MemberApprovalCount = Member::whereIn('Is_Approved', ['N','R'])->select('Member_Id','First_Name as Name','Mobile_No','Is_Approved')->count();
+
+                if($referralsCount>0 && $MemberApprovalCount>0)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'message' => 'success',
+                        'data' => [
+                            'MemberReferalCount'=>$referralsCount,
+                            'MemberApprovalCount'=>$MemberApprovalCount
+                        ]
+                    ]);
+                }
+                if($referralsCount>0)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'message' => 'success',
+                        'data' => [
+                            'MemberReferalCount'=>$referralsCount,
+                            'MemberApprovalCount'=>null
+                        ]
+                    ]);
+                }
+                if($MemberApprovalCount>0)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'message' => 'success',
+                        'data' => [
+                            'MemberReferalCount'=>null,
+                            'MemberApprovalCount'=>$MemberApprovalCount
+                        ]
+                    ]);
+                }
+                else
+                {
+                    return $this->respond([
+                        'status' => 'failure',
+                        'code' => 400,
+                        'message' => 'Referals not available',
+                        'data' => array()
+                        ]);
+                }
+            }
+            else
+            {
+                return $this->respondTokenError("Token Mismatched");
+            }
+   }
+}
     
 
     /**************Web Application***********/

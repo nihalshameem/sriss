@@ -81,5 +81,18 @@ Route::group(['prefix' => '/v2'], function () {
 
 		Route::get('/getReceipts', [App\Http\Controllers\ContributionController::class,'Receipts']);
 
+		Route::get('/getMemberReferal',[App\Http\Controllers\MembersController::class, 'MemberReferal']);
+
+		Route::get('/getMemberPendingList',[App\Http\Controllers\MembersController::class, 'MemberApprovalPending']);
+
+		Route::post('/SetMemberApproval',[App\Http\Controllers\MembersController::class, 'UpdateMemberApproval']);
+
+		Route::post('/SetMemberReferal',[App\Http\Controllers\MembersController::class, 'UpdateMemberReferal']);
+
+		Route::get('/getCounts', [App\Http\Controllers\MembersController::class,'getCounts']);
+
+		Route::post('/postMobileNotification', [App\Http\Controllers\NotificationController::class,'saveMobileNotification']);
+
+
 		
 });

@@ -49,8 +49,7 @@ class NotificationController extends ApiController
         {
             return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
         }
-        else
-        {   
+        else{   
             if($user=$this->is_valid_token($request['token']))
             {
                     $Member = Member::where('Member_Id',$request->member_id)->first();
@@ -289,6 +288,66 @@ class NotificationController extends ApiController
            
             
             
+        }
+
+        public function saveMobileNotification(Request $request)
+        {   
+            $rules = array (
+            'member_id' => 'required',
+            'token' => 'required',
+            'NotificationPath' => 'max:1024',
+            );
+            $validator = Validator::make($request->all(),$rules);
+
+            if($validator->fails())
+            {
+                return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+
+            }
+            else
+            {
+                if($user=$this->is_valid_token($request['token']))
+                {
+                        $Member = Member::where('Member_Id',$request->member_id)->first();
+                        $Volunteer = Volunteer::first();
+                        
+                        $MemberLocation = Member::where('Member_Id',$request->member_id)->first();
+
+                        $date = Carbon::now()->format('Y-m-d');
+                        $Notifications = array();
+
+                            $notification = new Notification();
+                            $notification->Notification_mesage = $request->message;
+                            $notification->Notification_start_date = $request->start_date;
+                            $notification->Notification_end_date = $request->end_date;
+                            $notification->Notification_active = $request->active;
+                            $notification->Notification_approved = $request->approve;
+                            if ($request->hasFile('NotificationPath'))
+                            {
+                            $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();
+                                        $image_extn = strtolower($image_ext);
+                                        $imageName = time() .'_'. $request->NotificationPath->getClientOriginalName();
+                                        $filePath = $request->file('NotificationPath')->storeAs('Notification', $imageName,'public');
+                            $notification->Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
+                            }
+                            $notification->save();
+                            $notifications = Notification::orderby('Notification_id','DESC')->first();
+                            Session::put('notificationId',$notifications->Notification_id);
+                           
+                            return Response([
+                                        'status' => 'success',
+                                        'code' => $this->getStatusCode(),
+                                        'message' => 'Uploded Successfull'
+
+                                    ]);                           
+
+                }
+                else
+                {
+                    return $this->respondTokenError("Token Mismatched");
+                }           
+            
+        }
         }
 
         public function SaveBroadCast(Request $request)
