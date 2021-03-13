@@ -8,6 +8,7 @@ use App\Models\MemberIdConfig;
 use App\Models\MemberProfile;
 use App\Models\MemberGroup;
 use App\Models\GroupMembers;
+use App\Models\User;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
 use JWTAuth;
@@ -19,7 +20,7 @@ use DB;
 use Route;
 use \Illuminate\Http\Response as Res;
 
-class MemberGroupController extends Controller
+class MemberGroupController extends ApiController
 {
 
 	//Member Group Function
@@ -122,4 +123,57 @@ class MemberGroupController extends Controller
         return view('GroupMembers.add',compact('memberGroups','members'));
     }
 
+
+
+
+    ///API Services
+
+
+    public function getGroups(Request $request)
+    {
+        $rules = array (
+            'member_id' => 'required',
+            'token'=>'required',
+            );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator-> fails())
+        {
+            return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+        }
+        else
+        {
+            if($user=$this->is_valid_token($request['token']))
+            {
+                $memberGroups = MemberGroup::get();
+                if($memberGroups)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'message' => 'Success',
+                        'data' => $memberGroups
+                    ]);
+                }
+                else
+                {
+                    return $this->respond([
+                        'status' => 'Failed',
+                        'code' => 400,
+                        'message' => 'Failed',
+                        ]);
+                }
+            }
+            else
+            {   
+                return $this->respondTokenError("Token Mismatched");
+            }
+        }
+    }
+
+    public function is_valid_token($token)
+        {
+            $user = User::where('api_token', $token)->first();
+            return $user;
+        }
 }

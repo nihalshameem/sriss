@@ -93,6 +93,8 @@ Route::group(['prefix' => '/v2'], function () {
 
 		Route::post('/postMobileNotification', [App\Http\Controllers\NotificationController::class,'saveMobileNotification']);
 
+		Route::get('/getGroups', [App\Http\Controllers\MemberGroupController::class,'getGroups']);
+
 
 		
 });
