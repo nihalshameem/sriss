@@ -740,6 +740,8 @@ class ComposerStaticInit5e8d7bd20336e256e9f68cb73b81b1fa
         'App\\Mail\\VerificationEmail' => __DIR__ . '/../..' . '/app/Mail/VerificationEmail.php',
         'App\\Models\\AboutUs' => __DIR__ . '/../..' . '/app/Models/AboutUs.php',
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
+        'App\\Models\\Advertisement' => __DIR__ . '/../..' . '/app/Models/Advertisement.php',
+        'App\\Models\\AdvertisementBroadcast' => __DIR__ . '/../..' . '/app/Models/AdvertisementBroadcast.php',
         'App\\Models\\AppIcon' => __DIR__ . '/../..' . '/app/Models/AppIcon.php',
         'App\\Models\\AppImage' => __DIR__ . '/../..' . '/app/Models/AppImage.php',
         'App\\Models\\AppImageConfig' => __DIR__ . '/../..' . '/app/Models/AppImageConfig.php',

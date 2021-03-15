@@ -37,7 +37,9 @@ class MembersController extends ApiController
             'mobile_number' => 'required|unique:users|max:255',
         ]);
 
-            if ($validator->fails()) {
+            $member = User::where('mobile_number',$request->mobile_number)->count();
+        
+            if ($member>0) {
                return Response([
                             'status' => 'failure',
                             'code' => 400,
@@ -154,49 +156,72 @@ class MembersController extends ApiController
                 if($user)
                 {
                     $memberactive = Member::where('Mobile_No',$request['mobile_number'])->first();
-                    if($memberactive->active_flag=='Y')
+                    if($memberactive->active_flag=='Y' )
                     {
-                        $user = User::where('mobile_number',$request['mobile_number'])->first();
-                        $api_token = $user['api_token'];
-
-                        if($user['api_token'] == NULL)
+                        if($memberactive->Is_Approved=='Y')
                         {
-                                return $this->_login($request['mobile_number'], $request['password']);
+                            $user = User::where('mobile_number',$request['mobile_number'])->first();
+                            $api_token = $user['api_token'];
+
+                            if($user['api_token'] == NULL)
+                            {
+                                    return $this->_login($request['mobile_number'], $request['password']);
+                            }
+                            else
+                            {
+                                
+                                try
+                                {
+                                    $credentials = ['mobile_number'=>$request['mobile_number'],'password' => $request['password']];
+                                    $token = JWTAuth::attempt($credentials);
+                                    $user->api_token = $token;
+                                    $user->save();
+                                    $user = User::where('mobile_number', $request['mobile_number'])->first();
+                                    $member = Member::where('Mobile_No', $request['mobile_number'])->value('Profile_Picture');
+                                    $language = Language::where('Language_lock', 'Y')->value('Language_lock');
+                                    return Response([
+                                        'status' => 'success',
+                                        'code' => 200,
+                                        'message' => 'Login Successfull',
+                                        'IsApproval' => true,
+                                        'data' => $this->user_transform($user,$language,$member)
+                                    ]);
+                                }catch(JWTException $e){
+                                    $user->api_token =null;
+                                    $user->save();
+                                    return $this->respondInternalError("Login Unsuccessful. An error occurred while performing an action!");
+                                }
+                            }
                         }
                         else
                         {
-                            
-                            try
-                            {
-                                $credentials = ['mobile_number'=>$request['mobile_number'],'password' => $request['password']];
-                                $token = JWTAuth::attempt($credentials);
-                                $user->api_token = $token;
-                                $user->save();
-                                $user = User::where('mobile_number', $request['mobile_number'])->first();
-                                $member = Member::where('Mobile_No', $request['mobile_number'])->value('Profile_Picture');
-                                $language = Language::where('Language_lock', 'Y')->value('Language_lock');
-                                return Response([
-                                    'status' => 'success',
-                                    'code' => $this->getStatusCode(),
-                                    'message' => 'Login Successfull',
-                                    'data' => $this->user_transform($user,$language,$member)
-                                ]);
-                            }catch(JWTException $e){
-                                $user->api_token =null;
-                                $user->save();
-                                return $this->respondInternalError("Login Unsuccessful. An error occurred while performing an action!");
-                            }
+                            return Response([
+                                        'status' => 'success',
+                                        'code' => 200,
+                                        'message' => 'தங்களது உறுப்பினர் ஒப்புதல் செயலில் உள்ளது.24 மணி நேரம் கழித்து உள் நுழைய முயற்சி செய்யவும், பதிவு செய்து 24 நான்கு மணி  நேரத்திற்கு பிறகும் உள் நுழைய முடியவில்லையனில் இந்த எண்ணை  +91 87544 23520 தொடர்பு கொள்ளவும்.Your approval is in progress, please access the App after 24 hours, if you are not able to login after 24 hours please Contact  +91 87544 23520',
+                                        'IsApproval' => false
+                                    ]);
                         }
                     }
                     else
                     {
-                        return $this->respondWithError("Deactivated");
+                        return Response([
+                                        'status' => 'failure',
+                                        'code' => 400,
+                                        'message' => 'Deactivated',
+                                        'IsApproval' => false
+                                    ]);
                     }
 
                 }  
                 else
                 {
-                    return $this->respondWithError("Invalid Username or Password");
+                    return Response([
+                                        'status' => 'failure',
+                                        'code' => 400,
+                                        'message' => 'Invalid Username or Password',
+                                        'IsApproval' => false
+                                    ]);
                 }
             }
             
@@ -215,37 +240,15 @@ class MembersController extends ApiController
         $user->api_token = $token;
         $user->save();
         $user = User::where('mobile_number','LIKE','%'.$mobile_number.'%')->first();
-        $language = Language::value('Language_lock');
+        $language =  Language::value('Language_lock');
         $member = Member::where('Mobile_No', $mobile_number)->value('Profile_Picture');
         return Response([
             'status' => 'success',
             'code' => $this->getStatusCode(),
             'message' => 'Login successful!',
+            'IsApproval' => true,
             'data' => $this->user_transform($user,$language,$member)
         ]);
-    }
-
-
-
-    public function Mobile_Verification(Request $request)
-    {
-        $mobile_number = User::where('mobile_number', $request->mobile_number)->first();
-        if($mobile_number)
-        {
-            return $this->respond([
-                'status' => 'success',
-                'code' => $this->getStatusCode(),
-                'message'=>'Mobile Number already exist',   
-                ]);
-        }
-        else
-        {
-            return $this->respond([
-                'status' => 'failure',
-                'code' => 400,
-                'message' => 'Mobile number not match',
-                ]);
-        }
     }
     
    
@@ -845,6 +848,7 @@ class MembersController extends ApiController
         $rules = array (
             'token' => 'required',
             'member_id' => 'required',
+            'status' => 'required',
             );
 
         $validator = Validator::make($request->all(), $rules);
@@ -856,7 +860,7 @@ class MembersController extends ApiController
         {
             if($user=$this->is_valid_token($request['token']))
             {
-                $Member = Member::whereIn('Is_Approved', ['N','R'])->select('Member_Id','First_Name as Name','Mobile_No','Is_Approved')->get();
+                $Member = Member::where('Is_Approved', $request->status)->select('Member_Id','First_Name as Name','Mobile_No','Is_Approved')->get();
 
                 if($Member->count()>0)
                 {
@@ -951,6 +955,16 @@ class MembersController extends ApiController
                 $MemberUpdate = Member::where('Member_Id',$request->member_id)->first();
                 $referredBycheck = Member::where('Mobile_No',$request->referred_by)->count();
                 
+                if($request->referred_by==$MemberUpdate->Mobile_No)
+                {
+                    return $this->respond([
+                        'status' => 'failure',
+                        'code' => 400,
+                        'message' => 'You cannot refer yourself',
+                        ]);
+                }
+                else
+                {
                     if($referredBycheck>0)
                     {
                         $MemberUpdate->ReferedBy = $request->referred_by;
@@ -981,6 +995,7 @@ class MembersController extends ApiController
                         ]);
                 }
             }
+            }
             else
             {
                     return $this->respondTokenError("Token Mismatched");
@@ -1008,7 +1023,7 @@ class MembersController extends ApiController
 
                 $referralsCount = Member::where('ReferedBy', $Member->Mobile_No)->count();
 
-                $MemberApprovalCount = Member::whereIn('Is_Approved', ['N','R'])->select('Member_Id','First_Name as Name','Mobile_No','Is_Approved')->count();
+                $MemberApprovalCount = Member::where('Is_Approved', 'N')->select('Member_Id','First_Name as Name','Mobile_No','Is_Approved')->count();
 
                 if($referralsCount>0 && $MemberApprovalCount>0)
                 {

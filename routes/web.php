@@ -515,3 +515,35 @@ Route::POST('/groupSingleMember', [App\Http\Controllers\MemberGroupController::c
 
 Route::POST('/groupMultiMember', [App\Http\Controllers\MemberGroupController::class, 'SaveMultiGroupMember'])->name('save.multiGroupMember');
 
+/** Advertisement **/
+
+Route::get('/Advertisements', [App\Http\Controllers\AdvertisementController::class, 'GetAdvertisements'])->name('list.advertisements');
+
+// Route::get('/Notificationsearch', [App\Http\Controllers\NotificationController::class,'Search']);
+
+Route::get('/AddAdvertisements', [App\Http\Controllers\AdvertisementController::class, 'AdvertisementShow'])->name('add.advertisement');
+
+Route::post('/SaveAdvertisements', [App\Http\Controllers\AdvertisementController::class, 'SaveAdvertisement'])->name('save.advertisement');
+
+Route::post('/updateAdvertisement', [App\Http\Controllers\AdvertisementController::class, 'UpdateAdvertisement'])->name('update.advertisement');
+
+Route::get('/AdEdit/{Advertisement}', [App\Http\Controllers\AdvertisementController::class, 'editAdvertisement'])->name('edit.advertisement');
+
+// Route::get('/NotificationMassDelete',[App\Http\Controllers\NotificationController::class,'TruncateNotification'])->name('truncate.notification');
+
+// Route::get('/notificationonly_delete',[App\Http\Controllers\NotificationController::class, 'DeleteNotification'])->name('delete.notification');
+
+// Route::post('/NotificationApproval', [App\Http\Controllers\NotificationController::class, 'NotificationApproval']);
+
+
+/* Advertisement Broad Cast */
+
+Route::get('/AdBroadcast', [App\Http\Controllers\AdvertisementController::class,'AdvertisementBroadcast'])->name('list.AdvertisementBroadcast');
+
+Route::post('/SaveAdBroadCast', [App\Http\Controllers\AdvertisementController::class,'SaveAdBroadCast'])->name('save.AdBroadcast');
+
+Route::get('/AdBroadCastEdit', [App\Http\Controllers\AdvertisementController::class,'AdvertisementBroadCastEdit'])->name('list.advertisementbroadcastedit');
+
+Route::post('/UpdateAdBroadCast', [App\Http\Controllers\AdvertisementController::class,'UpdateAdvertisementBroadCast'])->name('UpdateBroadCast');
+
+

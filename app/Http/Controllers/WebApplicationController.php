@@ -314,6 +314,31 @@ class WebApplicationController extends ApiController
         }
     }
 
+    public function TermsandConditions(Request $request)
+    {
+       
+        $termsandconditions = Compliance::where('Compliance_id','2')->first();
+                
+       if($termsandconditions->count()>0)
+        {
+            return $this->respond([
+                'status' => 'success',
+                'message' => 'success',
+                'code' => $this->getStatusCode(),
+                'data'=>$termsandconditions,   
+                ]);
+        }
+        else
+        {
+            return $this->respond([
+                'status' => 'failure',
+                'code' => 400,
+            ]);  
+        }
+            
+           
+    }
+
     public function is_valid_token($token)
     {
         $user = User::where('api_token', $token)->first();

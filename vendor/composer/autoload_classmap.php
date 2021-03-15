@@ -43,6 +43,8 @@ return array(
     'App\\Mail\\VerificationEmail' => $baseDir . '/app/Mail/VerificationEmail.php',
     'App\\Models\\AboutUs' => $baseDir . '/app/Models/AboutUs.php',
     'App\\Models\\Admin' => $baseDir . '/app/Models/Admin.php',
+    'App\\Models\\Advertisement' => $baseDir . '/app/Models/Advertisement.php',
+    'App\\Models\\AdvertisementBroadcast' => $baseDir . '/app/Models/AdvertisementBroadcast.php',
     'App\\Models\\AppIcon' => $baseDir . '/app/Models/AppIcon.php',
     'App\\Models\\AppImage' => $baseDir . '/app/Models/AppImage.php',
     'App\\Models\\AppImageConfig' => $baseDir . '/app/Models/AppImageConfig.php',

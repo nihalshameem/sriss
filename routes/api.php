@@ -95,6 +95,6 @@ Route::group(['prefix' => '/v2'], function () {
 
 		Route::get('/getGroups', [App\Http\Controllers\MemberGroupController::class,'getGroups']);
 
-
+		Route::get('/termsandconditions', [App\Http\Controllers\WebApplicationController::class,'TermsandConditions']);
 		
 });

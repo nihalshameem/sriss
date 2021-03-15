@@ -27,6 +27,7 @@
           <div class="card card-primary">
             
             <form role="form" method="post" class="col-md-10" action="{{ route('save.notification') }}" enctype="multipart/form-data" style="margin:0 auto">
+              <input type="hidden" class="form-control" name="Notification_id"  value="{{{ $Notifications->Notification_id  ?? '' }}}">
               @csrf
               @if( Session::has( 'success' ))
               <div class="alert alert-success alert-block" style="border-color: #8ac38b;color: #388E3C;background-color: #cde0c4;">
