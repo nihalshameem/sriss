@@ -110,6 +110,7 @@ class AdvertisementController extends ApiController
                     $Advertisements= array_reduce($Advertisements, 'array_merge', array());
                     $Advertisements=array_unique($Advertisements, SORT_REGULAR);
                     $Advertisements = collect($Advertisements)->sortBy('id')->reverse()->toArray();
+                    $Advertisements=head($Advertisements);;
 
                         
                         
@@ -120,7 +121,8 @@ class AdvertisementController extends ApiController
                                             'status' => 'success',
                                             'message' => 'success',
                                             'code' => $this->getStatusCode(),
-                                            'data'=>$Advertisements,   
+                                            'image_path' => $Advertisements->image_path,
+                                            'link' => $Advertisements->link
                                             ]);
                     }
                     else

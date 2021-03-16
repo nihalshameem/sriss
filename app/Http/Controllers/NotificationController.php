@@ -303,11 +303,19 @@ class NotificationController extends ApiController
                 if($user=$this->is_valid_token($request['token']))
                 {
                     
-                    Notification::where('Notification_id', $request->notification_id)->get();
+                    $Notification=Notification::where('Notification_id', $request->notification_id)->get();
                             return Response([
                                         'status' => 'success',
                                         'code' => $this->getStatusCode(),
                                         'message' => 'Success'
+                                        'Notification_id' => $Notification->Notification_id,
+                                        'Notification_mesage' => $Notification->,
+                                        'Notification_text' => $Notification->Notification_mesage,
+                                        'Notification_start_date' => $Notification->Notification_start_date,
+                                        'Notification_end_date' => $Notification->Notification_end_date,
+                                        'Notification_image_path' => $Notification->Notification_image_path,
+                                        'Notification_active' => $Notification->Notification_active,
+                                        'Notification_approved' => $Notification->Notification_approved, 
                                     ]);                           
                 }
                 else
