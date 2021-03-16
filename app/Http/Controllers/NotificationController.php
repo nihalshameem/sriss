@@ -167,7 +167,7 @@ class NotificationController extends ApiController
         }
     }
 
-    public function saveMobileNotification(Request $request)
+    public function addAppNotification(Request $request)
         {   
             $rules = array (
             'member_id' => 'required',
@@ -234,6 +234,54 @@ class NotificationController extends ApiController
             
         }
         }
+
+        public function listAppNotification(Request $request)
+        {   
+            $rules = array (
+            'member_id' => 'required',
+            'token' => 'required',
+            );
+            $validator = Validator::make($request->all(),$rules);
+
+            if($validator->fails())
+            {
+                return Response([
+                                        'status' => 'failure',
+                                        'code' => 400,
+                                        'message' => 'Field Validation Failed',
+
+                                    ]);  
+
+            }
+            else
+            { 
+                if($user=$this->is_valid_token($request['token']))
+                {
+                        $Notifications = Notification::orderby('Notification_id','DESC')->get();
+                           
+                            return Response([
+                                        'status' => 'success',
+                                        'code' => $this->getStatusCode(),
+                                        'message' => 'Success',
+                                        'data' => $Notifications
+
+                                    ]);                           
+
+                }
+                else
+                {
+                    return Response([
+                                        'status' => 'failure',
+                                        'code' => 400,
+                                        'message' => 'Token Mismatched',
+
+                                    ]);  
+                }           
+            
+        }
+        }
+
+    
 
     public function is_valid_token($token)
     {
@@ -603,7 +651,7 @@ class NotificationController extends ApiController
         {
             $notifications = Notification::orderby('Notification_id','desc')->first();
             $cities = District::get();
-            $states = State::get();
+            $states = State::where('State_active','Y')->get();
             $stateJson = StateDivision::get();
             return view('notification.broadcast',compact('notifications','cities','states','stateJson'));
 
@@ -613,7 +661,7 @@ class NotificationController extends ApiController
         {
             $NotificationBroadcast = NotificationBroadcast::where('Notification_id',Session::get('notificationId'))->get();
              $Notification = Notification::where('Notification_id',Session::get('notificationId'))->first();
-             $states = State::get();
+             $states = State::where('State_active','Y')->get();
             return view('notification.broadcast.edit',compact('NotificationBroadcast','states','Notification'));
         }
 

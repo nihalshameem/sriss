@@ -7,6 +7,8 @@ use App\Models\Member;
 use App\Models\User;
 use App\Models\State;
 use App\Models\Volunteer;
+use App\Models\MemberCategory;
+use App\Models\MemberCategoryAppIcon;
 use Session;
 use DateTime;
 use View;
@@ -27,8 +29,8 @@ class VolunteerController extends ApiController
     public function ListVolunteer()
     {
         $NotInVolunteer = Volunteer::pluck('Member_id');
-        $Member = Member::where('active_flag','Y')->whereNotIn('Member_Id',$NotInVolunteer)->get();
-        $Volunteer = Member::where('active_flag','Y')->whereIn('Member_Id',$NotInVolunteer)->get();
+        $Member = Member::where('active_flag','Y')->get();
+        $Volunteer = Member::where('active_flag','Y')->where('Member_Category_Id','!=','1')->where('Member_Category_Id','!=',null)->get();
         $Members = array();
         return view('volunteer.list',compact('Volunteer','Member','Members'));
     }
@@ -42,21 +44,51 @@ class VolunteerController extends ApiController
     }
 
 
-    public function UpdateVolunteer($memberId)
+    public function UpdateVolunteer(Request $request)
     {
-        $member = User::Where("Member_Id", '=', $memberId)
-                        ->update(['Is_Volunteer'=> 'Y']);
-                        
-        $user = User::where('Member_Id',$memberId)->first();
-        $Member = Member::where('Member_Id',$memberId)->first();
-        $Volunteer = new Volunteer();
-        $Volunteer->Member_id = $user->Member_Id;
-        $Volunteer->Pincode = $Member->Pincode;
-        $Volunteer->Volunteer_Active = 'Y';
-        $Volunteer->DRS_Service_Joining_Date ='0';
-        $Volunteer->save();
+        $MemberCategoryAppIconCount = MemberCategoryAppIcon::where('Category_Id',$request->category_id)->count();
+        if($MemberCategoryAppIconCount>0)
+        {
+            $MemberCategory = MemberCategory::where('MemberCategory_id',$request->category_id)->first();
 
-        return redirect('/VolunteerList');
+
+                if($MemberCategory->Category!="Volunteer")
+                {
+                    $MemberCategoryUpdate = Member::where('Member_Id',$request->memberId)->update(['Member_Category_Id'=> $request->category_id]);  
+                }
+                else
+                {
+                    $MemberCategoryUpdate = Member::where('Member_Id',$request->memberId)->update(['Member_Category_Id'=> $request->category_id]);    
+
+                    $user = User::where('Member_Id',$request->memberId)->first();
+                    $Member = Member::where('Member_Id',$request->memberId)->first();
+                    $VolunteerDelete = Volunteer::where('Member_id',$request->memberId)->delete();
+
+                    $Volunteer = new Volunteer();
+                    $Volunteer->Member_id = $user->Member_Id;
+                    $Volunteer->Pincode = $Member->Pincode;
+                    $Volunteer->Volunteer_Active = 'Y';
+                    $Volunteer->DRS_Service_Joining_Date ='0';
+                    $Volunteer->save();
+                }
+
+                
+                return $this->respond([
+                                    'status' => 'success',
+                                    'code' => 200
+                                    
+                                    ]);
+        }
+        else
+        {
+             return $this->respond([
+                                    'status' => 'failure',
+                                    'message' => 'Please Assign AppIcon',
+                                    'code' => 400
+                                    
+                                    ]);
+        }
+        
     }
 
     public function RemoveVolunteer($memberId)

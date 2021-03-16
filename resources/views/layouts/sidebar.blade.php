@@ -82,7 +82,7 @@
 <li class="nav-item">
     <a href="{{ route('list.volunteer') }}" class="nav-link {{ (request()->segment(2) == 'list.volunteer') ? 'active' : '' }}" style="color:#3e3e3e">
       <i class="nav-icon fa fa-users fa-lg"></i>
-      <p>Karyakartha Enrollment</p>
+      <p>Member Category Enrollment</p>
   </a>
 </li> 
 
@@ -207,7 +207,23 @@
 </li>
 @endif
 
+@if($role->hasPermission('40',$role->role_id)) 
+<li class="nav-item">
+    <a href="{{ route('MemberCategory.list') }}" class="nav-link {{ (request()->segment(2) == 'MemberCategory.list') ? 'active' : '' }}" style="color:#3e3e3e">
+      <i class="nav-icon fa fa-list-alt fa-lg"></i>
+      <p> Member Category-SA</p>
+  </a>
+</li>
+@endif
 
+@if($role->hasPermission('41',$role->role_id)) 
+<li class="nav-item">
+    <a href="{{ route('list.advertisements') }}" class="nav-link {{ (request()->segment(2) == 'list.advertisements') ? 'active' : '' }}" style="color:#3e3e3e">
+      <i class="nav-icon fa fa-list-alt fa-lg"></i>
+      <p> Advertisement</p>
+  </a>
+</li>
+@endif
 
 
 

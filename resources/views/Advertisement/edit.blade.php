@@ -25,7 +25,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="card card-primary">
-            
+          
             <form role="form" method="post" class="col-md-10" action="{{ route('update.advertisement') }}" enctype="multipart/form-data" style="margin:0 auto">
               <input type="hidden" class="form-control" name="Advertisement_id"  value="{{{ $Advertisements->id  ?? '' }}}">
               @csrf
@@ -47,7 +47,7 @@
                 <div class="col-md-6">
                  <div class="form-group">
                   <label for="exampleInputPassword1">Description</label>
-                  <textarea class="form-control" id="desc" rows="5" cols="50" name="description" placeholder="Enter Description" value="{{ $Advertisements->description}}" required="">{{ $Advertisements->description}}</textarea>
+                  <textarea class="form-control" id="desc" rows="1" cols="50" name="description" placeholder="Enter Description" value="{{ $Advertisements->description}}" required="">{{ $Advertisements->description}}</textarea>
                 </div>
               </div>
               <div class="col-md-6">
@@ -58,13 +58,16 @@
               </div>
             </div>
           </div>
-          
-          <div class="form-group">
+          <div class="row">
+          <div class="form-group col-md-6">
             <label for="exampleInputFile">Advertisement Image Path</label>
             <div class="input-group">
               <div class="custom-file">
                 <input type="file" class="custom-file-input" name="AdvertisementImg" id="exampleInputFile2" accept=" image/gif, image/jpeg ,image/png" {{ $Advertisements->image_path }} onchange="upload_check2()">
                 <label class="custom-file-label"  for="exampleInputFile2">Choose file</label>
+
+              
+            
               </div>
               <div class="input-group-append">
                 <span class="input-group-text" id="">Upload</span>
@@ -72,7 +75,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group col-md-6">
             <label for="exampleInputFile">Banner Image Path</label>
             <div class="input-group">
               <div class="custom-file">
@@ -84,7 +87,9 @@
               </div>
             </div>
           </div>
-
+        </div>
+<label>Uploaded Image</label><br>
+              <img src="{{ $Advertisements->image_path}}" width="150px" height="100px">
           
                <div class="form-group">
                 <label for="exampleInputPassword1">Link</label>
@@ -115,13 +120,13 @@
             <!-- checkbox -->
             <div class="form-group clearfix">
               <div class="icheck-primary d-inline">
-                <input type="radio" id="checkboxPrimary11" value="Y" name="active" {{ ($Advertisements->Notification_active == "Y") ? 'checked' : '' }}>
+                <input type="radio" id="checkboxPrimary11" value="Y" name="active" {{ ($Advertisements->active == "Y") ? 'checked' : '' }}>
                 <label for="checkboxPrimary11">Yes
                 </label>
               </div>
               
               <div class="icheck-primary d-inline">
-                <input type="radio" id="checkboxPrimary12" value="N"  name="active" {{ ($Advertisements->Notification_active == "N") ? 'checked' : '' }}>
+                <input type="radio" id="checkboxPrimary12" value="N"  name="active" {{ ($Advertisements->active == "N") ? 'checked' : '' }}>
                 <label for="checkboxPrimary12">
                   No
                 </label>

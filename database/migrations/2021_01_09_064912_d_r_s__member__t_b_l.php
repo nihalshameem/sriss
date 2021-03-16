@@ -16,6 +16,7 @@ class DRSMemberTBL extends Migration
         Schema::create('DRS_Member_TBL', function (Blueprint $table) {
             $table->increments('id');
             $table->string('Member_Id');
+            $table->integer('Member_Category_Id')->default(1);
             $table->string('First_Name');
             $table->string('Last_Name');
             $table->string('Address1')->nullable();

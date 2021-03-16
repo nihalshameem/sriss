@@ -15,7 +15,7 @@
           <div class="col-sm-3">
           </div>
           <div class="col-sm-3">
-            <h3 class="title-head">Karyakartha Enrollment</h3>
+            <h3 class="title-head">Member Category Enrollment</h3>
           </div>
           <div class="col-sm-2">        
           </div>
@@ -26,9 +26,7 @@
         <!-- /.card-header -->
         <div class="card-body" style="padding-top:0;">
           <div class="row">
-            <div class="col-md-2">
-              
-            </div>
+          
              <div class="col-md-3">
               <select name="volunteersearch" id="mobile_number" class="selectpicker form-control volunteersearch"  data-live-search="true" >
                   <option value="">Mobile Number</option>
@@ -52,6 +50,18 @@
                           <option value="{{ $member->Member_Id }}">{{ $member->Member_Id }}</option>
                           @endforeach 
               </select>
+            </div>
+             <div class="col-md-3">
+              <?php
+                    $MemberCategory = \App\Models\MemberCategory::where('Category_active','Y')->get();
+                  ?>
+                  <select class="form-control" id="category_id">
+                    <option value="">Select Member Category</option>
+                    @foreach($MemberCategory as $MemberCategory) 
+                <option value="{{$MemberCategory->MemberCategory_id}}">{{ $MemberCategory->Category}}</option>
+                @endforeach
+                  
+                  </select>
             </div>
           </div>
         </div>
@@ -97,7 +107,14 @@
           <td>{{ $demember->Email_Id }} </td>  
           <td>{{ $demember->Mobile_No }}</td>   
           <td>{{ $demember->Member_Id }}</td>  
-         <td> <a href="/RemoveVolunteer/{{$demember->Member_Id}}" onclick="return  confirm('Are you sure want to remove volunteer?')"><span class="badge bg-danger">Remove</span></a>  </td>               
+          <?php
+            $MemberCategory = \App\Models\MemberCategory::where('MemberCategory_id',$demember->Member_Category_Id)->first();
+          ?>
+          @if($MemberCategory!=null)
+         <td> <a><span class="badge bg-success">{{$MemberCategory->Category}}</span></a>  </td> 
+         @else
+          <td></td>
+         @endif              
         
       </tr>
           @endforeach
@@ -112,4 +129,36 @@
 </div>
 </section>
 </div>
+<script type="text/javascript">
+  function UpdateVolunteer(memberId)
+  {
+    var category_id = document.getElementById("category_id");
+    var category_id = category_id.value;
+    if(category_id=="")
+    {
+      alert('Must Select Member Category');
+    }
+    else
+    {
+      $.ajax({
+          type : 'get',
+          url : '{{URL::to('UpdateVolunteer')}}',
+          data : {'memberId':memberId,'category_id':category_id},
+          success:function(data){
+            console.log(data);
+            if(data['code']==400)
+            {
+                alert(data['message']);
+            }
+            else
+            {
+              window.location.reload();
+            }
+            //
+         } 
+       });
+    }
+    
+  }
+</script>
 @endsection

@@ -34,10 +34,10 @@
                
 
                <div class="col-md-3">
-                  <input type="date" name="#search" id="search" class="form-control">
+                  
               </div>
               <div class="col-md-3">
-                  <input type="date" name="search1" id="search1" class="form-control">
+                  
               </div>
               <div class="col-md-2">
                 <a class="btn btn-primary btn-md" style="float:right; font-family: sans-serif;" href="{{ route( 'add.advertisement' ) }}" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;Add</a>         			  
@@ -124,11 +124,11 @@
 </div>
 <script>
     function Delete	(value) {
-      if (confirm("Are your sure you want to delete the notification?")) {
+      if (confirm("Are your sure you want to delete the Advertisement?")) {
         $.ajax({
             type : 'get',
-            url : '{{URL::to('notificationonly_delete')}}',
-            data : {'notificationId':value},
+            url : '{{URL::to('adonly_delete')}}',
+            data : {'Advertisement_Id':value},
             success:function(data){
               window.location.reload();
           } 
@@ -144,8 +144,8 @@
       if (confirm("Are your sure you want to delete all the record?")) {
         $.ajax({
             type : 'get',
-            url : '{{URL::to('NotificationMassDelete')}}',
-            data : {'notificationId':''},
+            url : '{{URL::to('AdMassDelete')}}',
+            data : {'Advertisement_Id':''},
             success:function(data){
               window.location.reload();
           } 

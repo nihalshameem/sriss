@@ -8,6 +8,8 @@ use App\Models\AboutUs;
 use App\Models\AppImage;
 use App\Models\AppImageConfig;
 use App\Models\AppIcon;
+use App\Models\MemberCategory;
+use App\Models\MemberCategoryAppIcon;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Member;
 use App\Models\Compliance;
@@ -134,6 +136,79 @@ class WebApplicationController extends ApiController
         return redirect(route('list.ProfileDetails'));
     }
 
+    /* Member Category */
+
+    public function ListMemberCategory()
+    {
+        $membercategory = MemberCategory::get();
+        return view('membercategory.list',compact('membercategory'));
+    }
+
+    public function AddMemberCategory()
+    {
+        return view('membercategory.add');
+
+    }
+
+    public function StoreMemberCategory(Request $request)
+    {
+        $membercategory = new MemberCategory();
+        $membercategory->Category = $request->category;
+        $membercategory->Category_active = $request->active;
+        $membercategory->save();
+        return redirect(route('MemberCategory.list'));
+    }
+
+    public function EditMemberCategory($categoryId)
+    {
+        $membercategory = MemberCategory::where('MemberCategory_id',$categoryId)->first();
+        return view('membercategory.edit',compact('membercategory'));
+    }
+
+    public function UpdateMemberCategory(Request $request)
+    {
+        $membercategory = MemberCategory::where('MemberCategory_id',$request->categoryId)->update(['Category'=>$request->category,'Category_active'=>$request->active]);
+        return redirect(route('MemberCategory.list'));
+    }
+
+    public function AssignAppIcon($categoryId)
+    {
+        $membercategory = MemberCategory::where('MemberCategory_id',$categoryId)->first();
+        $appIcon = AppIcon::get();
+        return view('membercategory.assign',compact('appIcon','membercategory'));
+    }
+
+    public function UpdateAppIconMemberCategory(Request $request)
+    {
+        $delete = MemberCategoryAppIcon::where('Category_Id',$request->categoryId)->delete();
+        foreach ($request->AppIcon as $key=>$cost) {
+
+            MemberCategoryAppIcon::create([
+                'Category_Id' => $request->categoryId[$key],
+                'AppIcon_Id' => $cost,
+            ]);
+        }
+        return redirect(route('MemberCategory.list'));
+    }
+
+    public function DeleteMemberCategory($categoryId)
+    {
+        $memberCount = Member::where('Member_Category_Id',$categoryId)->count();
+        if($memberCount>0)
+        {
+            return Redirect::back()->withErrors(['Please remove assigned members from this category', 'Please remove assigned members from this category']);
+
+        }
+        else
+        {
+            $MemberCategoryAppIcon = MemberCategoryAppIcon::where('Category_Id',$categoryId)->delete();
+            $membercategory = MemberCategory::where('MemberCategory_id',$categoryId)->delete();
+                    return redirect(route('MemberCategory.list'));
+
+        }
+        
+    }
+
    
     
 
@@ -251,24 +326,28 @@ class WebApplicationController extends ApiController
 
     /***AppIcon***/
     
-    public function getAppIcon(Request $request)
+public function getAppIcon(Request $request)
     {
+        $rules = array (
+            'member_id' => 'required',
+            'token' => 'required',
+            );
 
-        if($request->member_id!=null)
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator-> fails())
+        {
+            return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+        }
+        else
         {
             if($user=$this->is_valid_token($request['token']))
             {
-                $member = User::where('Member_Id',$request->member_id)->first();
+                $member = Member::where('Member_Id',$request->member_id)->first();
+                $membercategory = MemberCategoryAppIcon::where('Category_Id',$member->Member_Category_Id)->pluck('AppIcon_Id');
 
-                if($member->Is_Volunteer=='Y')
-                {
-                    $appIcon = AppIcon::where('AppIcon_visible','Y')->get();
-                }
-                else
-                {
-                    $appIcon = AppIcon::where('AppIcon_visible','Y')->whereNotIn('AppIcon_desc', ['Collections'])->get();
-                }
-                if($appIcon)
+                $appIcon = AppIcon::whereIn('AppIcon_id',$membercategory)->where('AppIcon_visible','Y')->get();
+                
+                if($appIcon->count()>0)
                 {
                     return $this->respond([
                                     'status' => 'success',
@@ -292,28 +371,9 @@ class WebApplicationController extends ApiController
         
     
     }
-    else
-    {
-         $appIcon = AppIcon::where('AppIcon_visible','Y')->get();
-                if($appIcon)
-                {
-                    return $this->respond([
-                                    'status' => 'success',
-                                    'message' => 'success',
-                                    'code' => $this->getStatusCode(),
-                                    'data'=>$appIcon,   
-                                    ]);
-                }
-                else
-                {
-                  return $this->respond([
-                                    'status' => 'failure',
-                                    'code' => 400,
-                                    ]);  
-                }
-        }
+    
     }
-
+    
     public function TermsandConditions(Request $request)
     {
        

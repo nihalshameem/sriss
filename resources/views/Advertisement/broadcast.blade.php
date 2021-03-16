@@ -34,46 +34,34 @@
         }
         .btn-primary
         {
-            color: #ffffff !important;
-            background-color: #8f3319 !important;
-            border-color: #8f3319 !important;
+            color: #333 !important;
+            background-color: #fafafa !important;
+            border-color: #333 !important;
             transition: all 0.4s ease 0s;
 
         }
         .btn-primary:hover
         {
 
-            color: #8f3319 !important;
-            background: white !important;
-            border: 2px solid #8f3319 !important;
+            color: #fafafa !important;
+            background: #333 !important;
+            border: 2px solid #333 !important;
             display: inline-block;
         }
         .btn-primary:focus
         {
-            background-color: #ffffff;
-            color:#8f3319;
-            border:1px solid #8f3319;
+            background-color: #333;
+            color:#fafafa;
+            border:1px solid #fafafa;
         }
         .btn-primary:visited
         { 
-            background-color: #ffffff;
-            color:#8f3319;
-            border:1px solid #8f3319;
-        }
-        .btn-back {
-            color: #8f3319 !important;
-            background-color: #ffffb7 !important;
-            border-color: #8f3319 !important;
-            transition: all 0.4s ease 0s;
-        }
-        .btn-back:hover {
-            color: #ffffb7 !important;
-            background-color: #8f3319 !important;
-            border-color: #ffffb7 !important;
-            transition: all 0.4s ease 0s;
+            background-color: #333;
+            color:#fafafa;
+            border:1px solid #fafafa;
         }
         .content-wrapper{
-            background-color: #FFFFB7;
+            background-color: #FAFAFA;
         }
         .table-borderless{
            border: 1px solid #ddd;
@@ -174,6 +162,9 @@ td{
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+.card{
+  background-color: #fafafa;
+}
 </style>
 
 </head>
@@ -189,7 +180,7 @@ td{
 
             <div class="row mb-2">
               <div class="col-sm-2">
-                <a href="/Notifications" class="btn btn-back" style="float:left;border-radius: 3px;background-color: aqua;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
+                <a href="/Advertisements" class="btn btn-back" style="float:left;border-radius: 3px;background-color: aqua;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
             </div>
             <div class="col-sm-3">
             </div>
@@ -204,7 +195,7 @@ td{
     <form role="form" method="post"  action="{{ route('save.AdBroadcast') }}" enctype="multipart/form-data" >
       @csrf
       <div class="row">
-        <input type="hidden" name="Advertisement_Id" value="{{$advertisement->id }}">
+        <input type="hidden" name="Advertisement_Id" value="{{$advertisement->id}}">
         <div class="col-md-3 form-group">
 
         </div>

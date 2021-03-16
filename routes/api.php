@@ -91,10 +91,14 @@ Route::group(['prefix' => '/v2'], function () {
 
 		Route::get('/getCounts', [App\Http\Controllers\MembersController::class,'getCounts']);
 
-		Route::post('/postMobileNotification', [App\Http\Controllers\NotificationController::class,'saveMobileNotification']);
+		Route::post('/addAppNotification', [App\Http\Controllers\NotificationController::class,'addAppNotification']);
+
+		Route::post('/listAppNotification', [App\Http\Controllers\NotificationController::class,'listAppNotification']);
 
 		Route::get('/getGroups', [App\Http\Controllers\MemberGroupController::class,'getGroups']);
 
 		Route::get('/termsandconditions', [App\Http\Controllers\WebApplicationController::class,'TermsandConditions']);
+
+		Route::post('/advertisement', [App\Http\Controllers\AdvertisementController::class,'Advertisements']);
 		
 });

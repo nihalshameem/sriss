@@ -34,34 +34,34 @@
   }
   .btn-primary
   {
-      color: #ffffff !important;
-      background-color: #8f3319 !important;
-      border-color: #8f3319 !important;
+      color: #fff !important;
+      background-color: #0640b5 !important;
+      border-color: #0640b5 !important;
       transition: all 0.4s ease 0s;
 
   }
   .btn-primary:hover
   {
 
-      color: #8f3319 !important;
-      background: white !important;
-      border: 2px solid #8f3319 !important;
+      color: #0640b5 !important;
+      background-color: #fff !important;
+      border-color: #0640b5 !important;
       display: inline-block;
   }
   .btn-primary:focus
   {
-      background-color: #ffffff;
-      color:#8f3319;
-      border:1px solid #8f3319;
+      color: #fff !important;
+      background-color: #0640b5 !important;
+      border-color: #0640b5 !important;
   }
   .btn-primary:visited
   { 
-      background-color: #ffffff;
-      color:#8f3319;
-      border:1px solid #8f3319;
+      color: #fff !important;
+      background-color: #0640b5 !important;
+      border-color: #0640b5 !important;
   }
   .content-wrapper{
-      background-color: #FFFFB7;
+      background-color: #FAFAFA;
   }
   .table-borderless{
    border: 1px solid #ddd;
@@ -152,8 +152,11 @@ td{
 }
 .title-head{
     font-weight: bold;
-    color: #8f3319;
+    color: #444;
     font-size: 17px;
+}
+.card{
+  background-color: #fafafa;
 }
 </style>
 
@@ -202,7 +205,7 @@ td{
               </tr>
           </thead>
           <tbody>
-             @foreach($NotificationBroadcast as $broadcast)
+             @foreach($AdvertisementBroadcast as $broadcast)
              <tr>
                 <?php
                 $State = App\Models\State::where('State_id',$broadcast->State_id)->first();
@@ -247,17 +250,17 @@ td{
                   </div>
            
     </div>
-    <form role="form" method="post" onSubmit="return confirm('Please note that all the previous broadcast options will be removed and you have to re-enter broadcast details again');"  action="{{ route('UpdateBroadCast') }}" enctype="multipart/form-data" >
+    <form role="form" method="post" onSubmit="return confirm('Please note that all the previous broadcast options will be removed and you have to re-enter broadcast details again');"  action="{{ route('UpdateAdBroadCast') }}" enctype="multipart/form-data" >
         @csrf
         <div class="row">
-        <input type="hidden" name="NotificationId" value="{{Session::get('Advertisement_id')}}">
+        <input type="hidden" name="Advertisement_Id" value="{{Session::get('Advertisement_id')}}">
         <div class="col-md-3 form-group">
 
         </div>
         <div class="col-md-6 form-group">
           <label for="exampleInputPassword1" style="text-align:center">Advertisement Description</label><br>
 
-          <textarea class="form-control" name="message" placeholder="Enter Message" value="{{$Notification->Notification_mesage }}" disabled=""> {{ $Notification->Notification_mesage}}</textarea>
+          <textarea class="form-control" name="message" placeholder="Enter Message" value="{{$Advertisement->description }}" disabled=""> {{ $Advertisement->description}}</textarea>
       </div>
        <div class="col-md-3 form-group">
             
@@ -304,7 +307,7 @@ td{
 </div>
 <div class="col-md-4 form-group">
     <label >Union</label><br>
-    <select id="union"  name="Union_id[]" multiple="multiple">
+    <select id="union"  name="Taluk_id[]" multiple="multiple">
       <option>Select Union</option>
       
   </select>

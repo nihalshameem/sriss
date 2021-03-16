@@ -351,7 +351,7 @@ Route::get('/VolunteerList', [App\Http\Controllers\VolunteerController::class,'L
 
 Route::get('/VolunteerSearch', [App\Http\Controllers\VolunteerController::class, 'VolunteerSearch'])->name('VolunteerSearch');
 
-Route::get('/UpdateVolunteer/{memberId}', [App\Http\Controllers\VolunteerController::class,'UpdateVolunteer'])->name('update.volunteer');
+Route::get('/UpdateVolunteer', [App\Http\Controllers\VolunteerController::class,'UpdateVolunteer'])->name('update.volunteer');
 
 Route::get('/RemoveVolunteer/{memberId}', [App\Http\Controllers\VolunteerController::class,'RemoveVolunteer'])->name('remove.volunteer');
 
@@ -529,9 +529,9 @@ Route::post('/updateAdvertisement', [App\Http\Controllers\AdvertisementControlle
 
 Route::get('/AdEdit/{Advertisement}', [App\Http\Controllers\AdvertisementController::class, 'editAdvertisement'])->name('edit.advertisement');
 
-// Route::get('/NotificationMassDelete',[App\Http\Controllers\NotificationController::class,'TruncateNotification'])->name('truncate.notification');
+Route::get('/AdMassDelete',[App\Http\Controllers\AdvertisementController::class,'TruncateAdvertisement'])->name('truncate.notification');
 
-// Route::get('/notificationonly_delete',[App\Http\Controllers\NotificationController::class, 'DeleteNotification'])->name('delete.notification');
+Route::get('/adonly_delete',[App\Http\Controllers\AdvertisementController::class, 'DeleteAdvertisement'])->name('delete.advertisement');
 
 // Route::post('/NotificationApproval', [App\Http\Controllers\NotificationController::class, 'NotificationApproval']);
 
@@ -544,6 +544,27 @@ Route::post('/SaveAdBroadCast', [App\Http\Controllers\AdvertisementController::c
 
 Route::get('/AdBroadCastEdit', [App\Http\Controllers\AdvertisementController::class,'AdvertisementBroadCastEdit'])->name('list.advertisementbroadcastedit');
 
-Route::post('/UpdateAdBroadCast', [App\Http\Controllers\AdvertisementController::class,'UpdateAdvertisementBroadCast'])->name('UpdateBroadCast');
+Route::post('/UpdateAdBroadCast', [App\Http\Controllers\AdvertisementController::class,'UpdateAdBroadCast'])->name('UpdateAdBroadCast');
 
+
+
+/*MemberCategory */
+
+Route::get('/MemberCategory', [App\Http\Controllers\WebApplicationController::class, 'ListMemberCategory'])->name('MemberCategory.list');
+
+Route::get('/MemberCategory/Add', [App\Http\Controllers\WebApplicationController::class, 'AddMemberCategory'])->name('MemberCategory.Add');
+
+Route::post('/MemberCategory', [App\Http\Controllers\WebApplicationController::class, 'StoreMemberCategory'])->name('MemberCategory.Store');
+
+
+Route::get('/MemberCategory/Edit/{CategoryId}', [App\Http\Controllers\WebApplicationController::class, 'EditMemberCategory'])->name('MemberCategory.Edit');
+
+Route::post('/MemberCategory/Update', [App\Http\Controllers\WebApplicationController::class, 'UpdateMemberCategory'])->name('MemberCategory.Update');
+
+
+Route::get('/MemberCategory/Assign/{CategoryId}', [App\Http\Controllers\WebApplicationController::class, 'AssignAppIcon'])->name('Assign.MemberCategory.Edit');
+
+Route::post('/MemberCategory/Assign', [App\Http\Controllers\WebApplicationController::class, 'UpdateAppIconMemberCategory'])->name('Assign.MemberCategory.Update');
+
+Route::get('/MemberCategory/Delete/{CategoryId}', [App\Http\Controllers\WebApplicationController::class, 'DeleteMemberCategory'])->name('MemberCategory.Delete');
 

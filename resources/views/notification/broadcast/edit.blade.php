@@ -34,9 +34,9 @@
   }
   .btn-primary
   {
-      color: #ffffff !important;
-      background-color: #8f3319 !important;
-      border-color: #8f3319 !important;
+      color: #212529 !important;
+      background-color: #edf6fe !important;
+      border-color: #edf6fe !important;
       transition: all 0.4s ease 0s;
 
   }
@@ -61,29 +61,29 @@
       border:1px solid #8f3319;
   }
   .content-wrapper{
-      background-color: #FFFFB7;
+      background-color: #fafafa;
   }
   .table-borderless{
    border: 1px solid #ddd;
-}
-.table{
-    background-color:#ffffcc;
-}
-.card-header{
-    background-color:#ffffcc;
-    border: 1px solid #ddd;
+  }
+  .table{
+      background-color:#fafafa;
+  }
+  .card-header{
+      background-color:#ffffcc;
+      border: 1px solid #ddd;
 
-}
-.card-title {
-    float: left;
-    font-size: 1.1rem;
-    font-weight: 400;
-    margin: 0;
-}
-.badge
-{
-    font-size:15px;
-}
+  }
+  .card-title {
+      float: left;
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin: 0;
+  }
+  .badge
+  {
+      font-size:15px;
+  }
 
 table {
     border-collapse: collapse;
@@ -155,14 +155,20 @@ td{
     color: #8f3319;
     font-size: 17px;
 }
+ .card{
+      background-color: #fafafa;
+    }
+    .bg-bd{
+      background-color: #fafafa;
+    }
 </style>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed" style="background-color:#ffffb7">
+<body class="hold-transition sidebar-mini layout-fixed" style="background-color:#fafafa;">
   <div class="wrapper">
      @include('layouts.header')
      @include('layouts.sidebar')
-     <div class="content-wrapper">
+     <div class="content-wrapper bg-bd" style="background: #fafafa;">
         <!-- Main content -->
         <section class="content" style="padding-top:25px">
           <div class="container-fluid">

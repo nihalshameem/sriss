@@ -34,9 +34,9 @@
         }
         .btn-primary
         {
-            color: #ffffff !important;
-            background-color: #8f3319 !important;
-            border-color: #8f3319 !important;
+            color: #212529 !important;
+            background-color: #edf6fe !important;
+            border-color: #edf6fe !important;
             transition: all 0.4s ease 0s;
 
         }
@@ -73,7 +73,7 @@
             transition: all 0.4s ease 0s;
         }
         .content-wrapper{
-            background-color: #FFFFB7;
+            background-color: #fafafa;
         }
         .table-borderless{
            border: 1px solid #ddd;
@@ -91,6 +91,9 @@
         font-size: 1.1rem;
         font-weight: 400;
         margin: 0;
+    }
+    .card{
+      background-color: #fafafa;
     }
     .badge
     {
@@ -181,7 +184,7 @@ td{
     <div class="wrapper">
      @include('layouts.header')
      @include('layouts.sidebar')
-     <div class="content-wrapper">
+     <div class="content-wrapper" style="background-color: #FAFAFA">
         <!-- Main content -->
         <section class="content" style="padding-top:25px">
           <div class="container-fluid">
