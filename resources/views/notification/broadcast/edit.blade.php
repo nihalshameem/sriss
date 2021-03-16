@@ -32,33 +32,45 @@
     .nav-link{
       color:white;
   }
-  .btn-primary
+  .btn-primary {
+    color: #fafafa !important;
+    background-color: #0640b5;
+    border-color: #0640b5 !important;
+    transition: all 0.4s ease 0s;
+}
+.btn-back {
+    color: #fafafa !important;
+    background-color: #0640b5;
+    border-color: #0640b5 !important;
+    
+}
+.btn-back:hover
   {
-      color: #212529 !important;
-      background-color: #edf6fe !important;
-      border-color: #edf6fe !important;
-      transition: all 0.4s ease 0s;
 
+      color: #0640b5 !important;
+      background: white !important;
+      border: 1px solid #0640b5 !important;
+      display: inline-block;
   }
   .btn-primary:hover
   {
 
-      color: #8f3319 !important;
+      color: #0640b5 !important;
       background: white !important;
-      border: 2px solid #8f3319 !important;
+      border: 1px solid #0640b5 !important;
       display: inline-block;
   }
   .btn-primary:focus
   {
       background-color: #ffffff;
-      color:#8f3319;
-      border:1px solid #8f3319;
+      color:#0640b5;
+      border:1px solid #0640b5;
   }
   .btn-primary:visited
   { 
       background-color: #ffffff;
-      color:#8f3319;
-      border:1px solid #8f3319;
+      color:#0640b5;
+      border:1px solid #0640b5;
   }
   .content-wrapper{
       background-color: #fafafa;
@@ -152,7 +164,7 @@ td{
 }
 .title-head{
     font-weight: bold;
-    color: #8f3319;
+    color: #3e3e3e;
     font-size: 17px;
 }
  .card{
@@ -175,7 +187,7 @@ td{
              <div class="col-12">
 
                 <div class="row mb-2">
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
                   </div>
                   <div class="col-sm-4">
                     <h3 class="title-head">Notification BroadCast Edit</h3>

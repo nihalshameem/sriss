@@ -45,6 +45,28 @@
               <input type="date" class="form-control" id="to_date" name="to_date" required="Required">
 
             </div>
+
+            <div class="form-group">
+              <div >
+                <label>BroadCast Type</label>
+              </div>
+              <!-- checkbox -->
+              <div class="form-group clearfix">
+                <div class="icheck-primary d-inline">
+                  <input type="radio" id="checkboxPrimary74" value="Y" name="broadtype" checked="">
+                  <label for="checkboxPrimary74">Geo
+                  </label>
+                </div>
+                
+                <div class="icheck-primary d-inline">
+                  <input type="radio" id="checkboxPrimary75" value="N"  name="broadtype" >
+                  <label for="checkboxPrimary75">
+                    Group
+                  </label>
+                </div>
+              </div>
+            </div>
+
             <div class="form-group">
               <label for="exampleInputPassword1">Number Of Responses&nbsp;<span style="color:red">*</span></label>
               <input type="number" min="0" class="form-control" onfocus="this.oldvalue = this.value;"  onkeyup ="responses(this);this.oldvalue = this.value;"   id="response"  required>

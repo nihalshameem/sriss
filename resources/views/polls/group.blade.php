@@ -49,7 +49,7 @@
 
       color: #0640b5 !important;
       background: white !important;
-      border: 2px solid #0640b5 !important;
+      border: 1px solid #0640b5 !important;
       display: inline-block;
   }
   .btn-primary:hover
@@ -57,7 +57,7 @@
 
       color: #0640b5 !important;
       background: white !important;
-      border: 2px solid #0640b5 !important;
+      border: 1px solid #0640b5 !important;
       display: inline-block;
   }
   .btn-primary:focus
@@ -177,6 +177,12 @@ td{
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+.card{
+      background-color: #fafafa;
+    }
+    .bg-bd{
+      background-color: #fafafa;
+    }
 </style>
 
 </head>
@@ -192,39 +198,44 @@ td{
 
             <div class="row mb-2">
               <div class="col-sm-2">
-                <a href="/Notifications" class="btn btn-back" style="float:left;border-radius: 3px;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
+                <a href="/Polls" class="btn btn-back" style="float:left;border-radius: 3px;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
             </div>
             <div class="col-sm-2">
             </div>
             <div class="col-sm-4">
-                <h3 class="title-head">Notification BroadCast</h3>
+                <h3 class="title-head">Polls Group Broadcast</h3>
             </div>
             <div class="col-sm-3">
             </div>
 
         </div>
     </div><br>
-    <form role="form" method="post"  action="{{ route('createNotificationBroadcast') }}" enctype="multipart/form-data" >
+    <form role="form" method="post"  action="{{ route('save.PollsGroupBroadcast') }}" enctype="multipart/form-data" >
       @csrf
       <div class="row">
-        <input type="hidden" name="NotificationId" value="{{$notifications->Notification_id }}">
+        <input type="hidden" name="polls_id" value="{{$polls->id }}">
         <div class="col-md-3 form-group">
 
         </div>
         <div class="col-md-6 form-group">
-          <label for="exampleInputPassword1" style="text-align:center">Notification Message</label><br>
+          <label for="exampleInputPassword1" style="text-align:center">Polls Question</label><br>
 
-          <textarea class="form-control" name="message" placeholder="Enter Message" value="{{$notifications->Notification_mesage }}" disabled=""> {{ $notifications->Notification_mesage}}</textarea>
+          <textarea class="form-control" name="message" placeholder="Enter Message" value="{{$polls->Polls_Questions }}" disabled=""> {{ $polls->Polls_question}}</textarea>
       </div>
        <div class="col-md-3 form-group">
 
         </div>
-  </div><br>
+  </div>
   <div class="row">
-    <div class="col-md-4 form-group">
-      <label for="exampleInputPassword1">State</label><br>
-      <select id="states" multiple="multiple" name="State_id[]" onchange="LoadStateDivision(this)">
-        <option disabled="">select state</option>
+    <div class="col-md-3 form-group">
+    </div>
+    <div class="col-md-6 form-group">
+      <label for="exampleInputPassword1">Select Group</label><br>
+      <select id="group" multiple="multiple" name="Group_id[]">
+        <option disabled="">Select Group</option>
+        @foreach($Groups as $Group)
+          <option value="{{$Group->Group_id}}">{{$Group->Group_name}}</option>
+        @endforeach
     </select>
     @if( Session::has( 'warning' ))
 
@@ -235,48 +246,10 @@ td{
     @endif
 
 </div>
-<div class="col-md-4 form-group">
-  <label for="exampleInputPassword1">State Division</label>
-  <select id="StateDivision" multiple="multiple" name="State_Division_id[]" onchange="LoadGreaterZones(this)">
-    <option>Select State Division</option>
-</select>
+<div class="col-md-3 form-group">
+    </div>
 
 
-</div>
-<div class="col-md-4 form-group">
-  <label for="exampleInputPassword1">Greater Zones</label>
-  <select id="GreaterZones" multiple="multiple" name="Greater_Zones_id[]" onchange="LoadZones(this)">
-    <option>Select Greater Zones</option>
-
-</select>
-
-</div>
-<br><br><br>
-<div class="col-md-4 form-group">
-  <label for="exampleInputPassword1">Zones</label><br>
-  <select id="zone" multiple="multiple" name="Zone_id[]" onchange="LoadDistrict(this)">
-    <option>Select Zones</option>
-
-</select>
-
-</div>
-
-<div class="col-md-4 form-group">
-  <label for="exampleInputPassword1">District</label><br>
-  <select id="district" multiple="multiple"  name="District_id[]" onchange="LoadUnion(this)">
-    <option>Select district</option>
-
-</select>
-
-</div>
-<div class="col-md-4 form-group">
-  <label for="exampleInputPassword1">Union</label><br>
-  <select id="union"  name="Union_id[]" multiple="multiple">
-    <option>Select Union</option>
-
-</select>
-
-</div>
 </div>
 <div style="max-width: 250px; margin: auto;">
   <a href="/AddNotification" class="btn btn-primary">Previous</a>
@@ -319,234 +292,13 @@ td{
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+
 <script type="text/javascript">
-
-    $(document).ready(function() {
-
-
-     var substateArray =  @json($states);
-     console.log(substateArray);
-     var options = substateArray.forEach( function(istate, index){
-      $('#states').append('<option value="'+istate.State_id+'">'+istate.State_desc+'</option>').multiselect("refresh");;
-
-      $('#states').multiselect('destroy');
-  });
-     $('#states').multiselect({
-        buttonWidth: '300px'
-    });
-     $('#StateDivision').multiselect({
-        buttonWidth: '300px'
-    });
-     $('#GreaterZones').multiselect({
-        buttonWidth: '300px'
-    });
-     $('#zone').multiselect({
-        buttonWidth: '300px'
-    });
-     $('#district').multiselect({
-        buttonWidth: '300px'
-    });
-     $('#union').multiselect({
+  $('#group').multiselect({
         buttonWidth: '300px'
     });
 
-     $('#states').multiselect();
-     $('#StateDivision').multiselect();
-     $('#GreaterZones').multiselect();
-     $('#zone').multiselect();
-     $('#district').multiselect();
-     $('#union').multiselect();
- });
-
-</script>
-
-
-
-<script>
-
- function LoadStateDivision(select){
-  var result = [];
-  var options = select && select.options;
-  var opt;
-
-  for (var i=0, iLen=options.length; i<iLen; i++) {
-    opt = options[i];
-
-    if (opt.selected) {
-      result.push(opt.value || opt.text);
-  }
-}
-$.ajax({
-    type : 'get',
-    url : '{{URL::to('LoadStateDivision')}}',
-    data : {'state_id':result},
-    success:function(response){
-     $('#StateDivision').empty();
-     var options = response.forEach( function(istate, index){
-      $('#StateDivision').append('<option value="'+istate.State_Division_id+'">'+istate.State_Division_desc+'</option>').multiselect("refresh");;
-
-      $('#StateDivision').multiselect('destroy');
-  });
-     $('#StateDivision').multiselect({
-        buttonWidth: '300px',
-        includeSelectAllOption: true
-    });
- } 
-});
-
-
-}
-</script>
-
-<script>
-
- function LoadGreaterZones(select){
-  var result = [];
-  var options = select && select.options;
-  var opt;
-
-  for (var i=0, iLen=options.length; i<iLen; i++) {
-    opt = options[i];
-
-    if (opt.selected) {
-      result.push(opt.value || opt.text);
-  }
-}
-$.ajax({
-    type : 'get',
-    url : '{{URL::to('LoadGreaterZones')}}',
-    data : {'statedivision_id':result},
-    success:function(response){
-     $('#GreaterZones').empty();
-     var options = response.forEach( function(istate, index){
-        $('#GreaterZones').append('<option value="'+istate.Greater_Zones_id+'">'+istate.Greater_Zones_desc+'</option>').multiselect("refresh");;
-        $('#GreaterZones').multiselect('destroy');
-    });
-     $('#GreaterZones').multiselect({
-        buttonWidth: '300px',
-        includeSelectAllOption: true,
-    });
- } 
-});
-
-
-}
-</script>
-<script>
-
- function LoadZones(select){
-  var result = [];
-  var options = select && select.options;
-  var opt;
-
-  for (var i=0, iLen=options.length; i<iLen; i++) {
-    opt = options[i];
-
-    if (opt.selected) {
-      result.push(opt.value || opt.text);
-  }
-}
-$.ajax({
-    type : 'get',
-    url : '{{URL::to('LoadZones')}}',
-    data : {'greaterzone_id':result},
-    success:function(response){
-     $('#zone').empty();
-     var options = response.forEach( function(istate, index){
-        $('#zone').append('<option value="'+istate.Zone_id+'">'+istate.Zone_desc+'</option>').multiselect("refresh");
-        $('#zone').multiselect('destroy');
-    });
-     $('#zone').multiselect({
-        buttonWidth: '300px',
-        enableFiltering: true,
-        includeSelectAllOption: true,
-        maxHeight: 200,
-        dropUp: true,
-        enableCaseInsensitiveFiltering: true,
-    });
- } 
-});
-
-
-}
-</script>
-
-<script>
-
- function LoadDistrict(select){
-  var result = [];
-  var options = select && select.options;
-  var opt;
-
-  for (var i=0, iLen=options.length; i<iLen; i++) {
-    opt = options[i];
-
-    if (opt.selected) {
-      result.push(opt.value || opt.text);
-  }
-}
-$.ajax({
-    type : 'get',
-    url : '{{URL::to('LoadDistrict')}}',
-    data : {'zone_id':result},
-    success:function(response){
-     $('#district').empty();
-     var options = response.forEach( function(istate, index){
-        $('#district').append('<option value="'+istate.District_id+'">'+istate.District_desc+'</option>').multiselect("refresh");
-        $('#district').multiselect('destroy');
-    });
-     $('#district').multiselect({
-      buttonWidth: '300px',
-        enableFiltering: true,
-        includeSelectAllOption: true,
-        maxHeight: 200,
-        dropUp: true,
-        enableCaseInsensitiveFiltering: true,
-    });
- } 
-});
-
-
-}
-</script>
-
-<script>
-
- function LoadUnion(select){
-  var result = [];
-  var options = select && select.options;
-  var opt;
-
-  for (var i=0, iLen=options.length; i<iLen; i++) {
-    opt = options[i];
-
-    if (opt.selected) {
-      result.push(opt.value || opt.text);
-  }
-}
-$.ajax({
-    type : 'get',
-    url : '{{URL::to('LoadUnion')}}',
-    data : {'district_id':result},
-    success:function(response){
-     $('#union').empty();
-     var options = response.forEach( function(istate, index){
-        $('#union').append('<option value="'+istate.Union_id+'">'+istate.Union_desc+'</option>').multiselect("refresh");
-        $('#union').multiselect('destroy');
-    });
-     $('#union').multiselect({
-           buttonWidth: '300px',
-        enableFiltering: true,
-        includeSelectAllOption: true,
-        maxHeight: 200,
-        dropUp: true,
-        enableCaseInsensitiveFiltering: true,
-    });
- } 
-});
-
-
-}
+     $('#group').multiselect();
 </script>
 
 </body>

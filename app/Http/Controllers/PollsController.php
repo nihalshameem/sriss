@@ -27,6 +27,8 @@ use App\Models\Zones;
 use App\Models\District;
 use App\Models\Union;
 use App\Models\Volunteer;
+use App\Models\MemberGroup;
+use App\Models\PollsGroupBroadcast;
 
 use \Illuminate\Http\Response as Res;
 
@@ -351,8 +353,12 @@ class PollsController extends ApiController
                 
             }
             Session::put('PollsId',$PollsQuestions->id);
-            
-            return redirect(route('list.PollsBroadcast'));
+            if($request->broadtype=='Y'){
+                return redirect(route('list.PollsBroadcast'));
+            }elseif ($request->broadtype=='N') {
+                return redirect(route('show.PollsGroupBroadcast'));
+            }  
+            //return redirect(route('list.PollsBroadcast'));
         
         
     }
@@ -775,6 +781,27 @@ class PollsController extends ApiController
         return redirect(route('list.polls')); 
     }
 
+    public function showPollsGroupBroadcast(){
+            $Groups=MemberGroup::where('active','Y')->get();
+            $polls=PollsQuestions::orderby('id','DESC')->first();
+            
+            return view('polls.group',compact('Groups','polls'));
+        }
+        public function savePollsGroupBroadcast(Request $request){
+            $data = array();
+
+            foreach ($request->Group_id as $row)
+            $data[] =[
+                    'Group_id' => $row,
+                    'Notification_id' => $request->notification_id,
+                    'active' => 'Y',
+                   ];
+
+            NotificationGroupBroadcast::insert($data);
+            return redirect(route('list.notification'));  
+        }
+
+
     public function Search(Request $request)
         {
             if($request->ajax())
@@ -804,6 +831,7 @@ class PollsController extends ApiController
 
         }
         }
+
 
     public function Responses($question)
     {

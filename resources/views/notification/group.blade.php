@@ -32,46 +32,46 @@
         .nav-link{
             color:white;
         }
-        .btn-primary
-        {
-            color: #212529 !important;
-            background-color: #edf6fe !important;
-            border-color: #edf6fe !important;
-            transition: all 0.4s ease 0s;
+.btn-primary {
+    color: #fafafa !important;
+    background-color: #0640b5;
+    border-color: #0640b5 !important;
+    
+}
+.btn-back {
+    color: #fafafa !important;
+    background-color: #0640b5;
+    border-color: #0640b5 !important;
+    
+}
+.btn-back:hover
+  {
 
-        }
-        .btn-primary:hover
-        {
+      color: #0640b5 !important;
+      background: white !important;
+      border: 1px solid #0640b5 !important;
+      display: inline-block;
+  }
+  .btn-primary:hover
+  {
 
-            color: #8f3319 !important;
-            background: white !important;
-            border: 2px solid #8f3319 !important;
-            display: inline-block;
-        }
-        .btn-primary:focus
-        {
-            background-color: #ffffff;
-            color:#8f3319;
-            border:1px solid #8f3319;
-        }
-        .btn-primary:visited
-        { 
-            background-color: #ffffff;
-            color:#8f3319;
-            border:1px solid #8f3319;
-        }
-        .btn-back {
-            color: #8f3319 !important;
-            background-color: #ffffb7 !important;
-            border-color: #8f3319 !important;
-            transition: all 0.4s ease 0s;
-        }
-        .btn-back:hover {
-            color: #ffffb7 !important;
-            background-color: #8f3319 !important;
-            border-color: #ffffb7 !important;
-            transition: all 0.4s ease 0s;
-        }
+      color: #0640b5 !important;
+      background: white !important;
+      border: 1px solid #0640b5 !important;
+      display: inline-block;
+  }
+  .btn-primary:focus
+  {
+      background-color: #ffffff;
+      color:#0640b5;
+      border:1px solid #0640b5;
+  }
+  .btn-primary:visited
+  { 
+      background-color: #ffffff;
+      color:#0640b5;
+      border:1px solid #0640b5;
+  }
         .content-wrapper{
             background-color: #fafafa;
         }
@@ -165,7 +165,7 @@ td{
 }
 .title-head{
   font-weight: bold;
-  color: #8f3319;
+  color: #3e3e3e;
   font-size: 17px;
 }
 .example::-webkit-scrollbar {
@@ -177,6 +177,12 @@ td{
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+.card{
+      background-color: #fafafa;
+    }
+    .bg-bd{
+      background-color: #fafafa;
+    }
 </style>
 
 </head>
@@ -192,9 +198,9 @@ td{
 
             <div class="row mb-2">
               <div class="col-sm-2">
-                <a href="/Notifications" class="btn btn-back" style="float:left;border-radius: 3px;background-color: aqua;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
+                <a href="/Notifications" class="btn btn-back" style="float:left;border-radius: 3px;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
             </div>
             <div class="col-sm-4">
                 <h3 class="title-head">Notification Group Broadcast</h3>
@@ -219,11 +225,11 @@ td{
        <div class="col-md-3 form-group">
 
         </div>
-  </div><br>
+  </div>
   <div class="row">
-    <div class="col-md-4 form-group">
+    <div class="col-md-3 form-group">
     </div>
-    <div class="col-md-4 form-group">
+    <div class="col-md-6 form-group">
       <label for="exampleInputPassword1">Select Group</label><br>
       <select id="group" multiple="multiple" name="Group_id[]">
         <option disabled="">Select Group</option>
@@ -240,7 +246,7 @@ td{
     @endif
 
 </div>
-<div class="col-md-4 form-group">
+<div class="col-md-3 form-group">
     </div>
 
 

@@ -107,12 +107,10 @@ class AdvertisementController extends ApiController
                            array_push($Advertisements, $AdvertisementState);
                     }
                    
-                    $Advertisements= array_reduce($Advertisements, 'array_merge', array());
+                     $Advertisements= array_reduce($Advertisements, 'array_merge', array());
                     $Advertisements=array_unique($Advertisements, SORT_REGULAR);
                     $Advertisements = collect($Advertisements)->sortBy('id')->reverse()->toArray();
-                    $Advertisements=head($Advertisements);;
-
-                        
+                    $Advertisements=head($Advertisements);
                         
                     if(count($Advertisements)>0)
                     {
@@ -121,8 +119,8 @@ class AdvertisementController extends ApiController
                                             'status' => 'success',
                                             'message' => 'success',
                                             'code' => $this->getStatusCode(),
-                                            'image_path' => $Advertisements->image_path,
-                                            'link' => $Advertisements->link
+                                            'image_path' => $Advertisements['image_path'],
+                                            'link' => $Advertisements['link']
                                             ]);
                     }
                     else

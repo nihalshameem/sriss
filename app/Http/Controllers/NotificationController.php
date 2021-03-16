@@ -301,15 +301,16 @@ class NotificationController extends ApiController
             else
             { 
                 if($user=$this->is_valid_token($request['token']))
-                {
+                 {
                     
-                    $Notification=Notification::where('Notification_id', $request->notification_id)->get();
+                    $Notification=Notification::where('Notification_id', $request->notification_id)->first();
+                    
                             return Response([
                                         'status' => 'success',
                                         'code' => $this->getStatusCode(),
-                                        'message' => 'Success'
+                                        'message' => 'Success',
                                         'Notification_id' => $Notification->Notification_id,
-                                        'Notification_mesage' => $Notification->,
+                                        'Notification_mesage' => $Notification->Notification_mesage,
                                         'Notification_text' => $Notification->Notification_mesage,
                                         'Notification_start_date' => $Notification->Notification_start_date,
                                         'Notification_end_date' => $Notification->Notification_end_date,
@@ -717,13 +718,24 @@ class NotificationController extends ApiController
 
                  $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_image_path'=> $Notification_image_path]);
                  Session::put('notificationId',$request->Notification_id);
-                return redirect(route('list.notificationbroadcastedit')); 
+                 $broadCastcount = NotificationBroadcast::where('Notification_id',$request->Notification_id)->count();
+                 if($broadCastcount>0){
+                    return redirect(route('list.notificationbroadcastedit')); 
+                 }else{
+                    return redirect(route('list.notificationbroadcastedit')); 
+                 }
+                
             }
             else
             {
                 $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_image_path'=> $request->ImageNotification]);
                 Session::put('notificationId',$request->Notification_id);
-                return redirect(route('list.notificationbroadcastedit'));  
+                $broadCastcount = NotificationBroadcast::where('Notification_id',$request->Notification_id)->count();
+                 if($broadCastcount>0){
+                    return redirect(route('list.notificationbroadcastedit')); 
+                 }else{
+                    return redirect(route('list.notificationbroadcastedit')); 
+                 }
             }
           
             
@@ -762,6 +774,13 @@ class NotificationController extends ApiController
              $Notification = Notification::where('Notification_id',Session::get('notificationId'))->first();
              $states = State::where('State_active','Y')->get();
             return view('notification.broadcast.edit',compact('NotificationBroadcast','states','Notification'));
+        }
+        public function NotificationGroupBroadCastEdit()
+        {
+            $NotificationGrpBroadcast = NotificationGroupBroadcast::where('Notification_id',Session::get('notificationId'))->get();
+             $Notification = Notification::where('Notification_id',Session::get('notificationId'))->first();
+             $groups = MemberGroup::where('active','Y')->get();
+            return view('notification.broadcast.edit',compact('NotificationGrpBroadcast','groups','Notification'));
         }
 
         public function UpdateBroadCast(Request $request)
