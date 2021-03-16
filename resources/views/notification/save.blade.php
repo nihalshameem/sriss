@@ -78,7 +78,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
               <div class="form-group">
                 <label>Active</label>
               </div>
@@ -98,9 +98,8 @@
                 </div>
               </div>
             </div>
-
             
-            <div class="col-sm-6">
+            <div class="col-sm-4">
               <div class="form-group">
                 <label>Approved</label>
               </div>
@@ -116,6 +115,27 @@
                   <input type="radio" id="checkboxPrimary2" value="N"  name="approve" >
                   <label for="checkboxPrimary2">
                     No
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label>BroadCast Type</label>
+              </div>
+              <!-- checkbox -->
+              <div class="form-group clearfix">
+                <div class="icheck-primary d-inline">
+                  <input type="radio" id="checkboxPrimary78" value="Y" name="broadtype" checked="">
+                  <label for="checkboxPrimary78">Geo
+                  </label>
+                </div>
+                
+                <div class="icheck-primary d-inline">
+                  <input type="radio" id="checkboxPrimary77" value="N"  name="broadtype" >
+                  <label for="checkboxPrimary77">
+                    Group
                   </label>
                 </div>
               </div>

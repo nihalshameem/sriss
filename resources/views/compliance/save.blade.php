@@ -49,6 +49,27 @@
           <input type="number" class="form-control" name="version" placeholder="Enter version" value="{{ $Compliances->Version_no }}" required>
           
       </div>
+
+      <div class="form-group">
+              <div >
+                <label>Active</label>
+              </div>
+              <!-- checkbox -->
+              <div class="form-group clearfix">
+                <div class="icheck-primary d-inline">
+                  <input type="radio" id="checkboxPrimary1" value="Y" name="active" {{ ($Compliances->Compliance_active == "Y") ? 'checked' : '' }}>
+                  <label for="checkboxPrimary1">Yes
+                  </label>
+                </div>
+                
+                <div class="icheck-primary d-inline">
+                  <input type="radio" id="checkboxPrimary2" value="N"  name="active" {{ ($Compliances->Compliance_active == "N") ? 'checked' : '' }}>
+                  <label for="checkboxPrimary2">
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
   </div>
 
   <div style="max-width: 200px; margin: auto;">

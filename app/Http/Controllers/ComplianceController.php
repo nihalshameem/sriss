@@ -39,7 +39,7 @@ class ComplianceController extends Controller
     public function SaveCompliance(Request $request)
     {
         Compliance::where("Compliance_id", '=', $request->ComplianceId)
-                ->update(['Compliance_desc'=> $request->Compliance_desc,'Compliance_text'=> $request->Compliance_text,'Version_no'=> $request->version]);
+                ->update(['Compliance_desc'=> $request->Compliance_desc,'Compliance_text'=> $request->Compliance_text,'Version_no'=> $request->version, 'Compliance_active'=> $request->active]);
 
     	return redirect(route('list.compliance'));
     }

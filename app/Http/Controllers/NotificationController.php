@@ -209,12 +209,23 @@ class NotificationController extends ApiController
                             }
                             $notification->save();
 
-                            $notificationGroupBroadcast=new NotificationGroupBroadcast();
+                            if($request->is_group=='N'){
+                                NotificationBroadcast::create([
+                            'Notification_id' => $request->NotificationId,
+                            'State_id' => 1,
+                        ]);
+
+                            }else{
+                                $notificationGroupBroadcast=new NotificationGroupBroadcast();
                             $notificationGroupBroadcast->Notification_id=$notification->id;
                             $notificationGroupBroadcast->Group_id=$request->Group_id;
                             $notificationGroupBroadcast->active='Y';
 
                             $notificationGroupBroadcast->save();
+
+                            }
+
+                            
 
                             $notifications = Notification::orderby('Notification_id','DESC')->first();
                             
@@ -259,6 +270,44 @@ class NotificationController extends ApiController
                                         'code' => $this->getStatusCode(),
                                         'message' => 'Success',
                                         'data' => $Notifications
+                                    ]);                           
+                }
+                else
+                {
+                    return Response([
+                                        'status' => 'failure',
+                                        'code' => 400,
+                                        'message' => 'Token Mismatched',
+                                    ]);  
+                }        
+            }
+        }
+
+        public function appNotificationView(Request $request)
+        {   
+            $rules = array (
+                'member_id' => 'required',
+                'token' => 'required',
+                'notification_id' => 'required' );
+            $validator = Validator::make($request->all(),$rules);
+            if($validator->fails())
+            {
+                return Response([
+                                    'status' => 'failure',
+                                    'code' => 400,
+                                    'message' => 'Field Validation Failed'
+                                    ]);  
+            }
+            else
+            { 
+                if($user=$this->is_valid_token($request['token']))
+                {
+                    
+                    Notification::where('Notification_id', $request->notification_id)->get();
+                            return Response([
+                                        'status' => 'success',
+                                        'code' => $this->getStatusCode(),
+                                        'message' => 'Success'
                                     ]);                           
                 }
                 else
@@ -372,8 +421,8 @@ class NotificationController extends ApiController
 
         public function NotificationShow()
         {
-            $Notifications = Notification::where('Notification_id',Session::get('notificationId'))->first();
-            return view('notification.save',compact('Notifications'));
+            
+            return view('notification.save');
         }
 
         public function SaveNotification(Request $request)
@@ -404,8 +453,13 @@ class NotificationController extends ApiController
                 $notification->save();
                 $notifications = Notification::orderby('Notification_id','DESC')->first();
                 Session::put('notificationId',$notifications->Notification_id);
-               
-                return redirect(route('list.NotificationBroadcast'));
+
+                if($request->broadtype=='Y'){
+                    return redirect(route('list.NotificationBroadcast'));
+                }elseif ($request->broadtype=='N') {
+                    return redirect(route('show.NotificationGroupBroadcast'));
+                }
+                
            }
             else
             {
@@ -420,13 +474,21 @@ class NotificationController extends ApiController
 
                      $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_image_path'=> $Notification_image_path]);
                      Session::put('notificationId',$request->Notification_id);
-                    return redirect(route('list.notification')); 
+                    if($request->broadtype=='Y'){
+                        return redirect(route('list.NotificationBroadcast'));
+                    }elseif ($request->broadtype=='N') {
+                        return redirect(route('show.NotificationGroupBroadcast'));
+                    }
                 }
                 else
                 {
                     $Notification = Notification::where("Notification_id", Session::get('notificationId'))->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_image_path'=> $request->ImageNotification]);
                     Session::put('notificationId',Session::get('notificationId'));
-                    return redirect(route('list.notification'));  
+                    if($request->broadtype=='Y'){
+                        return redirect(route('list.NotificationBroadcast'));
+                    }elseif ($request->broadtype=='N') {
+                        return redirect(route('show.NotificationGroupBroadcast'));
+                    }  
                 }
             }
            
@@ -873,6 +935,25 @@ class NotificationController extends ApiController
             }
           return redirect(route('list.notification'));  
 
+        }
+
+        public function showNotificationGroupBroadcast(){
+            $Groups=MemberGroup::where('active','Y')->get();
+            $notifications=Notification::orderby('Notification_id','DESC')->first();
+            return view('notification.group',compact('Groups','notifications'));
+        }
+        public function saveNotificationGroupBroadcast(Request $request){
+            $data = array();
+
+            foreach ($request->Group_id as $row)
+            $data[] =[
+                    'Group_id' => $row,
+                    'Notification_id' => $request->notification_id,
+                    'active' => 'Y',
+                   ];
+
+            NotificationGroupBroadcast::insert($data);
+            return redirect(route('list.notification'));  
         }
 
         public function LoadStateDivision(Request $request)

@@ -365,6 +365,16 @@ Route::get('/NotificationBroadCastEdit', [App\Http\Controllers\NotificationContr
 
 Route::post('/UpdateBroadCast', [App\Http\Controllers\NotificationController::class,'UpdateBroadCast'])->name('UpdateBroadCast');
 
+/* Notification Group Broad Cast */
+
+Route::get('/showGroupBroadCast', [App\Http\Controllers\NotificationController::class,'showNotificationGroupBroadcast'])->name('show.NotificationGroupBroadcast');
+
+Route::post('/saveGroupBroadCast', [App\Http\Controllers\NotificationController::class,'saveNotificationGroupBroadcast'])->name('save.NotificationGroupBroadcast');
+
+
+
+/* Notification Broad Cast */
+
 Route::get('/PollsBroadCast', [App\Http\Controllers\PollsController::class,'PollsBroadcast'])->name('list.PollsBroadcast');
 
 Route::post('/SavePollsBroadCast', [App\Http\Controllers\PollsController::class,'SavePollsBroadCast'])->name('SavePollsBroadCast');
