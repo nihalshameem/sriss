@@ -34,6 +34,7 @@
 										<th>Sl No</th>
 										<th>Text</th>
 										<th>Version</th>
+										<th>Active</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -42,7 +43,8 @@
 									<tr>
 										<td>{{ $i+1 }}</td>
 										<td>{{ $Compliance->Compliance_desc }}</td>
-										<td>{{ $Compliance->Version_no }}</td>                  
+										<td>{{ $Compliance->Version_no }}</td>  
+										<td>{{ $Compliance->Compliance_active }}</td>       
 										<td>
 											<a href="{{ route('edit.compliance', ['id' => $Compliance->Compliance_id]) }}"><span class="badge bg-danger"><i class="fas fa-edit"></i></span></a>
 										</td>

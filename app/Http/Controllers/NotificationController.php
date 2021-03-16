@@ -235,38 +235,31 @@ class NotificationController extends ApiController
         }
         }
 
-        public function listAppNotification(Request $request)
+        public function appNotificationList(Request $request)
         {   
             $rules = array (
             'member_id' => 'required',
-            'token' => 'required',
-            );
+            'token' => 'required', );
             $validator = Validator::make($request->all(),$rules);
-
             if($validator->fails())
             {
                 return Response([
-                                        'status' => 'failure',
-                                        'code' => 400,
-                                        'message' => 'Field Validation Failed',
-
+                                    'status' => 'failure',
+                                    'code' => 400,
+                                    'message' => 'Field Validation Failed'
                                     ]);  
-
             }
             else
             { 
                 if($user=$this->is_valid_token($request['token']))
                 {
                         $Notifications = Notification::orderby('Notification_id','DESC')->get();
-                           
                             return Response([
                                         'status' => 'success',
                                         'code' => $this->getStatusCode(),
                                         'message' => 'Success',
                                         'data' => $Notifications
-
                                     ]);                           
-
                 }
                 else
                 {
@@ -274,11 +267,47 @@ class NotificationController extends ApiController
                                         'status' => 'failure',
                                         'code' => 400,
                                         'message' => 'Token Mismatched',
-
                                     ]);  
-                }           
-            
+                }        
+            }
         }
+
+        public function appNotificationDelete(Request $request)
+        {   
+            $rules = array (
+                'member_id' => 'required',
+                'token' => 'required',
+                'notification_id' => 'required' );
+            $validator = Validator::make($request->all(),$rules);
+            if($validator->fails())
+            {
+                return Response([
+                                    'status' => 'failure',
+                                    'code' => 400,
+                                    'message' => 'Field Validation Failed'
+                                    ]);  
+            }
+            else
+            { 
+                if($user=$this->is_valid_token($request['token']))
+                {
+                    NotificationBroadcast::where('Notification_id', $request->notification_id)->delete();
+                    Notification::where('Notification_id', $request->notification_id)->delete();
+                            return Response([
+                                        'status' => 'success',
+                                        'code' => $this->getStatusCode(),
+                                        'message' => 'Success'
+                                    ]);                           
+                }
+                else
+                {
+                    return Response([
+                                        'status' => 'failure',
+                                        'code' => 400,
+                                        'message' => 'Token Mismatched',
+                                    ]);  
+                }        
+            }
         }
 
     

@@ -93,7 +93,9 @@ Route::group(['prefix' => '/v2'], function () {
 
 		Route::post('/addAppNotification', [App\Http\Controllers\NotificationController::class,'addAppNotification']);
 
-		Route::post('/listAppNotification', [App\Http\Controllers\NotificationController::class,'listAppNotification']);
+		Route::get('/appNotificationList', [App\Http\Controllers\NotificationController::class,'appNotificationList']);
+
+		Route::post('/appNotificationDelete', [App\Http\Controllers\NotificationController::class,'appNotificationDelete']);
 
 		Route::get('/getGroups', [App\Http\Controllers\MemberGroupController::class,'getGroups']);
 
