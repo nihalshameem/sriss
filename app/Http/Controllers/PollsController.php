@@ -810,7 +810,7 @@ class PollsController extends ApiController
                ];
 
         PollsGroupBroadcast::insert($data);
-        return redirect(route('polls.list'));  
+        return redirect(route('list.polls'));  
     }
 
     public function editPollsGroupBroadCast()

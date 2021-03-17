@@ -299,6 +299,7 @@ class GeoController extends ApiController
 		          
 		            $Union = new Union();
             		$Union->District_id = $request->DistrictId;
+            		$Union->pincode = $request->pincode[$i];
             		$Union->Union_desc = $request->name[$i];
             		$Union->Union_active = $request->Status;
             		$Union->save();

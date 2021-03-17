@@ -436,7 +436,7 @@ class NotificationController extends ApiController
 
         public function NotificationShow()
         {
-            
+            Session::forget('notificationId');
             return view('notification.save');
         }
 

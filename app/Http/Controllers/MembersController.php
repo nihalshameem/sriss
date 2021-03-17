@@ -876,7 +876,7 @@ class MembersController extends ApiController
                     return $this->respond([
                         'status' => 'failure',
                         'code' => 400,
-                        'message' => 'Member Not found',
+                        'message' => 'There is no record to approve',
                         ]);
                 }
             }

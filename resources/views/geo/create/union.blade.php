@@ -93,8 +93,8 @@
       for (i = 0; i < value; i++) 
       {
         j=i+1;
-        $('<div id="row'+value+'">'+'<div class="form-group">'+'<label class="form-lable">Area Name</label>'+
-          '<input class="form-control" name="name[]" type="text">'+
+        $('<div class="row" id="row'+value+'">'+'<div class="form-group col-md-6">'+'<label class="form-lable">Area Name</label>'+
+          '<input class="form-control" name="name[]" type="text"></div><div class="form-group  col-md-6"><label class="form-lable">Pincode</label><input class="form-control" name="pincode[]" type="number" max="999999">'+
           '</div></div>').appendTo('#link-list');
       }
       

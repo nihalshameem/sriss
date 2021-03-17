@@ -69,18 +69,18 @@
               <div >
 
                 <label>BroadCast Type</label>
-                }
+                
               </div>
               <!-- checkbox -->
               <div class="form-group clearfix">
                 <div class="icheck-primary d-inline">
-                  <input type="radio" id="checkboxPrimary74" value="Y" name="broadtype"  {{ ($is_group == "N") ? 'checked' : '' }} >
+                  <input type="radio" value="Y" name="broadtype"  {{ ($is_group == "N") ? 'checked' : '' }} >
                   <label for="checkboxPrimary74">Geo
                   </label>
                 </div>
 
                 <div class="icheck-primary d-inline">
-                  <input type="radio" id="checkboxPrimary75" value="N"  name="broadtype"  {{ ($is_group == "Y") ? 'checked' : '' }}>
+                  <input type="radio"  value="N"  name="broadtype"  {{ ($is_group == "Y") ? 'checked' : '' }}>
                   <label for="checkboxPrimary75">
                     Group
                   </label>
