@@ -204,7 +204,7 @@ class NotificationController extends ApiController
                     $notification->Notification_start_date = $request->start_date;
                     $notification->Notification_end_date = $request->end_date;
                     $notification->Notification_active = $request->active;
-                    $notification->Notification_approved = $request->Notification_approved;
+                    $notification->Notification_approved = $request->approved;
                     if ($request->hasFile('NotificationPath'))
                     {
                     $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();

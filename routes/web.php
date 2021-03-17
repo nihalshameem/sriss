@@ -592,3 +592,9 @@ Route::post('/MemberCategory/Assign', [App\Http\Controllers\WebApplicationContro
 
 Route::get('/MemberCategory/Delete/{CategoryId}', [App\Http\Controllers\WebApplicationController::class, 'DeleteMemberCategory'])->name('MemberCategory.Delete');
 
+Route::get('/MemberPending/List', [App\Http\Controllers\MembersController::class,'ListMemberPending'])->name('MemberPending.list');
+
+Route::get('/MemberPending/Filter', [App\Http\Controllers\MembersController::class,'MemberPendingFilter'])->name('MemberPending.Filter');
+
+Route::post('/UpdateMemberApproval', [App\Http\Controllers\MembersController::class,'UpdateMemberApprovalPending'])->name('MemberApproval.Update');
+

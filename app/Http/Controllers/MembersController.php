@@ -1256,6 +1256,81 @@ class MembersController extends ApiController
         }
     }
 
+   public function Mobile_Verification(Request $request)
+    {
+        $mobile_number = User::where('mobile_number', $request->mobile_number)->first();
+
+        if($mobile_number)
+        {
+            return $this->respond([
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Mobile number already exist',
+                ]);
+        }
+        else
+        {
+            return $this->respond([
+                'status' => 'failure',
+                'code' => 400,
+                'message' => 'Mobile number not match',
+                ]);
+        }
+    }
+
+
+    public function ListMemberPending()
+    {
+       $member = Member::where('Is_Approved','N')->get();
+       return view('Member.pendinglist',compact('member'));
+    }
+    public function MemberPendingFilter(Request $request)
+    {
+        if($request->updatedDate!=null)
+        {
+              $member = Member::whereDate('created_at','>=',$request->createdDate)
+                        ->whereDate('updated_at','<=',$request->updatedDate)
+                        ->where('Is_Approved',$request->status)
+                        ->get();
+        }
+        else
+        {
+            if($request->createdDate!=null)
+            {
+                  $member =Member::whereDate('created_at','>=',$request->createdDate)
+                                        ->whereDate('updated_at','<=',date('Y-m-d'))
+                                        ->where('Is_Approved',$request->status)
+                        ->get();
+            }
+            else
+            {
+                 
+                $member = Member::where('Is_Approved',$request->status)
+                                ->get();
+            }
+
+            
+        }
+
+        $member = View::make('Member.filter.member_approval_filter', compact('member'))->render();
+        return Response::json(['member' => $member]);
+    }
+
+
+    public function UpdateMemberApprovalPending(Request $request)
+    {
+        if($request->submit == "Approve")
+            {
+             $MemberUpdate = Member::whereIn('Member_Id',$request->member_id)->update(['Is_Approved'=>'Y']);
+            }
+            else if($request->submit == "Reject")
+            {
+                $MemberUpdate = Member::whereIn('Member_Id',$request->member_id)->update(['Is_Approved'=>'R']);
+            }
+        
+        return redirect(route('MemberPending.list'));
+    }
+
 
    
    

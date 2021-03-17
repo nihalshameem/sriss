@@ -219,7 +219,7 @@ td{
         <div class="col-md-6 form-group">
           <label for="exampleInputPassword1" style="text-align:center">Polls Question</label><br>
 
-          <textarea class="form-control" placeholder="Enter Message" disabled="" > {{ $Polls->Polls_Questions}}</textarea>
+          <textarea class="form-control" placeholder="Enter Message" disabled="" > {{ $polls->Polls_Questions}}</textarea>
       </div>
        <div class="col-md-3 form-group">
 
