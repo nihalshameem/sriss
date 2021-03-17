@@ -111,16 +111,25 @@ class AdvertisementController extends ApiController
                     $Advertisements=array_unique($Advertisements, SORT_REGULAR);
                     $Advertisements = collect($Advertisements)->sortBy('id')->reverse()->toArray();
                     $Advertisements=head($Advertisements);
-                        
+
+                    if($Advertisements==false){
+                        return $this->respond([
+                                            'status' => 'failure',
+                                            'code' => 400,
+                                            'message' => 'Advertisement not available',
+                                            ]);
+
+                    } else{   
                     if(count($Advertisements)>0)
                     {
+                        $data=array('image_path' => $Advertisements['image_path'],
+                                            'link' => $Advertisements['link'] );
 
                             return $this->respond([
                                             'status' => 'success',
                                             'message' => 'success',
                                             'code' => $this->getStatusCode(),
-                                            'image_path' => $Advertisements['image_path'],
-                                            'link' => $Advertisements['link']
+                                            'data' => $data;
                                             ]);
                     }
                     else
@@ -131,6 +140,7 @@ class AdvertisementController extends ApiController
                                             'message' => 'Advertisement not available',
                                             ]);  
                     }
+                }
                     
             }
             else
