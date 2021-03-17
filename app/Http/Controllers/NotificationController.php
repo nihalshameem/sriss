@@ -172,6 +172,11 @@ class NotificationController extends ApiController
             $rules = array (
             'member_id' => 'required',
             'token' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'message' => 'required',
+            'active' => 'required',
+            'approved' => 'required',
             'NotificationPath' => 'max:1024',
             );
             $validator = Validator::make($request->all(),$rules);
@@ -199,7 +204,7 @@ class NotificationController extends ApiController
                     $notification->Notification_start_date = $request->start_date;
                     $notification->Notification_end_date = $request->end_date;
                     $notification->Notification_active = $request->active;
-                    $notification->Notification_approved = $request->approve;
+                    $notification->Notification_approved = $request->Notification_approved;
                     if ($request->hasFile('NotificationPath'))
                     {
                     $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();
@@ -217,14 +222,15 @@ class NotificationController extends ApiController
                         ]);
 
                     }else{
-                        
-                        foreach ($request->Group_id as $row)
-                        $data[] =[
+                        foreach (explode(',',$request->Group_id) as $row)
+                        {
+                            $data[] =[
                                 'Group_id' => $row,
                                 'Notification_id' => $notification->id,
                                 'active' => 'Y',
                                ];
-
+                        }
+                        
                         NotificationGroupBroadcast::insert($data);
             
                     }
