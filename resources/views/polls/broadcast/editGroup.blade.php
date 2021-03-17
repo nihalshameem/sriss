@@ -198,28 +198,29 @@ td{
 
             <div class="row mb-2">
               <div class="col-sm-2">
-                <a href="/Polls" class="btn btn-back" style="float:left;border-radius: 3px;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
+                <a href="/Notifications" class="btn btn-back" style="float:left;border-radius: 3px;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
             </div>
             <div class="col-sm-2">
             </div>
             <div class="col-sm-4">
-                <h3 class="title-head">Polls Group Broadcast</h3>
+                <h3 class="title-head">Polls Group Broadcast Edit</h3>
             </div>
             <div class="col-sm-3">
             </div>
 
         </div>
     </div><br>
-    <form role="form" method="post"  action="{{ route('save.PollsGroupBroadcast') }}" enctype="multipart/form-data" >
+    <form role="form" method="post" onSubmit="return confirm('Please note that all the previous broadcast options will be removed and you have to re-enter broadcast details again');" action="{{ route('update.PollsGroupBroadcast') }}" enctype="multipart/form-data" >
       @csrf
       <div class="row">
-        <input type="hidden" name="polls_id" value="{{$polls->id }}">
+        <input type="hidden" name="polls_id" value="{{$Polls->id }}">
         <div class="col-md-3 form-group">
+
         </div>
         <div class="col-md-6 form-group">
           <label for="exampleInputPassword1" style="text-align:center">Polls Question</label><br>
 
-          <textarea class="form-control" placeholder="Enter Message" disabled="" > {{ $Polls->Polls_Questions}}</textarea>
+          <textarea class="form-control" name="message" placeholder="Enter Message" disabled=""> {{ $Polls->Polls_Questions}}</textarea>
       </div>
        <div class="col-md-3 form-group">
 
@@ -230,7 +231,7 @@ td{
     </div>
     <div class="col-md-6 form-group">
       <label for="exampleInputPassword1">Select Group</label><br>
-      <select id="group" multiple="multiple" name="Group_id[]">
+      <select id="group" multiple="multiple" name="Group_id[]" >
         <option disabled="">Select Group</option>
         @foreach($Groups as $Group)
           <option value="{{$Group->Group_id}}">{{$Group->Group_name}}</option>

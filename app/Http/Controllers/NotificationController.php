@@ -185,6 +185,7 @@ class NotificationController extends ApiController
             { 
                 if($user=$this->is_valid_token($request['token']))
                 {
+                    
                     $Member = Member::where('Member_Id',$request->member_id)->first();
                     $Volunteer = Volunteer::first();
                     
@@ -348,6 +349,7 @@ class NotificationController extends ApiController
                 if($user=$this->is_valid_token($request['token']))
                 {
                     NotificationBroadcast::where('Notification_id', $request->notification_id)->delete();
+                    NotificationGroupBroadcast::where('Notification_id', $request->notification_id)->delete();
                     Notification::where('Notification_id', $request->notification_id)->delete();
                             return Response([
                                         'status' => 'success',
@@ -749,6 +751,7 @@ class NotificationController extends ApiController
         public function DeleteNotification(Request $request)
         {
             NotificationBroadcast::where('Notification_id', $request->notificationId)->delete();
+            NotificationGroupBroadcast::where('Notification_id', $request->notificationId)->delete();
             Notification::where('Notification_id', $request->notificationId)->delete();
             echo json_encode($request->notificationId);
         }
@@ -994,20 +997,26 @@ class NotificationController extends ApiController
         }
 
         public function updateNotificationGroupBroadcast(Request $request){
-            $NotificationGroupBroadcast = NotificationGroupBroadcast::where('Notification_id',$request->NotificationId)->delete();
-            $data = array();
+            if($request->Group_id==''){
+                return redirect(route('list.notification'));
+            }else{
+            
+                $NotificationGroupBroadcast = NotificationGroupBroadcast::where('Notification_id',Session::get('notificationId'))->delete();
+                $data = array();
 
-            foreach ($request->Group_id as $row)
-            $data[] =[
-                    'Group_id' => $row,
-                    'Notification_id' => $request->notification_id,
-                    'active' => 'Y',
-                   ];
+                foreach ($request->Group_id as $row)
+                $data[] =[
+                        'Group_id' => $row,
+                        'Notification_id' => $request->notification_id,
+                        'active' => 'Y',
+                       ];
 
-            NotificationGroupBroadcast::insert($data);
-            return redirect(route('list.notification')); 
+                NotificationGroupBroadcast::insert($data);
+                Session::forget('notificationId');
+                return redirect(route('list.notification')); 
 
         }
+    }
 
         public function LoadStateDivision(Request $request)
         {

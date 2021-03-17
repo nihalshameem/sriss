@@ -129,7 +129,7 @@ class AdvertisementController extends ApiController
                                             'status' => 'success',
                                             'message' => 'success',
                                             'code' => $this->getStatusCode(),
-                                            'data' => $data;
+                                            'data' => $data
                                             ]);
                     }
                     else

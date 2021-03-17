@@ -231,7 +231,7 @@ td{
     </div>
     <div class="col-md-6 form-group">
       <label for="exampleInputPassword1">Select Group</label><br>
-      <select id="group" multiple="multiple" name="Group_id[]" required="">
+      <select id="group" multiple="multiple" name="Group_id[]" >
         <option disabled="">Select Group</option>
         @foreach($Groups as $Group)
           <option value="{{$Group->Group_id}}">{{$Group->Group_name}}</option>

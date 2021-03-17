@@ -393,6 +393,10 @@ Route::get('/showPollsBroadCast', [App\Http\Controllers\PollsController::class,'
 
 Route::post('/savePollsBroadCast', [App\Http\Controllers\PollsController::class,'savePollsGroupBroadcast'])->name('save.PollsGroupBroadcast');
 
+Route::get('/editPollsBroadCast', [App\Http\Controllers\PollsController::class,'editPollsGroupBroadCast'])->name('edit.PollsGroupBroadcast');
+
+Route::post('/updatePollsBroadCast', [App\Http\Controllers\PollsController::class,'updatePollsGroupBroadCast'])->name('update.PollsGroupBroadcast');
+
 
 
 Route::get('/LoadStateDivision', [App\Http\Controllers\NotificationController::class,'LoadStateDivision'])->name('list.LoadStateDivision');

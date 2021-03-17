@@ -64,6 +64,30 @@
 
                 </div>
               </div>
+
+              <div class="form-group">
+              <div >
+
+                <label>BroadCast Type</label>
+                }
+              </div>
+              <!-- checkbox -->
+              <div class="form-group clearfix">
+                <div class="icheck-primary d-inline">
+                  <input type="radio" id="checkboxPrimary74" value="Y" name="broadtype"  {{ ($is_group == "N") ? 'checked' : '' }} >
+                  <label for="checkboxPrimary74">Geo
+                  </label>
+                </div>
+
+                <div class="icheck-primary d-inline">
+                  <input type="radio" id="checkboxPrimary75" value="N"  name="broadtype"  {{ ($is_group == "Y") ? 'checked' : '' }}>
+                  <label for="checkboxPrimary75">
+                    Group
+                  </label>
+                </div>
+              </div>
+            </div>
+
               @foreach($PollsAnswers as $PollsAnswer)
               <div class="form-group">
                <input type="hidden" class="form-control" name="Answer_id[]"  value="{{ $PollsAnswer->Polls_Answers_id}}" required>

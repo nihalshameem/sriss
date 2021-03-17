@@ -368,7 +368,14 @@ class PollsController extends ApiController
             $PollsQuestions = PollsQuestions::where("id",$Questions_id)->first();
             $PollsAnswers = PollsAnswers::where("Questions_id",$Questions_id)->get();
             $PollsAnswerCount = PollsAnswers::where("Questions_id",$Questions_id)->count();
-            return view('polls.edit',compact('PollsAnswerCount'))->with([
+            $broadcastcount=PollsBroadcast::where('Polls_id', $PollsQuestions->id)->count();
+
+            if($broadcastcount>0){
+                $is_group='N';
+            }else{
+                $is_group='Y';
+            }
+            return view('polls.edit',compact('PollsAnswerCount','is_group'))->with([
             'PollsQuestions'   => $PollsQuestions,
             'PollsAnswers'   => $PollsAnswers,
             
@@ -388,7 +395,6 @@ class PollsController extends ApiController
                 {
                     $PollsAnswers = PollsAnswers::where("Polls_Answers_id", $request->Answer_id[$i])->update(['Polls_Answers_Options'=> $request->Answer[$i]]);
                 }
-                
             }
             else
             {
@@ -400,9 +406,14 @@ class PollsController extends ApiController
                 }
                 $PollsAnswers->save();
             }
-            
         }
-        return redirect(route('list.PollsBroadCastEdit'));  
+        $GeoCount=PollsBroadcast::where("Polls_id", $request->PollsQuestions_id)->count();
+        
+        if($GeoCount>0){
+            return redirect(route('list.PollsBroadCastEdit'));
+        }else{
+            return redirect(route('edit.PollsGroupBroadcast'));
+        }
     }
 
     public function PollsBroadCast()
@@ -782,24 +793,49 @@ class PollsController extends ApiController
     }
 
     public function showPollsGroupBroadcast(){
-            $Groups=MemberGroup::where('active','Y')->get();
-            $polls=PollsQuestions::orderby('id','DESC')->first();
-            
-            return view('polls.group',compact('Groups','polls'));
-        }
-        public function savePollsGroupBroadcast(Request $request){
-            $data = array();
+        $Groups=MemberGroup::where('active','Y')->get();
+        $polls=PollsQuestions::orderby('id','DESC')->first();
+
+        return view('polls.group',compact('Groups','polls'));
+    }
+
+    public function savePollsGroupBroadcast(Request $request){
+        $data = array();
+
+        foreach ($request->Group_id as $row)
+        $data[] =[
+                'Group_id' => $row,
+                'Polls_id' => $request->polls_id,
+                'active' => 'Y',
+               ];
+
+        PollsGroupBroadcast::insert($data);
+        return redirect(route('polls.list'));  
+    }
+
+    public function editPollsGroupBroadCast()
+    {
+        $Groups=MemberGroup::where('active','Y')->get();
+        $Polls = PollsQuestions::where('id',Session::get('PollsId'))->first();
+        return view('polls.broadcast.editGroup',compact('Groups','Polls'));
+    }
+
+    public function updatePollsGroupBroadCast(Request $request)
+    {
+        $PollsGroupBroadcast = PollsGroupBroadcast::where('Polls_id',Session::get('PollsId'))->delete();
+        $data = array();
 
             foreach ($request->Group_id as $row)
             $data[] =[
                     'Group_id' => $row,
-                    'Notification_id' => $request->notification_id,
+                    'Polls_id' => $request->polls_id,
                     'active' => 'Y',
                    ];
 
-            NotificationGroupBroadcast::insert($data);
-            return redirect(route('list.notification'));  
-        }
+            PollsGroupBroadcast::insert($data);
+            Session::forget('PollsId');
+            return redirect(route('list.polls'));
+    }
 
 
     public function Search(Request $request)
