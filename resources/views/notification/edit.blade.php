@@ -85,7 +85,7 @@
             </div>
           </div>
           <div class="row">
-           <div class="col-sm-6">
+           <div class="col-sm-4">
             <div class="form-group">
               <label>Active</label>
             </div>
@@ -106,7 +106,7 @@
             </div>
           </div>
 
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label>Approved</label>
             </div>
@@ -126,6 +126,26 @@
               </div>
             </div>
           </div>
+          <div class="col-sm-4">
+              <div class="form-group">
+                <label>BroadCast Type</label>
+              </div>
+              <!-- checkbox -->
+              <div class="form-group clearfix">
+                <div class="icheck-primary d-inline">
+                  <input type="radio"  value="Y" name="broadtype" {{ ($Notifications->is_group == "N") ? 'checked' : '' }}>
+                  <label >Geo
+                  </label>
+                </div>
+                
+                <div class="icheck-primary d-inline">
+                  <input type="radio" value="N"  name="broadtype" {{ ($Notifications->is_group == "Y") ? 'checked' : '' }}>
+                  <label >
+                    Group
+                  </label>
+                </div>
+              </div>
+            </div>
         </div>
         
         

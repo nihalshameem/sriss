@@ -185,65 +185,62 @@ class NotificationController extends ApiController
             { 
                 if($user=$this->is_valid_token($request['token']))
                 {
-                        $Member = Member::where('Member_Id',$request->member_id)->first();
-                        $Volunteer = Volunteer::first();
-                        
-                        $MemberLocation = Member::where('Member_Id',$request->member_id)->first();
+                    $Member = Member::where('Member_Id',$request->member_id)->first();
+                    $Volunteer = Volunteer::first();
+                    
+                    $MemberLocation = Member::where('Member_Id',$request->member_id)->first();
 
-                        $date = Carbon::now()->format('Y-m-d');
-                        $Notifications = array();
+                    $date = Carbon::now()->format('Y-m-d');
+                    $Notifications = array();
 
-                            $notification = new Notification();
-                            $notification->Notification_mesage = $request->message;
-                            $notification->Notification_start_date = $request->start_date;
-                            $notification->Notification_end_date = $request->end_date;
-                            $notification->Notification_active = $request->active;
-                            $notification->Notification_approved = $request->approve;
-                            if ($request->hasFile('NotificationPath'))
-                            {
-                            $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();
-                                        $image_extn = strtolower($image_ext);
-                                        $imageName = time() .'_'. $request->NotificationPath->getClientOriginalName();
-                                        $filePath = $request->file('NotificationPath')->storeAs('Notification', $imageName,'public');
-                            $notification->Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
-                            }
-                            $notification->save();
+                    $notification = new Notification();
+                    $notification->Notification_mesage = $request->message;
+                    $notification->Notification_start_date = $request->start_date;
+                    $notification->Notification_end_date = $request->end_date;
+                    $notification->Notification_active = $request->active;
+                    $notification->Notification_approved = $request->approve;
+                    if ($request->hasFile('NotificationPath'))
+                    {
+                    $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();
+                                $image_extn = strtolower($image_ext);
+                                $imageName = time() .'_'. $request->NotificationPath->getClientOriginalName();
+                                $filePath = $request->file('NotificationPath')->storeAs('Notification', $imageName,'public');
+                    $notification->Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
+                    }
+                    $notification->save();
 
-                            if($request->is_group=='N'){
-                                NotificationBroadcast::create([
+                    if($request->is_group=='N'){
+                        NotificationBroadcast::create([
                             'Notification_id' => $request->NotificationId,
                             'State_id' => 1,
                         ]);
 
-                            }else{
-                                $notificationGroupBroadcast=new NotificationGroupBroadcast();
-                            $notificationGroupBroadcast->Notification_id=$notification->id;
-                            $notificationGroupBroadcast->Group_id=$request->Group_id;
-                            $notificationGroupBroadcast->active='Y';
+                    }else{
+                        
+                        foreach ($request->Group_id as $row)
+                        $data[] =[
+                                'Group_id' => $row,
+                                'Notification_id' => $notification->id,
+                                'active' => 'Y',
+                               ];
 
-                            $notificationGroupBroadcast->save();
+                        NotificationGroupBroadcast::insert($data);
+            
+                    }
 
-                            }
-
-                            
-
-                            $notifications = Notification::orderby('Notification_id','DESC')->first();
-                            
-                           
-                            return Response([
-                                        'status' => 'success',
-                                        'code' => $this->getStatusCode(),
-                                        'message' => 'Uploded Successfull'
-
-                                    ]);                           
-
+                    $notifications = Notification::orderby('Notification_id','DESC')->first();
+                  
+                    return Response([
+                                'status' => 'success',
+                                'code' => $this->getStatusCode(),
+                                'message' => 'Uploded Successfull'
+                            ]);                           
                 }
                 else
                 {
                     return $this->respondTokenError("Token Mismatched");
-                }           
-            
-        }
+                }          
+            }
         }
 
         public function appNotificationList(Request $request)
@@ -264,13 +261,13 @@ class NotificationController extends ApiController
             { 
                 if($user=$this->is_valid_token($request['token']))
                 {
-                        $Notifications = Notification::orderby('Notification_id','DESC')->get();
-                            return Response([
-                                        'status' => 'success',
-                                        'code' => $this->getStatusCode(),
-                                        'message' => 'Success',
-                                        'data' => $Notifications
-                                    ]);                           
+                    $Notifications = Notification::orderby('Notification_id','DESC')->get();
+                        return Response([
+                                    'status' => 'success',
+                                    'code' => $this->getStatusCode(),
+                                    'message' => 'Success',
+                                    'data' => $Notifications
+                                ]);                           
                 }
                 else
                 {
@@ -304,19 +301,20 @@ class NotificationController extends ApiController
                  {
                     
                     $Notification=Notification::where('Notification_id', $request->notification_id)->first();
+                    $data=array('Notification_id'=>$Notification->Notification_id,
+                                'Notification_mesage'=>$Notification->Notification_mesage,
+                                'Notification_text'=>$Notification->Notification_text,
+                                'Notification_start_date' => $Notification->Notification_start_date,
+                                'Notification_end_date' => $Notification->Notification_end_date,
+                                'Notification_image_path' => $Notification->Notification_image_path,
+                                'Notification_active' => $Notification->Notification_active,
+                                'Notification_approved' => $Notification->Notification_approved, );
                     
                             return Response([
                                         'status' => 'success',
                                         'code' => $this->getStatusCode(),
                                         'message' => 'Success',
-                                        'Notification_id' => $Notification->Notification_id,
-                                        'Notification_mesage' => $Notification->Notification_mesage,
-                                        'Notification_text' => $Notification->Notification_mesage,
-                                        'Notification_start_date' => $Notification->Notification_start_date,
-                                        'Notification_end_date' => $Notification->Notification_end_date,
-                                        'Notification_image_path' => $Notification->Notification_image_path,
-                                        'Notification_active' => $Notification->Notification_active,
-                                        'Notification_approved' => $Notification->Notification_approved, 
+                                        'data' => $data
                                     ]);                           
                 }
                 else
@@ -691,6 +689,12 @@ class NotificationController extends ApiController
         public function editNotification($Notification)
         {
             $Notifications = Notification::where("Notification_id",$Notification)->first();
+            $GeoCount=NotificationBroadcast::where("Notification_id",$Notification)->count();
+            if($GeoCount>0){
+                $Notifications->is_group='N';
+            }else{
+                $Notifications->is_group='Y';
+            }
             return view('notification.edit')->with([
             'Notifications'   => $Notifications,
             
@@ -722,7 +726,7 @@ class NotificationController extends ApiController
                  if($broadCastcount>0){
                     return redirect(route('list.notificationbroadcastedit')); 
                  }else{
-                    return redirect(route('list.notificationbroadcastedit')); 
+                    return redirect(route('edit.NotificationGroupBroadcast')); 
                  }
                 
             }
@@ -734,7 +738,7 @@ class NotificationController extends ApiController
                  if($broadCastcount>0){
                     return redirect(route('list.notificationbroadcastedit')); 
                  }else{
-                    return redirect(route('list.notificationbroadcastedit')); 
+                    return redirect(route('edit.NotificationGroupBroadcast')); 
                  }
             }
           
@@ -981,6 +985,28 @@ class NotificationController extends ApiController
 
             NotificationGroupBroadcast::insert($data);
             return redirect(route('list.notification'));  
+        }
+
+        public function editNotificationGroupBroadcast(){
+            $Groups=MemberGroup::where('active','Y')->get();
+            $notifications=Notification::where('Notification_id',Session::get('notificationId'))->first();
+            return view('notification.broadcast.editGroup',compact('Groups','notifications'));
+        }
+
+        public function updateNotificationGroupBroadcast(Request $request){
+            $NotificationGroupBroadcast = NotificationGroupBroadcast::where('Notification_id',$request->NotificationId)->delete();
+            $data = array();
+
+            foreach ($request->Group_id as $row)
+            $data[] =[
+                    'Group_id' => $row,
+                    'Notification_id' => $request->notification_id,
+                    'active' => 'Y',
+                   ];
+
+            NotificationGroupBroadcast::insert($data);
+            return redirect(route('list.notification')); 
+
         }
 
         public function LoadStateDivision(Request $request)

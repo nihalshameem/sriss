@@ -371,6 +371,10 @@ Route::get('/showGroupBroadCast', [App\Http\Controllers\NotificationController::
 
 Route::post('/saveGroupBroadCast', [App\Http\Controllers\NotificationController::class,'saveNotificationGroupBroadcast'])->name('save.NotificationGroupBroadcast');
 
+Route::get('/editGroupBroadCast', [App\Http\Controllers\NotificationController::class,'editNotificationGroupBroadcast'])->name('edit.NotificationGroupBroadcast');
+
+Route::post('/updateGroupBroadCast', [App\Http\Controllers\NotificationController::class,'updateNotificationGroupBroadcast'])->name('update.NotificationGroupBroadcast');
+
 
 
 /* Notification Broad Cast */
