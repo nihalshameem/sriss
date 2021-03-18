@@ -457,13 +457,19 @@ class ContributionController extends ApiController
 
     public function UpdateContributions(Request $request)
     {
+
         $contributionId = OfflineContribution::where("Offline_Contribution_id",$request->ContributionId)->first();        
         $date = Carbon::now()->format('d');
         $month = Carbon::now()->format('m');
         $year = Carbon::now()->year;
         $Offline = OfflineContribution::where('Offline_Contribution_payment_status','Completed')->orderby('Offline_Contribution_id','desc')->first();
-        
+
+       if($Offline!=null){
         $invoice =(str_pad((int)$Offline->Offline_Contribution_id+1 + 1, 8, '0', STR_PAD_LEFT));
+    }else{
+        $invoice =(str_pad((int)1 + 1, 8, '0', STR_PAD_LEFT));
+    }
+        
 
         if($contributionId->drs_Inst_Type=="Cash")
         {

@@ -420,7 +420,7 @@ class PollsController extends ApiController
     {
         $Polls = PollsQuestions::orderby('id','desc')->first();
         $cities = District::get();
-        $states = State::get();
+        $states = State::where('State_active', 'Y')->get();
         $stateJson = StateDivision::get();
         return view('polls.broadcast',compact('Polls','cities','states','stateJson'));
     }
@@ -607,7 +607,7 @@ class PollsController extends ApiController
     {
         $PollsBroadcast = PollsBroadcast::where('Polls_id',Session::get('PollsId'))->get();
         $Polls = PollsQuestions::where('id',Session::get('PollsId'))->first();
-        $states = State::get();
+        $states = State::where('State_active', 'Y')->get();
         return view('polls.broadcast.edit',compact('PollsBroadcast','states','Polls'));
     }
 

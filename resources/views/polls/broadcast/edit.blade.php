@@ -35,33 +35,45 @@
     .btn-primary
     {
       color: #ffffff !important;
-      background-color: #8f3319 !important;
-      border-color: #8f3319 !important;
-      transition: all 0.4s ease 0s;
+      background-color: #0653c8 !important;
+      
+      border: 1px solid #0653c8 !important;
 
     }
     .btn-primary:hover
     {
 
-      color: #8f3319 !important;
+      color: #0653c8 !important;
       background: white !important;
-      border: 2px solid #8f3319 !important;
+      border: 1px solid #0653c8 !important;
       display: inline-block;
     }
     .btn-primary:focus
     {
-      background-color: #ffffff;
-      color:#8f3319;
-      border:1px solid #8f3319;
+      background-color: #0653c8;
+      color:#ffffff;
+      border:1px solid #0653c8;
     }
     .btn-primary:visited
     { 
-      background-color: #ffffff;
-      color:#8f3319;
-      border:1px solid #8f3319;
+      background-color: #0653c8;
+      color:#ffffff;
+      border:1px solid #0653c8;
+    }
+    .btn-back {
+      color: #ffffff !important;
+      background-color: #0653c8 !important;
+      border-color: #0653c8 !important;
+      
+    }
+    .btn-back:hover {
+      color: #0653c8 !important;
+      background-color: #ffffff !important;
+      border-color: #0653c8 !important;
+      
     }
     .content-wrapper{
-      background-color: #FFFFB7;
+      background-color: aliceblue;
     }
     .table-borderless{
      border: 1px solid #ddd;
@@ -83,6 +95,9 @@
   .badge
   {
     font-size:15px;
+  }
+  .card{
+    background-color: aliceblue;
   }
 
   table {
@@ -303,7 +318,7 @@
         <div class="row">
           <div class="col-md-4 form-group">
             <label >State&nbsp;<span style="color:red">*</span></label><br>
-            <select id="states" multiple="multiple" name="State_id[]" onchange="LoadStateDivision(this)">
+            <select id="states" multiple="multiple" name="State_id[]" onchange="LoadZones(this)">
               <option disabled="">Select State</option>
             </select>
             @if( Session::has( 'warning' ))
@@ -315,22 +330,7 @@
             @endif
             
           </div>
-          <div class="col-md-4 form-group">
-            <label >State Division</label>
-            <select id="StateDivision" multiple="multiple" name="State_Division_id[]" onchange="LoadGreaterZones(this)">
-              <option>Select State Division</option>
-            </select>
 
-            
-          </div>
-          <div class="col-md-4 form-group">
-            <label >Greater Zones</label>
-            <select id="GreaterZones" multiple="multiple" name="Greater_Zones_id[]" onchange="LoadZones(this)">
-              <option>Select Greater Zones</option>
-              
-            </select>
-            
-          </div>
           <div class="col-md-4 form-group">
             <label >Zones</label><br>
             <select id="zone" multiple="multiple" name="Zone_id[]" onchange="LoadDistrict(this)">
@@ -430,8 +430,7 @@
   });
 
    $('#states').multiselect();
-   $('#StateDivision').multiselect();
-   $('#GreaterZones').multiselect();
+
    $('#zone').multiselect();
    $('#district').multiselect();
    $('#union').multiselect();
@@ -440,77 +439,6 @@
 </script>
 
 
-
-<script>
-
- function LoadStateDivision(select){
-  var result = [];
-  var options = select && select.options;
-  var opt;
-
-  for (var i=0, iLen=options.length; i<iLen; i++) {
-    opt = options[i];
-
-    if (opt.selected) {
-      result.push(opt.value || opt.text);
-    }
-  }
-  $.ajax({
-    type : 'get',
-    url : '{{URL::to('LoadStateDivision')}}',
-    data : {'state_id':result},
-    success:function(response){
-     $('#StateDivision').empty();
-     var options = response.forEach( function(istate, index){
-      $('#StateDivision').append('<option value="'+istate.State_Division_id+'">'+istate.State_Division_desc+'</option>').multiselect("refresh");;
-      
-      $('#StateDivision').multiselect('destroy');
-    });
-     $('#StateDivision').multiselect({
-      buttonWidth: '300px',
-      includeSelectAllOption: true
-    });
-   } 
- });
-  
-
-}
-</script>
-
-<script>
-
- function LoadGreaterZones(select){
-  var result = [];
-  var options = select && select.options;
-  var opt;
-
-  for (var i=0, iLen=options.length; i<iLen; i++) {
-    opt = options[i];
-
-    if (opt.selected) {
-      result.push(opt.value || opt.text);
-    }
-  }
-  $.ajax({
-    type : 'get',
-    url : '{{URL::to('LoadGreaterZones')}}',
-    data : {'statedivision_id':result},
-    success:function(response){
-     $('#GreaterZones').empty();
-     var options = response.forEach( function(istate, index){
-      $('#GreaterZones').append('<option value="'+istate.Greater_Zones_id+'">'+istate.Greater_Zones_desc+'</option>').multiselect("refresh");;
-      $('#GreaterZones').multiselect('destroy');
-    });
-     $('#GreaterZones').multiselect({
-      buttonWidth: '300px',
-      includeSelectAllOption: true
-    });
-   } 
- });
-  
-
-}
-</script>
 <script>
 
  function LoadZones(select){
@@ -528,7 +456,7 @@
   $.ajax({
     type : 'get',
     url : '{{URL::to('LoadZones')}}',
-    data : {'greaterzone_id':result},
+    data : {'State_id':result},
     success:function(response){
      $('#zone').empty();
      var options = response.forEach( function(istate, index){

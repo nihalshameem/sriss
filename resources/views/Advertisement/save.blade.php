@@ -21,7 +21,7 @@
           </div>
           
         </div>
-      </div><br>
+      </div>
       <div class="row">
         <div class="col-md-12">
           <div class="card card-primary">
@@ -47,7 +47,7 @@
                 <div class="col-md-6">
                  <div class="form-group">
                   <label for="exampleInputPassword1">Description</label>
-                  <textarea class="form-control" id="desc" rows="5" cols="50" name="description" placeholder="Enter Description" value="{{{ $Advertisements->description  ?? '' }}}" required=""></textarea>
+                  <textarea class="form-control" id="desc" rows="2" cols="50" name="description" placeholder="Enter Description" value="{{{ $Advertisements->description  ?? '' }}}" required=""></textarea>
                 </div>
               </div>
               <div class="col-md-6">
@@ -58,9 +58,9 @@
               </div>
             </div>
           </div>
-          
-          <div class="form-group">
-            <label for="exampleInputFile">Advertisement Image Path</label>
+<div class="row">      
+          <div class="form-group col-md-6">
+            <label for="exampleInputFile">Banner Image Path</label>
             <div class="input-group">
               <div class="custom-file">
                 <input type="file" class="custom-file-input" name="AdvertisementImg" id="exampleInputFile2" accept=" image/gif, image/jpeg ,image/png" onchange="upload_check2()">
@@ -72,7 +72,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group col-md-6">
             <label for="exampleInputFile">Banner Image Path</label>
             <div class="input-group">
               <div class="custom-file">
@@ -84,6 +84,8 @@
               </div>
             </div>
           </div>
+
+</div>
 
           
                <div class="form-group">

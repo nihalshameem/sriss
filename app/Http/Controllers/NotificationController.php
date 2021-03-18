@@ -207,11 +207,11 @@ class NotificationController extends ApiController
                     $notification->Notification_approved = $request->approved;
                     if ($request->hasFile('NotificationPath'))
                     {
-                    $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();
-                                $image_extn = strtolower($image_ext);
-                                $imageName = time() .'_'. $request->NotificationPath->getClientOriginalName();
-                                $filePath = $request->file('NotificationPath')->storeAs('Notification', $imageName,'public');
-                    $notification->Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
+                        $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();
+                        $image_extn = strtolower($image_ext);
+                        $imageName = time() .'_'. $request->NotificationPath->getClientOriginalName();
+                        $filePath = $request->file('NotificationPath')->storeAs('Notification', $imageName,'public');
+                        $notification->Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
                     }
                     $notification->save();
 
@@ -514,7 +514,7 @@ class NotificationController extends ApiController
         public function SaveBroadCast(Request $request)
         {
           
-            if($request->has('State_id') && $request->missing('State_Division_id') && $request->missing('Greater_Zones_id') && $request->missing('Zone_id') && $request->missing('District_id') && $request->missing('Union_id'))
+            if($request->has('State_id') && $request->missing('Zone_id') && $request->missing('District_id') && $request->missing('Union_id'))
             {
                 foreach ($request->State_id as $keys=>$State) {   
                 
@@ -531,70 +531,70 @@ class NotificationController extends ApiController
             return \Redirect::back()->withInput()->withWarning('Must Select State ');
         }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->missing('Greater_Zones_id') )
-            {
-                foreach ($request->State_id as $keys=>$State) {   
-                foreach ($request->State_Division_id as $keysd=>$statedivision) {
-                    if($statedivision==null)
-                    {
-                         NotificationBroadcast::create([
-                            'Notification_id' => $request->NotificationId,
-                            'State_id' => $State,
-                        ]);
-                    }
-                    else{
-                        NotificationBroadcast::create([
-                            'Notification_id' => $request->NotificationId,
-                            'State_Division_id' => $statedivision,
-                        ]);
-                    }
+            // else if($request->has('State_id') && $request->has('State_Division_id') && $request->missing('Greater_Zones_id') )
+            // {
+            //     foreach ($request->State_id as $keys=>$State) {   
+            //     foreach ($request->State_Division_id as $keysd=>$statedivision) {
+            //         if($statedivision==null)
+            //         {
+            //              NotificationBroadcast::create([
+            //                 'Notification_id' => $request->NotificationId,
+            //                 'State_id' => $State,
+            //             ]);
+            //         }
+            //         else{
+            //             NotificationBroadcast::create([
+            //                 'Notification_id' => $request->NotificationId,
+            //                 'State_Division_id' => $statedivision,
+            //             ]);
+            //         }
 
                        
                 
-                }
-                }
-            }
+            //     }
+            //     }
+            // }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->missing('Zone_id'))
-            {
-                    foreach ($request->State_Division_id as $keysd=>$statedivision) {
-                    foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
+            // else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->missing('Zone_id'))
+            // {
+            //         foreach ($request->State_Division_id as $keysd=>$statedivision) {
+            //         foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
 
-                    $greaterzone  = GreaterZones::where('State_Division_id',$request->State_Division_id[$keysd])->where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->first();
+            //         $greaterzone  = GreaterZones::where('State_Division_id',$request->State_Division_id[$keysd])->where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->first();
 
-                        if($greaterzone)
-                        {
-                            NotificationBroadcast::create([
-                                'Notification_id' => $request->NotificationId,
-                                'Greater_Zones_id' => $GreaterZonesid,
-                            ]); 
-                        }
-                        else
-                        {
-                            $notification = NotificationBroadcast::where('Notification_id',$request->NotificationId)->where('State_Division_id', $statedivision)->first();
-                            if($notification==null)
-                            {
-                                 NotificationBroadcast::create([
-                                    'Notification_id' => $request->NotificationId,
-                                    'State_Division_id' => $statedivision,
-                                ]);
-                            }
-                        }
+            //             if($greaterzone)
+            //             {
+            //                 NotificationBroadcast::create([
+            //                     'Notification_id' => $request->NotificationId,
+            //                     'Greater_Zones_id' => $GreaterZonesid,
+            //                 ]); 
+            //             }
+            //             else
+            //             {
+            //                 $notification = NotificationBroadcast::where('Notification_id',$request->NotificationId)->where('State_Division_id', $statedivision)->first();
+            //                 if($notification==null)
+            //                 {
+            //                      NotificationBroadcast::create([
+            //                         'Notification_id' => $request->NotificationId,
+            //                         'State_Division_id' => $statedivision,
+            //                     ]);
+            //                 }
+            //             }
 
                            
                     
-                    }
-                    }
+            //         }
+            //         }
 
-            }
+            // }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->has('Zone_id') && $request->missing('District_id'))
+            else if($request->has('State_id') && $request->has('Zone_id') && $request->missing('District_id'))
             {
                     
-                    foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
+                    foreach ($request->State_id as $keyS=>$Stateid) {
                     foreach ($request->Zone_id as $keyZ=>$Zones) {
 
-                    $zone  = Zones::where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->where('Zone_id',$request->Zone_id[$keyZ])->first();
+                    $zone  = Zones::where('State_id',$request->$request->State_id[$keyS])->where('Zone_id',$request->Zone_id[$keyZ])->first();
 
                         if($zone)
                         {
@@ -606,12 +606,12 @@ class NotificationController extends ApiController
                         else
                         {
                              
-                            $notification = NotificationBroadcast::where('Notification_id',$request->NotificationId)->where('Greater_Zones_id', $GreaterZonesid)->first();
+                            $notification = NotificationBroadcast::where('Notification_id',$request->NotificationId)->where('State_id', $Stateid)->first();
                             if($notification==null)
                             {
                                 NotificationBroadcast::create([
                                 'Notification_id' => $request->NotificationId,
-                                'Greater_Zones_id' => $GreaterZonesid,
+                                'Greater_Zones_id' => $Stateid,
                                 ]);
                             }
                         }
@@ -621,7 +621,7 @@ class NotificationController extends ApiController
 
             }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->has('Zone_id') && $request->has('District_id') && $request->missing('Union_id'))
+            else if($request->has('State_id') && $request->has('Zone_id') && $request->has('District_id') && $request->missing('Union_id'))
             {
                     
                     foreach ($request->Zone_id as $keyZ=>$Zones) {
@@ -654,12 +654,14 @@ class NotificationController extends ApiController
                     
                     }
             }
-            else if($request->has('District_id') && $request->has('Union_id') && $request->missing('Greater_Zones_id') && $request->missing('Zone_id') && $request->missing('District_id')  && $request->missing('State_Division_id')  && $request->missing('State_id'))
+            else if($request->has('District_id') && $request->has('Union_id') && $request->has('Zone_id') && $request->has('State_id'))
             {
                     
                     foreach ($request->District_id as $keyD=>$District) {
                     foreach ($request->Union_id as $keyU=>$Union) {
-                    $union  = Union::where('District_id',$request->District_id[$keyD])->where('Union_id',$request->Union_id[$keyU])->first();
+                    $union  = Union::where('District_id',$request->District_id[$keyD])
+                                ->where('Union_id',$request->Union_id[$keyU])
+                                ->first();
 
                         if($union)
                         {
@@ -670,7 +672,6 @@ class NotificationController extends ApiController
                         }
                         else
                         {
-
                                $notification = NotificationBroadcast::where('Notification_id',$request->NotificationId)->where('District_id', $District)->first();
                                 if($notification==null)
                                 {
@@ -679,11 +680,7 @@ class NotificationController extends ApiController
                                         'District_id' => $District,
                                     ]);
                                 }
-                             
                         }
-
-                           
-                    
                     }
                     }
 
@@ -803,7 +800,7 @@ class NotificationController extends ApiController
         }
             $NotificationBroadcast = NotificationBroadcast::where('Notification_id',$request->NotificationId)->delete();
           
-            if($request->has('State_id') && $request->missing('State_Division_id') && $request->missing('Greater_Zones_id') && $request->missing('Zone_id') && $request->missing('District_id') && $request->missing('Union_id'))
+            if($request->has('State_id') && $request->missing('Zone_id') && $request->missing('District_id') && $request->missing('Union_id'))
             {
                 foreach ($request->State_id as $keys=>$State) {   
                 
@@ -816,11 +813,11 @@ class NotificationController extends ApiController
                 }
             }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->missing('Greater_Zones_id') )
+            else if($request->has('State_id') && $request->has('Zone_id') && $request->missing('District_id') && $request->missing('Union_id'))
             {
                 foreach ($request->State_id as $keys=>$State) {   
-                foreach ($request->State_Division_id as $keysd=>$statedivision) {
-                    if($statedivision==null)
+                foreach ($request->Zone_id as $keyz=>$zone_id) {
+                    if($zone_id==null)
                     {
                          NotificationBroadcast::create([
                             'Notification_id' => $request->NotificationId,
@@ -830,7 +827,7 @@ class NotificationController extends ApiController
                     else{
                         NotificationBroadcast::create([
                             'Notification_id' => $request->NotificationId,
-                            'State_Division_id' => $statedivision,
+                            'State_Division_id' => $zone_id,
                         ]);
                     }
 
@@ -840,73 +837,73 @@ class NotificationController extends ApiController
                 }
             }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->missing('Zone_id'))
-            {
-                    foreach ($request->State_Division_id as $keysd=>$statedivision) {
-                    foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
+            // else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->missing('Zone_id'))
+            // {
+            //         foreach ($request->State_Division_id as $keysd=>$statedivision) {
+            //         foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
 
-                    $greaterzone  = GreaterZones::where('State_Division_id',$request->State_Division_id[$keysd])->where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->first();
+            //         $greaterzone  = GreaterZones::where('State_Division_id',$request->State_Division_id[$keysd])->where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->first();
 
-                        if($greaterzone)
-                        {
-                            NotificationBroadcast::create([
-                                'Notification_id' => $request->NotificationId,
-                                'Greater_Zones_id' => $GreaterZonesid,
-                            ]); 
-                        }
-                        else
-                        {
-                            $notification = NotificationBroadcast::where('Notification_id',$request->NotificationId)->where('State_Division_id', $statedivision)->first();
-                            if($notification==null)
-                            {
-                                 NotificationBroadcast::create([
-                                    'Notification_id' => $request->NotificationId,
-                                    'State_Division_id' => $statedivision,
-                                ]);
-                            }
-                        }
+            //             if($greaterzone)
+            //             {
+            //                 NotificationBroadcast::create([
+            //                     'Notification_id' => $request->NotificationId,
+            //                     'Greater_Zones_id' => $GreaterZonesid,
+            //                 ]); 
+            //             }
+            //             else
+            //             {
+            //                 $notification = NotificationBroadcast::where('Notification_id',$request->NotificationId)->where('State_Division_id', $statedivision)->first();
+            //                 if($notification==null)
+            //                 {
+            //                      NotificationBroadcast::create([
+            //                         'Notification_id' => $request->NotificationId,
+            //                         'State_Division_id' => $statedivision,
+            //                     ]);
+            //                 }
+            //             }
 
                            
                     
-                    }
-                    }
+            //         }
+            //         }
 
-            }
+            // }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->has('Zone_id') && $request->missing('District_id'))
-            {
+            // else if($request->has('State_id') && $request->has('Zone_id') && $request->has('District_id') && $request->missing('Union_id'))
+            // {
                     
-                    foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
-                    foreach ($request->Zone_id as $keyZ=>$Zones) {
+            //         foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
+            //         foreach ($request->Zone_id as $keyZ=>$Zones) {
 
-                    $zone  = Zones::where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->where('Zone_id',$request->Zone_id[$keyZ])->first();
+            //         $zone  = Zones::where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->where('Zone_id',$request->Zone_id[$keyZ])->first();
 
-                        if($zone)
-                        {
-                            NotificationBroadcast::create([
-                                'Notification_id' => $request->NotificationId,
-                                'Zone_id' => $Zones,
-                            ]); 
-                        }
-                        else
-                        {
+            //             if($zone)
+            //             {
+            //                 NotificationBroadcast::create([
+            //                     'Notification_id' => $request->NotificationId,
+            //                     'Zone_id' => $Zones,
+            //                 ]); 
+            //             }
+            //             else
+            //             {
                              
-                            $notification = NotificationBroadcast::where('Notification_id',$request->NotificationId)->where('Greater_Zones_id', $GreaterZonesid)->first();
-                            if($notification==null)
-                            {
-                                NotificationBroadcast::create([
-                                'Notification_id' => $request->NotificationId,
-                                'Greater_Zones_id' => $GreaterZonesid,
-                                ]);
-                            }
-                        }
+            //                 $notification = NotificationBroadcast::where('Notification_id',$request->NotificationId)->where('Greater_Zones_id', $GreaterZonesid)->first();
+            //                 if($notification==null)
+            //                 {
+            //                     NotificationBroadcast::create([
+            //                     'Notification_id' => $request->NotificationId,
+            //                     'Greater_Zones_id' => $GreaterZonesid,
+            //                     ]);
+            //                 }
+            //             }
                     
-                    }
-                    }
+            //         }
+            //         }
 
-            }
+            // }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->has('Zone_id') && $request->has('District_id') && $request->missing('Union_id'))
+            else if($request->has('State_id') && $request->has('Zone_id') && $request->has('District_id') && $request->missing('Union_id'))
             {
                     
                     foreach ($request->Zone_id as $keyZ=>$Zones) {
@@ -1024,17 +1021,6 @@ class NotificationController extends ApiController
         }
     }
 
-        public function LoadStateDivision(Request $request)
-        {
-            $StateDivision = StateDivision::whereIN('State_id',$request->state_id)->get();
-            return response()->json($StateDivision);
-        }
-
-        public function LoadGreaterZones(Request $request)
-        {
-            $GreaterZones = GreaterZones::whereIN('State_Division_id',$request->statedivision_id)->get();
-            return response()->json($GreaterZones);
-        }
         public function LoadZones(Request $request)
         {
             $Zones = Zones::whereIN('State_id',$request->State_id)->get();

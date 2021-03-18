@@ -224,6 +224,14 @@
   </a>
 </li>
 @endif
+@if($role->hasPermission('42',$role->role_id)) 
+<li class="nav-item">
+    <a href="{{ route('MemberPending.list') }}" class="nav-link {{ (request()->segment(2) == 'MemberPending.list') ? 'active' : '' }}" style="color:#3e3e3e">
+      <i class="nav-icon fa fa-list-alt fa-lg"></i>
+      <p> Member Approval</p>
+  </a>
+</li>
+@endif
 
 
 

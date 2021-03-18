@@ -223,7 +223,7 @@ td{
   <div class="row">
     <div class="col-md-4 form-group">
       <label for="exampleInputPassword1">State</label><br>
-      <select id="states" multiple="multiple" name="State_id[]" onchange="LoadStateDivision(this)">
+      <select id="states" multiple="multiple" name="State_id[]" onchange="LoadZones(this)">
         <option disabled="">select state</option>
     </select>
     @if( Session::has( 'warning' ))
@@ -235,23 +235,8 @@ td{
     @endif
 
 </div>
-<div class="col-md-4 form-group">
-  <label for="exampleInputPassword1">State Division</label>
-  <select id="StateDivision" multiple="multiple" name="State_Division_id[]" onchange="LoadGreaterZones(this)">
-    <option>Select State Division</option>
-</select>
 
-
-</div>
-<div class="col-md-4 form-group">
-  <label for="exampleInputPassword1">Greater Zones</label>
-  <select id="GreaterZones" multiple="multiple" name="Greater_Zones_id[]" onchange="LoadZones(this)">
-    <option>Select Greater Zones</option>
-
-</select>
-
-</div>
-<br><br><br>
+<br>
 <div class="col-md-4 form-group">
   <label for="exampleInputPassword1">Zones</label><br>
   <select id="zone" multiple="multiple" name="Zone_id[]" onchange="LoadDistrict(this)">
@@ -361,77 +346,6 @@ td{
 </script>
 
 
-
-<script>
-
- function LoadStateDivision(select){
-  var result = [];
-  var options = select && select.options;
-  var opt;
-
-  for (var i=0, iLen=options.length; i<iLen; i++) {
-    opt = options[i];
-
-    if (opt.selected) {
-      result.push(opt.value || opt.text);
-  }
-}
-$.ajax({
-    type : 'get',
-    url : '{{URL::to('LoadStateDivision')}}',
-    data : {'state_id':result},
-    success:function(response){
-     $('#StateDivision').empty();
-     var options = response.forEach( function(istate, index){
-      $('#StateDivision').append('<option value="'+istate.State_Division_id+'">'+istate.State_Division_desc+'</option>').multiselect("refresh");;
-
-      $('#StateDivision').multiselect('destroy');
-  });
-     $('#StateDivision').multiselect({
-        buttonWidth: '300px',
-        includeSelectAllOption: true
-    });
- } 
-});
-
-
-}
-</script>
-
-<script>
-
- function LoadGreaterZones(select){
-  var result = [];
-  var options = select && select.options;
-  var opt;
-
-  for (var i=0, iLen=options.length; i<iLen; i++) {
-    opt = options[i];
-
-    if (opt.selected) {
-      result.push(opt.value || opt.text);
-  }
-}
-$.ajax({
-    type : 'get',
-    url : '{{URL::to('LoadGreaterZones')}}',
-    data : {'statedivision_id':result},
-    success:function(response){
-     $('#GreaterZones').empty();
-     var options = response.forEach( function(istate, index){
-        $('#GreaterZones').append('<option value="'+istate.Greater_Zones_id+'">'+istate.Greater_Zones_desc+'</option>').multiselect("refresh");;
-        $('#GreaterZones').multiselect('destroy');
-    });
-     $('#GreaterZones').multiselect({
-        buttonWidth: '300px',
-        includeSelectAllOption: true,
-    });
- } 
-});
-
-
-}
-</script>
 <script>
 
  function LoadZones(select){
@@ -449,7 +363,7 @@ $.ajax({
 $.ajax({
     type : 'get',
     url : '{{URL::to('LoadZones')}}',
-    data : {'greaterzone_id':result},
+    data : {'State_id':result},
     success:function(response){
      $('#zone').empty();
      var options = response.forEach( function(istate, index){

@@ -864,6 +864,7 @@ class MembersController extends ApiController
 
                 if($Member->count()>0)
                 {
+
                     return $this->respond([
                         'status' => 'success',
                         'code' => $this->getStatusCode(),
@@ -873,11 +874,20 @@ class MembersController extends ApiController
                 }
                 else
                 {
-                    return $this->respond([
+                    if($request->status==N){
+                        return $this->respond([
                         'status' => 'failure',
                         'code' => 400,
                         'message' => 'There is no record to approve',
                         ]);
+                    }elseif ($request->status==R) {
+                        return $this->respond([
+                        'status' => 'failure',
+                        'code' => 400,
+                        'message' => 'There is no record to reject',
+                        ]);
+                    }
+                    
                 }
             }
             else

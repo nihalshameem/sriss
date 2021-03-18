@@ -214,8 +214,6 @@ td{
               <thead>
                 <tr>
                   <th>State</th>
-                  <th>State Division</th>
-                  <th>Greater Zones</th>
                   <th>Zones</th>
                   <th>District</th>
                   <th>Union</th>
@@ -232,24 +230,8 @@ td{
                 @else
                 <td></td>
                 @endif
-                <?php
-                $StateDivision = App\Models\StateDivision::where('State_Division_id',$broadcast->State_Division_id)->first();
-                ?>
-                @if($StateDivision!= null)
-                <td>{{$StateDivision->State_Division_desc}}</td>
-                @else
-                <td></td>
-                @endif
-
-                <?php
-                $GreaterZones = App\Models\GreaterZones::where('Greater_Zones_id',$broadcast->Greater_Zones_id)->first();
-                ?>
-                @if($GreaterZones!=null)
-                <td>{{$GreaterZones->Greater_Zones_desc}}</td>
-                @else
-                <td></td>
-                @endif
-
+                
+                
                 <?php
                 $Zones = App\Models\Zones::where('Zone_id',$broadcast->Zone_id)->first();
                 ?>
@@ -304,7 +286,7 @@ td{
         <div class="row">
           <div class="col-md-4 form-group">
             <label >State</label><br>
-            <select id="states" multiple="multiple" name="State_id[]" onchange="LoadStateDivision(this)">
+            <select id="states" multiple="multiple" name="State_id[]" onchange="LoadZones(this)">
               <option disabled="">select state</option>
           </select>
           @if( Session::has( 'warning' ))
@@ -316,22 +298,7 @@ td{
           @endif
           
       </div>
-      <div class="col-md-4 form-group">
-        <label >State Division</label>
-        <select id="StateDivision" multiple="multiple" name="State_Division_id[]" onchange="LoadGreaterZones(this)">
-          <option>Select State Division</option>
-      </select>
-
-      
-  </div>
-  <div class="col-md-4 form-group">
-    <label >Greater Zones</label>
-    <select id="GreaterZones" multiple="multiple" name="Greater_Zones_id[]" onchange="LoadZones(this)">
-      <option>Select Greater Zones</option>
-      
-  </select>
-  
-</div>
+     
 <div class="col-md-4 form-group">
     <label >Zones</label><br>
     <select id="zone" multiple="multiple" name="Zone_id[]" onchange="LoadDistrict(this)">
@@ -478,40 +445,7 @@ td{
 }
 </script>
 
-<script>
 
-   function LoadGreaterZones(select){
-      var result = [];
-      var options = select && select.options;
-      var opt;
-
-      for (var i=0, iLen=options.length; i<iLen; i++) {
-        opt = options[i];
-
-        if (opt.selected) {
-          result.push(opt.value || opt.text);
-      }
-  }
-  $.ajax({
-    type : 'get',
-    url : '{{URL::to('LoadGreaterZones')}}',
-    data : {'statedivision_id':result},
-    success:function(response){
-       $('#GreaterZones').empty();
-       var options = response.forEach( function(istate, index){
-          $('#GreaterZones').append('<option value="'+istate.Greater_Zones_id+'">'+istate.Greater_Zones_desc+'</option>').multiselect("refresh");;
-          $('#GreaterZones').multiselect('destroy');
-      });
-       $('#GreaterZones').multiselect({
-          buttonWidth: '300px',
-          includeSelectAllOption: true
-      });
-   } 
-});
-  
-
-}
-</script>
 <script>
 
    function LoadZones(select){
@@ -529,7 +463,7 @@ td{
   $.ajax({
     type : 'get',
     url : '{{URL::to('LoadZones')}}',
-    data : {'greaterzone_id':result},
+    data : {'State_id':result},
     success:function(response){
        $('#zone').empty();
        var options = response.forEach( function(istate, index){

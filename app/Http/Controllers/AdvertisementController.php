@@ -168,6 +168,7 @@ class AdvertisementController extends ApiController
         public function AdvertisementShow()
         {
             $Advertisements = Advertisement::where('id',Session::get('Advertisement_id'))->first();
+            
             return view('Advertisement.save',compact('Advertisements'));
         }
 
@@ -203,9 +204,13 @@ class AdvertisementController extends ApiController
                 }
                 $advertisement->save();
                 $advertisement = Advertisement::orderby('id','DESC')->first();
-                Session::put('Advertisement_id',$advertisement->id);
+                
+                $adBroad=new AdvertisementBroadcast();
+                $adBroad->advertisement_id=$advertisement->id;
+                $adBroad->State_id=1;
+                $adBroad->save();
                
-                return redirect(route('list.AdvertisementBroadcast'));
+                return redirect(route('list.advertisements'));
            }
             else
             {
@@ -219,12 +224,16 @@ class AdvertisementController extends ApiController
                     $Ad_image_path = config('app.url').'storage/app/public/Advertisement/'.$imageName; 
 
                      $Advertisement = Advertisement::where("id", $request->Advertisement_id)->update(['from_date'=> $request->from_date,'to_date'=> $request->to_date,'active'=> $request->active,'description'=> $request->description,'image_path'=> $Ad_image_path, 'link'=> $request->link,'description'=> $request->description]);
-                     Session::put('Advertisement_id',$request->Advertisement_id);
-                    return redirect(route('list.AdvertisementBroadcast')); 
+                     
+                     $adBroad=new AdvertisementBroadcast();
+                     $adBroad->advertisement_id=$advertisement->id;
+                     $adBroad->State_id=1;
+                     $adBroad->save();
+
+                    return redirect(route('list.advertisements'));
                 }
                 else
                 {
-                    Session::put('Advertisement_id',Session::get('advertisement_id'));
                     return \Redirect::back()->withInput()->withWarning('Must upload image field');
                 }
             }
@@ -255,7 +264,7 @@ class AdvertisementController extends ApiController
 
                  $Advertisement = Advertisement::where("id", $request->Advertisement_id)->update(['from_date'=> $request->from_date,'to_date'=> $request->to_date,'active'=> $request->active,'description'=> $request->description,'image_path'=> $Advertisement_image_path, 'link'=> $request->link,'description'=> $request->description]);
                  Session::put('Advertisement_id',$request->Advertisement_id);
-                return redirect(route('list.advertisementbroadcastedit')); 
+                return redirect(route('list.advertisements')); 
             }
             else
             {
