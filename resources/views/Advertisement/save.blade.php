@@ -73,7 +73,7 @@
           </div>
 
           <div class="form-group col-md-6">
-            <label for="exampleInputFile">Banner Image Path</label>
+            <label for="exampleInputFile">Popup</label>
             <div class="input-group">
               <div class="custom-file">
                 <input type="file" class="custom-file-input" name="BannerImg" id="exampleInputFile2" accept=" image/gif, image/jpeg ,image/png" onchange="upload_check2()">
@@ -90,7 +90,7 @@
           
                <div class="form-group">
                 <label for="exampleInputPassword1">Link</label>
-                <input type="text" class="form-control" name="link" value="{{{ $Advertisements->link  ?? '' }}}" required>
+                <input type="text" class="form-control" name="link" value="{{{ $Advertisements->link  ?? '' }}}">
               </div>
               
               <div class="row">
@@ -133,7 +133,7 @@
 
           <div style="max-width: 200px; margin: auto;">
             <a href="/Advertisements" class="btn btn-primary">Cancel</a>
-            <button type="submit" class="btn btn-primary">Next</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div><br><br>
         </div>
       </form>

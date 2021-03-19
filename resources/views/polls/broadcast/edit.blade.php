@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -225,11 +224,9 @@
               <thead>
                 <tr>
                   <th>State</th>
-                  <th>State Division</th>
-                  <th>Greater Zones</th>
                   <th>Zones</th>
                   <th>District</th>
-                  <th>Union</th>
+                  <th>Area</th>
               </tr>
           </thead>
           <tbody>
@@ -243,23 +240,7 @@
                 @else
                 <td></td>
                 @endif
-                <?php
-                $StateDivision = App\Models\StateDivision::where('State_Division_id',$broadcast->State_Division_id)->first();
-                ?>
-                @if($StateDivision!= null)
-                <td>{{$StateDivision->State_Division_desc}}</td>
-                @else
-                <td></td>
-                @endif
-
-                <?php
-                $GreaterZones = App\Models\GreaterZones::where('Greater_Zones_id',$broadcast->Greater_Zones_id)->first();
-                ?>
-                @if($GreaterZones!=null)
-                <td>{{$GreaterZones->Greater_Zones_desc}}</td>
-                @else
-                <td></td>
-                @endif
+              
 
                 <?php
                 $Zones = App\Models\Zones::where('Zone_id',$broadcast->Zone_id)->first();

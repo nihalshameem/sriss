@@ -34,12 +34,13 @@
                     <option value="">Select Icon</option>
                     @if(isset($AppIcon))
                     @foreach($AppIcon as $appIcon) 
-                    <option value="{{$appIcon->AppIcon_id}}" {{ ($AppIconEdit->AppIcon_desc == $appIcon->AppIcon_desc ) ? 'selected' : '' }}>{{ $appIcon->AppIcon_desc}}</option>
+                    <option value="{{$appIcon->AppIcon_id}}" {{ ($AppIconEdit->AppIcon_text == $appIcon->AppIcon_text ) ? 'selected' : '' }}>{{ $appIcon->AppIcon_text}}</option>
                     @endforeach
                     @endif
                 }
             </select>
         </div>
+       
         <div class="col-md-6 form-group">
           <label >Icon Path</label>
           <div class="input-group" >
@@ -52,22 +53,30 @@
             </div>
         </div>
     </div>
-</div>
-<div class="form-group">
+    <div class="col-md-6 form-group"><br>
   <label>Uploaded Image</label>
   
   <img src="{{ $AppIconEdit->AppIcon_image_path}}" width="100px" height="50px">
   
 </div>
+</div>
+
 <div class="row">
+
    <div class="col-md-6 form-group">
     <label >English Text</label>
-    <input type="text" class="form-control" value="{{ $AppIconEdit->AppIcon_desc}}" name="AppIconEng">
+    <input type="text" class="form-control" value="{{ $AppIconEdit->L1_text}}" name="l1_text">
 </div>
 <div class="col-md-6 form-group">
     <label >Tamil Text</label>
     
-    <input type="text" class="form-control"  value="{{ $AppIconEdit->AppIcon_text_ta}}" name="AppIconTamil">
+    <input type="text" class="form-control"  value="{{ $AppIconEdit->L2_text}}" name="l2_text">
+    
+</div>
+<div class="col-md-6 form-group">
+    <label >Hindi Text</label>
+    
+    <input type="text" class="form-control"  value="{{ $AppIconEdit->L3_text}}" name="l3_text">
     
 </div>
 </div>

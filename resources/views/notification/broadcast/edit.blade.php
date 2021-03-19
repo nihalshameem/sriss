@@ -543,6 +543,7 @@ td{
     url : '{{URL::to('LoadUnion')}}',
     data : {'district_id':result},
     success:function(response){
+      console.log(response);
        $('#union').empty();
        var options = response.forEach( function(istate, index){
           $('#union').append('<option value="'+istate.Union_id+'">'+istate.Union_desc+'</option>').multiselect("refresh");

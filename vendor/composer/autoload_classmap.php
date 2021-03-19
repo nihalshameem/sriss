@@ -59,6 +59,7 @@ return array(
     'App\\Models\\GroupMembers' => $baseDir . '/app/Models/GroupMembers.php',
     'App\\Models\\IdCard' => $baseDir . '/app/Models/IdCard.php',
     'App\\Models\\Language' => $baseDir . '/app/Models/Language.php',
+    'App\\Models\\LanguageConfig' => $baseDir . '/app/Models/LanguageConfig.php',
     'App\\Models\\Member' => $baseDir . '/app/Models/Member.php',
     'App\\Models\\MemberCategory' => $baseDir . '/app/Models/MemberCategory.php',
     'App\\Models\\MemberCategoryAppIcon' => $baseDir . '/app/Models/MemberCategoryAppIcon.php',

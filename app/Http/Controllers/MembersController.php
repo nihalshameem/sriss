@@ -874,13 +874,13 @@ class MembersController extends ApiController
                 }
                 else
                 {
-                    if($request->status==N){
+                    if($request->status=="N"){
                         return $this->respond([
                         'status' => 'failure',
                         'code' => 400,
                         'message' => 'There is no record to approve',
                         ]);
-                    }elseif ($request->status==R) {
+                    }elseif ($request->status=="R") {
                         return $this->respond([
                         'status' => 'failure',
                         'code' => 400,

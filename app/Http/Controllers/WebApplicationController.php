@@ -48,18 +48,23 @@ class WebApplicationController extends ApiController
         return redirect(route('aboutus'));
     }
 
-    /******Language Lock******/
+    /******Language******/
 
-    public function ShowLanguageLock()
+    public function ListLanguage()
     {
-        $Languages = Language::first();
-        return view('Language.language_lock',compact('Languages'));
+        $Languages = Language::get();
+        return view('Language.list',compact('Languages'));
+    }
+    public function EditLanguage($languageId)
+    {
+        $language = Language::where('Language_id',$languageId)->first();
+        return view('Language.save',compact('language'));
     }
 
-    public function SaveLanguageLock(Request $request)
+    public function UpdateLanguage(Request $request)
     {
          Language::where("Language_id", '=', '1')
-                    ->update(['Language_lock'=> $request->Language_lock]);
+                    ->update(['Language_name'=> $request->Language_name,'Language_active'=> $request->active]);
         return redirect(route('list.languageLock'));
     }
 
@@ -71,7 +76,8 @@ class WebApplicationController extends ApiController
     {
         $AppIconEdit = AppIcon::where('AppIcon_id',$AppIconId)->first();
         $AppIcon = AppIcon::get();
-        return view('AppIcon.save',compact('AppIcon'))->with([
+        $Languages = Language::get();
+        return view('AppIcon.save',compact('AppIcon','Languages'))->with([
             'AppIconEdit'   => $AppIconEdit,
             
         ]);
@@ -80,6 +86,7 @@ class WebApplicationController extends ApiController
      public function ShowAppIcon()
     {
         $AppIcon = AppIcon::get();
+
         return view('AppIcon.list',compact('AppIcon'));
     }
 
@@ -97,14 +104,21 @@ class WebApplicationController extends ApiController
             $filePath = $request->file('AppIconPath')->storeAs('AppIcon', $imageName,'public');
 
             AppIcon::where("AppIcon_id", '=', $request->App_Icon_id)
-                                        ->update(['AppIcon_image_path'=> config('app.url').'storage/app/public/AppIcon/'.$imageName,'AppIcon_desc'=> $request->AppIconEng,'AppIcon_text_ta'=>$request->AppIconTamil,'AppIcon_visible'=>$request->App_Icon_status]);
+                                        ->update(['AppIcon_image_path'=> config('app.url').'storage/app/public/AppIcon/'.$imageName,'L1_text'=> $request->l1_text,
+                                            'L2_text'=> $request->l2_text,
+                                            'L3_text'=> $request->l3_text,
+                                            'AppIcon_text_ta'=>$request->AppIconTamil,
+                                            'AppIcon_visible'=>$request->App_Icon_status]);
 
             return redirect(route('list.appIcon'));
         }
         else
         {
              AppIcon::where("AppIcon_id", '=', $request->App_Icon_id)
-                                        ->update(['AppIcon_desc'=> $request->AppIconEng,'AppIcon_text_ta'=>$request->AppIconTamil,'AppIcon_visible'=>$request->App_Icon_status]);
+                                        ->update(['L1_text'=> $request->l1_text,
+                                            'L2_text'=> $request->l2_text,
+                                            'L3_text'=> $request->l3_text,
+                                            'AppIcon_visible'=>$request->App_Icon_status]);
             return redirect(route('list.appIcon'));
         }
         
@@ -250,6 +264,7 @@ class WebApplicationController extends ApiController
             $vision = Compliance::where('Compliance_id','1')->where('Compliance_active','Y')->first();
             $terms = Compliance::where('Compliance_id','2')->where('Compliance_active','Y')->first();
             $privacy = Compliance::where('Compliance_id','3')->where('Compliance_active','Y')->first();
+            $language = Language::where('Language_active','D')->get();
            
             
              return response()->json([
@@ -260,6 +275,7 @@ class WebApplicationController extends ApiController
                             'vision'=>$vision,
                             'termsandconditions'=>$terms,
                             'privacy'=>$privacy,
+                            'language'=>$language,
                         ]),
                     ]);
            
@@ -273,7 +289,7 @@ class WebApplicationController extends ApiController
         }  
     }
 
-    /***LanguageLock***/
+    /***Language***/
 
     public function getLanguageLock(Request $request)
     {
@@ -323,6 +339,74 @@ class WebApplicationController extends ApiController
             }
         }
     }
+    public function Setlanguage(Request $request)
+    {
+        $rules = array (
+            'member_id' => 'required',
+            'token' => 'required',
+            'language' => 'required',
+            );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator-> fails())
+        {
+            return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+        }
+        else
+        {
+            if($user=$this->is_valid_token($request['token']))
+            {
+                $members = Member::where("Member_Id",$request['member_id'])->first();
+
+                if($request['language']){
+                    $members->Language_id = $request['language'];
+                    }
+                    if($members->save())
+                    {
+                        return $this->respond([
+                        'status' => 'success',
+                        'status_code' => $this->getStatusCode(),
+                        'message' => 'Language Updated',
+                        'data'=>$members
+                        ]);
+                    }
+                    else
+                    {
+                        return $this->respond([
+                        'status' => 'Failed',
+                        'status_code' => $this->getStatusCode(),
+                        'message' => 'Failed to Update',
+                        ]);
+                    }
+                
+                if($languagecount)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'data' =>[
+                           'language_lock'=> $language
+                            ],
+                        'message'=>'success',   
+                        ]);
+                }
+                else
+                {
+                    return $this->respond([
+                        'status' => 'failure',
+                        'code' => 400,
+                        'message' => 'failure',
+                        ]);
+                }
+              
+
+            }
+            else
+            {
+                 return $this->respondTokenError("Token Mismatched");
+            }
+        }
+    }
 
     /***AppIcon***/
     
@@ -343,9 +427,10 @@ public function getAppIcon(Request $request)
             if($user=$this->is_valid_token($request['token']))
             {
                 $member = Member::where('Member_Id',$request->member_id)->first();
+            
                 $membercategory = MemberCategoryAppIcon::where('Category_Id',$member->Member_Category_Id)->pluck('AppIcon_Id');
-
-                $appIcon = AppIcon::whereIn('AppIcon_id',$membercategory)->where('AppIcon_visible','Y')->get();
+                $appIcon = AppIcon::whereIn('AppIcon_id',$membercategory)->where('AppIcon_visible','Y')->select('AppIcon_image_path',$member->Language_id.'_text As text','AppIcon_visible')->get();
+                
                 
                 if($appIcon->count()>0)
                 {

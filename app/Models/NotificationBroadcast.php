@@ -14,4 +14,9 @@ class NotificationBroadcast extends Model
     ];
 
     protected $table = 'sss_notification_broadcast_tbl';
+
+    public function notificationgroup()
+    {
+        return $this->belongsTo(Notification::class,'Notification_id','Notification_id');
+    }
 }

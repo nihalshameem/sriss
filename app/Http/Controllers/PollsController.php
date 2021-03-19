@@ -28,6 +28,7 @@ use App\Models\District;
 use App\Models\Union;
 use App\Models\Volunteer;
 use App\Models\MemberGroup;
+use App\Models\GroupMembers;
 use App\Models\PollsGroupBroadcast;
 
 use \Illuminate\Http\Response as Res;
@@ -35,7 +36,7 @@ use \Illuminate\Http\Response as Res;
 class PollsController extends ApiController
 {
 
-    /************** Web Services****************/
+    /***** Web Services*****/
 
     public function PollsQuestions(Request $request)
     {
@@ -90,25 +91,7 @@ class PollsController extends ApiController
 
                            
                         }
-                        if($MemberLocation->Greater_Zones_Id!=null)
-                        {
-                             $PollsBroadcast = PollsBroadcast::where('Greater_Zones_id',$MemberLocation->Greater_Zones_Id)->pluck('Polls_id');
-
-                            $PollsQuestionsGreaterZones = PollsQuestions::where('Polls_Questions_To_date','>=',$date)->WhereNotIn('id',$PollsResult)->whereIn('id',$PollsBroadcast)->get()->toArray();
-
-                            array_push($Polls, $PollsQuestionsGreaterZones);
-            
-                            
-                        }
-                        if($MemberLocation->State_Division_Id!=null)
-                        {
-                            $PollsBroadcast = PollsBroadcast::where('State_Division_id',$MemberLocation->State_Division_Id)->pluck('Polls_id');
-
-                            $PollsQuestionstateDivision = PollsQuestions::where('Polls_Questions_To_date','>=',$date)->WhereNotIn('id',$PollsResult)->whereIn('id',$PollsBroadcast)->get()->toArray();
-
-                            array_push($Polls, $PollsQuestionstateDivision);
-            
-                        }
+                        
                         if($MemberLocation->State_Id!=null)
                         {
                             $PollsBroadcast = PollsBroadcast::where('State_id',$MemberLocation->State_Id)->pluck('Polls_id');
@@ -119,7 +102,22 @@ class PollsController extends ApiController
             
                         
                         }
+                        $MemberGroup=GroupMembers::where('Member_Id',$request->member_id)->pluck('Group_id');
 
+                    if(count($MemberGroup)>0){
+                        $pollsGroupBroad =PollsGroupBroadcast::whereIn('Group_id', $MemberGroup)->pluck('Polls_id');
+
+                            if(count($pollsGroupBroad)>0){
+                                $PollsGroup = PollsQuestions::where('Polls_Questions_To_date','>=',$date)
+                                                        ->WhereNotIn('id',$PollsResult)
+                                                        ->whereIn('id',$pollsGroupBroad)
+                                                        ->get()
+                                                        ->toArray();
+
+                                array_push($Polls, $PollsGroup);
+
+                            }
+                    }
                         $Polls= array_reduce($Polls, 'array_merge', array());
 
 
@@ -317,7 +315,7 @@ class PollsController extends ApiController
         return $user;
     }
 
-    /****************** Web Application *****************/
+    /****** Web Application *******/
 
     public function ListPolls()
     {
@@ -426,7 +424,7 @@ class PollsController extends ApiController
     }
     public function SavePollsBroadCast(Request $request)
     {
-        if($request->has('State_id') && $request->missing('State_Division_id') && $request->missing('Greater_Zones_id') && $request->missing('Zone_id') && $request->missing('District_id') && $request->missing('Union_id'))
+        if($request->has('State_id') && $request->missing('Zone_id') && $request->missing('District_id') && $request->missing('Union_id'))
             {
                 foreach ($request->State_id as $keys=>$State) {   
                 
@@ -442,11 +440,11 @@ class PollsController extends ApiController
             return \Redirect::back()->withInput()->withWarning('Must Select State ');
         }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->missing('Greater_Zones_id') )
+            else if($request->has('State_id') && $request->has('Zone_id') && $request->missing('District_id') && $request->missing('Union_id'))
             {
                 foreach ($request->State_id as $keys=>$State) {   
-                foreach ($request->State_Division_id as $keysd=>$statedivision) {
-                    if($statedivision==null)
+                foreach ($request->Zone_id as $keysd=>$zone_id) {
+                    if($zone_id==null)
                     {
                          PollsBroadcast::create([
                             'Polls_id' => $request->PollsId,
@@ -456,7 +454,7 @@ class PollsController extends ApiController
                     else{
                         PollsBroadcast::create([
                             'Polls_id' => $request->PollsId,
-                            'State_Division_id' => $statedivision,
+                            'State_Division_id' => $zone_id,
                         ]);
                     }
 
@@ -466,73 +464,73 @@ class PollsController extends ApiController
                 }
             }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->missing('Zone_id'))
-            {
-                    foreach ($request->State_Division_id as $keysd=>$statedivision) {
-                    foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
+            // else if($request->has('State_id') && $request->has('Zone_id') && $request->has('District_id') && $request->missing('Union_id'))
+            // {
+            //         foreach ($request->State_Division_id as $keysd=>$statedivision) {
+            //         foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
 
-                    $greaterzone  = GreaterZones::where('State_Division_id',$request->State_Division_id[$keysd])->where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->first();
+            //         $greaterzone  = GreaterZones::where('State_Division_id',$request->State_Division_id[$keysd])->where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->first();
 
-                        if($greaterzone)
-                        {
-                            PollsBroadcast::create([
-                                'Polls_id' => $request->PollsId,
-                                'Greater_Zones_id' => $GreaterZonesid,
-                            ]); 
-                        }
-                        else
-                        {
-                            $polls = PollsBroadcast::where('Polls_id',$request->PollsId)->where('State_Division_id', $statedivision)->first();
-                            if($polls==null)
-                            {
-                                 PollsBroadcast::create([
-                                    'Polls_id' => $request->PollsId,
-                                    'State_Division_id' => $statedivision,
-                                ]);
-                            }
-                        }
+            //             if($greaterzone)
+            //             {
+            //                 PollsBroadcast::create([
+            //                     'Polls_id' => $request->PollsId,
+            //                     'Greater_Zones_id' => $GreaterZonesid,
+            //                 ]); 
+            //             }
+            //             else
+            //             {
+            //                 $polls = PollsBroadcast::where('Polls_id',$request->PollsId)->where('State_Division_id', $statedivision)->first();
+            //                 if($polls==null)
+            //                 {
+            //                      PollsBroadcast::create([
+            //                         'Polls_id' => $request->PollsId,
+            //                         'State_Division_id' => $statedivision,
+            //                     ]);
+            //                 }
+            //             }
 
                            
                     
-                    }
-                    }
+            //         }
+            //         }
 
-            }
+            // }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->has('Zone_id') && $request->missing('District_id'))
-            {
+            // else if($request->has('State_id') && $request->has('Zone_id') && $request->has('District_id'))
+            // {
                     
-                    foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
-                    foreach ($request->Zone_id as $keyZ=>$Zones) {
+            //         foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
+            //         foreach ($request->Zone_id as $keyZ=>$Zones) {
 
-                    $zone  = Zones::where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->where('Zone_id',$request->Zone_id[$keyZ])->first();
+            //         $zone  = Zones::where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->where('Zone_id',$request->Zone_id[$keyZ])->first();
 
-                        if($zone)
-                        {
-                            PollsBroadcast::create([
-                                'Polls_id' => $request->PollsId,
-                                'Zone_id' => $Zones,
-                            ]); 
-                        }
-                        else
-                        {
+            //             if($zone)
+            //             {
+            //                 PollsBroadcast::create([
+            //                     'Polls_id' => $request->PollsId,
+            //                     'Zone_id' => $Zones,
+            //                 ]); 
+            //             }
+            //             else
+            //             {
                              
-                            $polls = PollsBroadcast::where('Polls_id',$request->PollsId)->where('Greater_Zones_id', $GreaterZonesid)->first();
-                            if($polls==null)
-                            {
-                                PollsBroadcast::create([
-                                'Polls_id' => $request->PollsId,
-                                'Greater_Zones_id' => $GreaterZonesid,
-                                ]);
-                            }
-                        }
+            //                 $polls = PollsBroadcast::where('Polls_id',$request->PollsId)->where('Greater_Zones_id', $GreaterZonesid)->first();
+            //                 if($polls==null)
+            //                 {
+            //                     PollsBroadcast::create([
+            //                     'Polls_id' => $request->PollsId,
+            //                     'Greater_Zones_id' => $GreaterZonesid,
+            //                     ]);
+            //                 }
+            //             }
                     
-                    }
-                    }
+            //         }
+            //         }
 
-            }
+            // }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->has('Zone_id') && $request->has('District_id') && $request->missing('Union_id'))
+            else if($request->has('State_id') && $request->has('Zone_id') && $request->has('District_id') && $request->missing('Union_id'))
             {
                     
                     foreach ($request->Zone_id as $keyZ=>$Zones) {
@@ -619,7 +617,7 @@ class PollsController extends ApiController
 
         $PollsBroadcast = PollsBroadcast::where('Polls_id',$request->PollsId)->delete();
 
-        if($request->has('State_id') && $request->missing('State_Division_id') && $request->missing('Greater_Zones_id') && $request->missing('Zone_id') && $request->missing('District_id') && $request->missing('Union_id'))
+        if($request->has('State_id') && $request->missing('Zone_id') && $request->missing('District_id') && $request->missing('Union_id'))
             {
                 foreach ($request->State_id as $keys=>$State) {   
                 
@@ -632,11 +630,11 @@ class PollsController extends ApiController
                 }
             }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->missing('Greater_Zones_id') )
+            else if($request->has('State_id') && $request->has('Zone_id') && $request->missing('District_id') && $request->missing('Union_id'))
             {
                 foreach ($request->State_id as $keys=>$State) {   
-                foreach ($request->State_Division_id as $keysd=>$statedivision) {
-                    if($statedivision==null)
+                foreach ($request->Zone_id as $keysd=>$zone_id) {
+                    if($zone_id==null)
                     {
                          PollsBroadcast::create([
                             'Polls_id' => $request->PollsId,
@@ -646,7 +644,7 @@ class PollsController extends ApiController
                     else{
                         PollsBroadcast::create([
                             'Polls_id' => $request->PollsId,
-                            'State_Division_id' => $statedivision,
+                            'State_Division_id' => $zone_id,
                         ]);
                     }
 
@@ -656,73 +654,73 @@ class PollsController extends ApiController
                 }
             }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->missing('Zone_id'))
-            {
-                    foreach ($request->State_Division_id as $keysd=>$statedivision) {
-                    foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
+            // else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->missing('Zone_id'))
+            // {
+            //         foreach ($request->State_Division_id as $keysd=>$statedivision) {
+            //         foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
 
-                    $greaterzone  = GreaterZones::where('State_Division_id',$request->State_Division_id[$keysd])->where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->first();
+            //         $greaterzone  = GreaterZones::where('State_Division_id',$request->State_Division_id[$keysd])->where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->first();
 
-                        if($greaterzone)
-                        {
-                            PollsBroadcast::create([
-                                'Polls_id' => $request->PollsId,
-                                'Greater_Zones_id' => $GreaterZonesid,
-                            ]); 
-                        }
-                        else
-                        {
-                            $polls = PollsBroadcast::where('Polls_id',$request->PollsId)->where('State_Division_id', $statedivision)->first();
-                            if($polls==null)
-                            {
-                                 PollsBroadcast::create([
-                                    'Polls_id' => $request->PollsId,
-                                    'State_Division_id' => $statedivision,
-                                ]);
-                            }
-                        }
+            //             if($greaterzone)
+            //             {
+            //                 PollsBroadcast::create([
+            //                     'Polls_id' => $request->PollsId,
+            //                     'Greater_Zones_id' => $GreaterZonesid,
+            //                 ]); 
+            //             }
+            //             else
+            //             {
+            //                 $polls = PollsBroadcast::where('Polls_id',$request->PollsId)->where('State_Division_id', $statedivision)->first();
+            //                 if($polls==null)
+            //                 {
+            //                      PollsBroadcast::create([
+            //                         'Polls_id' => $request->PollsId,
+            //                         'State_Division_id' => $statedivision,
+            //                     ]);
+            //                 }
+            //             }
 
                            
                     
-                    }
-                    }
+            //         }
+            //         }
 
-            }
+            // }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->has('Zone_id') && $request->missing('District_id'))
-            {
+            // else if($request->has('State_id') && $request->has('Zone_id') && $request->missing('District_id'))
+            // {
                     
-                    foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
-                    foreach ($request->Zone_id as $keyZ=>$Zones) {
+            //         foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
+            //         foreach ($request->Zone_id as $keyZ=>$Zones) {
 
-                    $zone  = Zones::where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->where('Zone_id',$request->Zone_id[$keyZ])->first();
+            //         $zone  = Zones::where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->where('Zone_id',$request->Zone_id[$keyZ])->first();
 
-                        if($zone)
-                        {
-                            PollsBroadcast::create([
-                                'Polls_id' => $request->PollsId,
-                                'Zone_id' => $Zones,
-                            ]); 
-                        }
-                        else
-                        {
+            //             if($zone)
+            //             {
+            //                 PollsBroadcast::create([
+            //                     'Polls_id' => $request->PollsId,
+            //                     'Zone_id' => $Zones,
+            //                 ]); 
+            //             }
+            //             else
+            //             {
                              
-                            $polls = PollsBroadcast::where('Polls_id',$request->PollsId)->where('Greater_Zones_id', $GreaterZonesid)->first();
-                            if($polls==null)
-                            {
-                                PollsBroadcast::create([
-                                'Polls_id' => $request->PollsId,
-                                'Greater_Zones_id' => $GreaterZonesid,
-                                ]);
-                            }
-                        }
+            //                 $polls = PollsBroadcast::where('Polls_id',$request->PollsId)->where('Greater_Zones_id', $GreaterZonesid)->first();
+            //                 if($polls==null)
+            //                 {
+            //                     PollsBroadcast::create([
+            //                     'Polls_id' => $request->PollsId,
+            //                     'Greater_Zones_id' => $GreaterZonesid,
+            //                     ]);
+            //                 }
+            //             }
                     
-                    }
-                    }
+            //         }
+            //         }
 
-            }
+            // }
 
-            else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->has('Zone_id') && $request->has('District_id') && $request->missing('Union_id'))
+            else if($request->has('State_id') && $request->has('Zone_id') && $request->has('District_id') && $request->missing('Union_id'))
             {
                     
                     foreach ($request->Zone_id as $keyZ=>$Zones) {

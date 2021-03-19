@@ -756,6 +756,7 @@ class ComposerStaticInit5e8d7bd20336e256e9f68cb73b81b1fa
         'App\\Models\\GroupMembers' => __DIR__ . '/../..' . '/app/Models/GroupMembers.php',
         'App\\Models\\IdCard' => __DIR__ . '/../..' . '/app/Models/IdCard.php',
         'App\\Models\\Language' => __DIR__ . '/../..' . '/app/Models/Language.php',
+        'App\\Models\\LanguageConfig' => __DIR__ . '/../..' . '/app/Models/LanguageConfig.php',
         'App\\Models\\Member' => __DIR__ . '/../..' . '/app/Models/Member.php',
         'App\\Models\\MemberCategory' => __DIR__ . '/../..' . '/app/Models/MemberCategory.php',
         'App\\Models\\MemberCategoryAppIcon' => __DIR__ . '/../..' . '/app/Models/MemberCategoryAppIcon.php',

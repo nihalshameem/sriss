@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class NotificationGroupBroadcast extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'active'
     ];
@@ -17,5 +18,10 @@ class NotificationGroupBroadcast extends Model
     public function Notification()
     {
         return $this->hasMany(Notification::class, 'Notification_id','id');
+    }
+
+    public function Group()
+    {
+        return $this->hasMany(Notification::class,'Notification_id','Notification_id');
     }
 }

@@ -93,6 +93,8 @@ Route::group(['prefix' => '/v2'], function () {
 
 		Route::post('/addAppNotification', [App\Http\Controllers\NotificationController::class,'addAppNotification']);
 
+		Route::post('/UpdateAppNotification', [App\Http\Controllers\NotificationController::class,'UpdateAppNotification']);
+
 		Route::get('/appNotificationList', [App\Http\Controllers\NotificationController::class,'appNotificationList']);
 
 		Route::post('/appNotificationDelete', [App\Http\Controllers\NotificationController::class,'appNotificationDelete']);
@@ -104,5 +106,7 @@ Route::group(['prefix' => '/v2'], function () {
 		Route::get('/termsandconditions', [App\Http\Controllers\WebApplicationController::class,'TermsandConditions']);
 
 		Route::post('/advertisement', [App\Http\Controllers\AdvertisementController::class,'Advertisements']);
+
+		Route::post('/Setlanguage', [App\Http\Controllers\WebApplicationController::class,'Setlanguage']);
 		
 });

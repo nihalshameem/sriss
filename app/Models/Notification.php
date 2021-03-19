@@ -15,4 +15,6 @@ class Notification extends Model
     ];
 
     protected $table = 'sss_notification_tbl';
+
+   
 }

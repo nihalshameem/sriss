@@ -15,7 +15,7 @@
             
           </div>
           <div class="col-sm-4">
-            <h3 class="title-head">App Icon</h3>
+            <h3 class="title-head">Language</h3>
           </div>
           <div class="col-sm-3">
             
@@ -32,29 +32,20 @@
               <thead>
                 <tr>
                   <th>Sl No</th>
-                  <?php
-                    $languages = \App\Models\Language::where('Language_active','D')->get();
-                  ?>
-                  @foreach($languages as $i => $language)
-                  <th>{{$language->Language_name}}</th>
-                  @endforeach
-                  <th>Image</th>
+                  <th>Languages</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($AppIcon as $i => $appIcon)
+                @foreach ($Languages as $i => $Language)
                 <tr>
                   <td>{{ $i+1 }}</td>
-                  <td>{{ $appIcon->L1_text }}</td>
-                  <td>{{ $appIcon->L2_text }}</td>
-                  <td>{{ $appIcon->L3_text }}</td>
-                  <td><img src="{{ $appIcon->AppIcon_image_path }}" width="120px" height="60px"></td>
-                  <td><span class="badge bg-success">{{ $appIcon->AppIcon_visible }}</span></td>
+                  <td>{{ $Language->Language_name }}</td>
+                  <td><span class="badge bg-success">{{ $Language->Language_active }}</span></td>
                   
                   <td>
-                   <a href="{{ route('edit.appIcon', ['AppIconId' => $appIcon->AppIcon_id]) }}"><span class="badge bg-danger"><i class="fa fa-edit fa-lg" style="text-align:center;"></i>&nbsp;&nbsp;Edit</span></a>
+                   <a href="{{ route('edit.language', ['languageId' => $Language->Language_id]) }}"><span class="badge bg-danger"><i class="fa fa-edit fa-lg" style="text-align:center;"></i>&nbsp;&nbsp;Edit</span></a>
                  </td>
                </tr>
                @endforeach
