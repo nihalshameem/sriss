@@ -71,6 +71,38 @@
         label:not(.form-check-label):not(.custom-file-label){ background-color: #fafafa; }
         .bootstrap-select .dropdown-toggle .filter-option{ background-color: #c6d4e5; color: #212543; }
         .card-primary:not(.card-outline) > .card-header {background-color: #edf6fe; }
+        .collapsible1 {
+  background-color: #0640B5;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active1, .collapsible1:hover {
+  background-color: #0640B5;
+}
+.collapsible1:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active1:after {
+  content: "\2212";
+}
+.content1 {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
 
 </style>
 
@@ -113,7 +145,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+var coll = document.getElementsByClassName("collapsible1");
+var i;
 
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active1");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
     
 
 

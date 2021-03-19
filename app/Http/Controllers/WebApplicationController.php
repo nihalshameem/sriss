@@ -429,7 +429,7 @@ public function getAppIcon(Request $request)
                 $member = Member::where('Member_Id',$request->member_id)->first();
             
                 $membercategory = MemberCategoryAppIcon::where('Category_Id',$member->Member_Category_Id)->pluck('AppIcon_Id');
-                $appIcon = AppIcon::whereIn('AppIcon_id',$membercategory)->where('AppIcon_visible','Y')->select('AppIcon_image_path',$member->Language_id.'_text As text','AppIcon_visible')->get();
+                $appIcon = AppIcon::whereIn('AppIcon_id',$membercategory)->where('AppIcon_visible','Y')->select('AppIcon_image_path',$member->Language_id.'_text As text','AppIcon_visible','AppIcon_text')->get();
                 
                 
                 if($appIcon->count()>0)

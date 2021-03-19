@@ -19,6 +19,7 @@ use Route;
 use Session;
 use PDF;
 use App;
+use Illuminate\Support\Facades\Log;
 use \Illuminate\Http\Response as Res;
 use App\Models\Country;
 use App\Models\State;
@@ -168,6 +169,7 @@ class NotificationController extends ApiController
 
     public function addAppNotification(Request $request)
         {   
+
             $rules = array (
             'member_id' => 'required',
             'token' => 'required',
@@ -176,7 +178,7 @@ class NotificationController extends ApiController
             'message' => 'required',
             'active' => 'required',
             'approved' => 'required',
-            'NotificationPath' => 'max:1024',
+            
             );
             $validator = Validator::make($request->all(),$rules);
 
@@ -190,12 +192,7 @@ class NotificationController extends ApiController
                 if($user=$this->is_valid_token($request['token']))
                 {
                     
-                    $Member = Member::where('Member_Id',$request->member_id)->first();
-                    $Volunteer = Volunteer::first();
                     
-                    $MemberLocation = Member::where('Member_Id',$request->member_id)->first();
-
-                    $date = Carbon::now()->format('Y-m-d');
                     $Notifications = array();
 
                     $notification = new Notification();
@@ -204,12 +201,12 @@ class NotificationController extends ApiController
                     $notification->Notification_end_date = $request->end_date;
                     $notification->Notification_active = $request->active;
                     $notification->Notification_approved = $request->approved;
-                    if ($request->hasFile('NotificationPath'))
+                    if ($request->hasFile('notification'))
                     {
-                        $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();
+                        $image_ext = $request->file('notification')->getClientOriginalExtension();
                         $image_extn = strtolower($image_ext);
-                        $imageName = time() .'_'. $request->NotificationPath->getClientOriginalName();
-                        $filePath = $request->file('NotificationPath')->storeAs('Notification', $imageName,'public');
+                        $imageName = time() .'_'. $request->notification->getClientOriginalName();
+                        $filePath = $request->file('notification')->storeAs('Notification', $imageName,'public');
                         $notification->Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
                     }
                     $notification->save();
@@ -223,7 +220,7 @@ class NotificationController extends ApiController
                     }else{
                         foreach (explode(',',$request->Group_id) as $row)
                         {
-                            $data[] =[
+                            $data[] = [
                                 'Group_id' => $row,
                                 'Notification_id' => $notification->id,
                                 'active' => 'Y',
@@ -250,7 +247,7 @@ class NotificationController extends ApiController
         }
 
         public function UpdateAppNotification(Request $request)
-        {   
+        { 
             $rules = array(
             'notification_id' => 'required',
             'member_id' => 'required',
@@ -260,7 +257,7 @@ class NotificationController extends ApiController
             'message' => 'required',
             'active' => 'required',
             'approved' => 'required',
-            'NotificationPath' => 'max:1024',
+            'notification' => 'max:1024',
             );
             
             $validator = Validator::make($request->all(),$rules);
@@ -275,57 +272,62 @@ class NotificationController extends ApiController
                 if($user=$this->is_valid_token($request['token']))
                 {
                     
-                    $Member = Member::where('Member_Id',$request->member_id)->first();
-                    $Volunteer = Volunteer::first();
-                    
-                    $MemberLocation = Member::where('Member_Id',$request->member_id)->first();
-
-                    $date = Carbon::now()->format('Y-m-d');
-                    $Notifications = array();
-
-                    $notification = Notification::where('Notification_id',$request->notification_id)->first();
-                    $notification->Notification_mesage = $request->message;
-                    $notification->Notification_start_date = $request->start_date;
-                    $notification->Notification_end_date = $request->end_date;
-                    $notification->Notification_active = $request->active;
-                    $notification->Notification_approved = $request->approved;
-                    if ($request->hasFile('NotificationPath'))
+                    if ($request->hasFile('notification'))
                     {
-                        $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();
+                        $image_ext = $request->file('notification')->getClientOriginalExtension();
                         $image_extn = strtolower($image_ext);
-                        $imageName = time() .'_'. $request->NotificationPath->getClientOriginalName();
-                        $filePath = $request->file('NotificationPath')->storeAs('Notification', $imageName,'public');
-                        $notification->Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
-                    }
-                    $notification->save();
+                        $imageName = time() .'_'. $request->notification->getClientOriginalName();
+                        $filePath = $request->file('notification')->storeAs('Notification', $imageName,'public');
 
-                    /*if($request->is_group=='N'){
+                        $Notification = Notification::where("Notification_id", $request->notification_id)->update([
+                        'Notification_start_date'=> $request->start_date,
+                        'Notification_end_date'=> $request->end_date,
+                        'Notification_active'=> $request->active,
+                        'Notification_approved'=> $request->approved,
+                        'Notification_mesage'=> $request->message,
+                        'Notification_image_path'=> config('app.url').'storage/app/public/Notification/'.$imageName]);
+                          
+                    }
+                    else
+                    {
+                         $Notification = Notification::where("Notification_id", $request->notification_id)->update([
+                        'Notification_start_date'=> $request->start_date,
+                        'Notification_end_date'=> $request->end_date,
+                        'Notification_active'=> $request->active,
+                        'Notification_approved'=> $request->approved,
+                        'Notification_mesage'=> $request->message]);
+                    }
+
+                    if($request->is_group=='N'){
+                        NotificationBroadcast::where('Notification_id',$request->notification_id)->delete();
+
                         NotificationBroadcast::create([
-                            'Notification_id' => $request->NotificationId,
+                            'Notification_id' => $request->notification_id,
                             'State_id' => 1,
                         ]);
 
-                    }else{
+                    }else
+                    {
                         foreach (explode(',',$request->Group_id) as $row)
                         {
+                            NotificationGroupBroadcast::where('Notification_id',$request->notification_id)->delete();
+
                             $data[] =[
                                 'Group_id' => $row,
-                                'Notification_id' => $notification->id,
+                                'Notification_id' => $request->notification_id,
                                 'active' => 'Y',
                                ];
                         }
                         
-                        NotificationGroupBroadcast::insert($data);*/
+                        NotificationGroupBroadcast::insert($data);
             
                     
-
-                    $notifications = Notification::orderby('Notification_id','DESC')->first();
-                  
                     return Response([
                                 'status' => 'success',
                                 'code' => $this->getStatusCode(),
                                 'message' => 'Uploded Successfull'
                             ]); 
+                }
                 }
                 else
                 {

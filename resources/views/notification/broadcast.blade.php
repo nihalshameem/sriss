@@ -27,6 +27,9 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Include the plugin's CSS and JS: -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" type="text/css"/>
+     <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
     <style>
         .nav-link{
@@ -304,6 +307,8 @@ td{
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+<script src="{{ asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+
 <script type="text/javascript">
 
     $(document).ready(function() {
@@ -341,6 +346,8 @@ td{
      $('#zone').multiselect();
      $('#district').multiselect();
      $('#union').multiselect();
+
+     
  });
 
 </script>
@@ -443,6 +450,7 @@ $.ajax({
     url : '{{URL::to('LoadUnion')}}',
     data : {'district_id':result},
     success:function(response){
+    console.log(response);
      $('#union').empty();
      var options = response.forEach( function(istate, index){
         $('#union').append('<option value="'+istate.Union_id+'">'+istate.Union_desc+'</option>').multiselect("refresh");

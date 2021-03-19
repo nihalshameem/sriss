@@ -25,7 +25,7 @@
         <div class="col-md-12">
           <div class="card card-primary">
          
-            <form role="form" method="post" class="col-md-6" action="{{ url('Privilleges/Update') }}" enctype="multipart/form-data" style="margin:0 auto;">
+            <form role="form" method="post" class="col-md-8" action="{{ url('Privilleges/Update') }}" enctype="multipart/form-data" style="margin:0 auto;">
               @csrf
                  @if( Session::has( 'success' ))
             <div class="alert alert-success alert-block" style="border-color: #8ac38b;color: #388E3C;background-color: #cde0c4;">
@@ -47,45 +47,127 @@
                       <input type="text" class="form-control"  value="{{$Roles->name}}" disabled>  
                      
                 </div>
-                <div class="row">
-                @foreach($role_permissions as $role_permission) 
-
-                      <?php
-                          $permissionschecked  = App\Models\Permission::where('id',$role_permission->permission_id)->get();
-                      ?>
-                      @foreach($permissionschecked as $permissionschecked) 
-
-                 <div class="col-md-4 form-group">
-                     
-                        <input type="checkbox" name="permission[]"  value="{{ $permissionschecked->id}}" id="permission" checked>&nbsp;&nbsp;{{ $permissionschecked->name}}<br>
+                <button type="button" class="collapsible1">Configurations</button>
+                <div class="content1">
                         <?php
-                          $user  = App\Models\User::where('name',Session::get('name'))->first();
-                      ?>
-                        <input type="hidden" class="form-control"  value="{{$Roles->id}}" name="role_id[]">  
-                      
-                      
-                     
-                      
-                </div>
-                @endforeach
-                          
-
-                      @endforeach
-                      <?php
-                          $permissionsUnchecked  = App\Models\Permission::whereNotIn('id',$role_permissionspluck)->get();
-                      ?>
-                       @foreach($permissionsUnchecked as $permissions) 
-                       <div class="col-md-4 form-group">
-                      <input type="checkbox" name="permission[]"  value="{{ $permissions->id}}" id="permission" >&nbsp;&nbsp;{{ $permissions->name}}<br>
+                        $permissionschecked  = App\Models\Permission::where('grouping','configurations')->whereIn('id',$role_permissionspluck)->get();
+                         $permissionsUnchecked  = App\Models\Permission::where('grouping','configurations')->whereNotIn('id',$role_permissionspluck)->get();
+                        ?>
+                        <div class="row">
+                        @foreach($permissionschecked as $permissionschecked) 
+                           <div class="col-md-4 form-group"><br>
+                               
+                                  <input type="checkbox" name="permission[]"  value="{{ $permissionschecked->id}}" id="permission" checked>&nbsp;&nbsp;{{ $permissionschecked->name}}<br>
+                                  <?php
+                                    $user  = App\Models\User::where('name',Session::get('name'))->first();
+                                ?>
+                                  <input type="hidden" class="form-control"  value="{{$Roles->id}}" name="role_id[]">                         
+                                
+                          </div>
+                        @endforeach
+                        @foreach($permissionsUnchecked as $permissionsUnchecked) 
+                            <div class="col-md-4 form-group"><br>
+                      <input type="checkbox" name="permission[]"  value="{{ $permissionsUnchecked->id}}" id="permission" >&nbsp;&nbsp;{{ $permissionsUnchecked->name}}<br>
                       <?php
                           $user  = App\Models\User::where('name',Session::get('name'))->first();
                       ?>
                       <input type="hidden" class="form-control" name="user_id[]" value="{{$user->id}}">
                       <input type="hidden" class="form-control"  value="{{$Roles->id}}" name="role_id[]"> 
                       </div> 
-                      @endforeach
-                    </div>
-
+                        @endforeach
+              </div>
+</div>
+<p></p>
+<button type="button" class="collapsible1">Operations</button>
+<div class="content1">
+  <?php
+                        $permissionschecked  = App\Models\Permission::where('grouping','operations')->whereIn('id',$role_permissionspluck)->get();
+                         $permissionsUnchecked  = App\Models\Permission::where('grouping','operations')->whereNotIn('id',$role_permissionspluck)->get();
+                        ?>
+                        <div class="row">
+                        @foreach($permissionschecked as $permissionschecked) 
+                           <div class="col-md-4 form-group"><br>
+                               
+                                  <input type="checkbox" name="permission[]"  value="{{ $permissionschecked->id}}" id="permission" checked>&nbsp;&nbsp;{{ $permissionschecked->name}}<br>
+                                  <?php
+                                    $user  = App\Models\User::where('name',Session::get('name'))->first();
+                                ?>
+                                  <input type="hidden" class="form-control"  value="{{$Roles->id}}" name="role_id[]">                         
+                                
+                          </div>
+                        @endforeach
+                        @foreach($permissionsUnchecked as $permissionsUnchecked) 
+                            <div class="col-md-4 form-group"><br>
+                      <input type="checkbox" name="permission[]"  value="{{ $permissionsUnchecked->id}}" id="permission" >&nbsp;&nbsp;{{ $permissionsUnchecked->name}}<br>
+                      <?php
+                          $user  = App\Models\User::where('name',Session::get('name'))->first();
+                      ?>
+                      <input type="hidden" class="form-control" name="user_id[]" value="{{$user->id}}">
+                      <input type="hidden" class="form-control"  value="{{$Roles->id}}" name="role_id[]"> 
+                      </div> 
+                        @endforeach
+              </div>
+</div><p></p>
+<button type="button" class="collapsible1">Masters</button>
+<div class="content1">
+  <?php
+                        $permissionschecked  = App\Models\Permission::where('grouping','master')->whereIn('id',$role_permissionspluck)->get();
+                         $permissionsUnchecked  = App\Models\Permission::where('grouping','master')->whereNotIn('id',$role_permissionspluck)->get();
+                        ?>
+                        <div class="row">
+                        @foreach($permissionschecked as $permissionschecked) 
+                           <div class="col-md-4 form-group"><br>
+                               
+                                  <input type="checkbox" name="permission[]"  value="{{ $permissionschecked->id}}" id="permission" checked>&nbsp;&nbsp;{{ $permissionschecked->name}}<br>
+                                  <?php
+                                    $user  = App\Models\User::where('name',Session::get('name'))->first();
+                                ?>
+                                  <input type="hidden" class="form-control"  value="{{$Roles->id}}" name="role_id[]">                         
+                                
+                          </div>
+                        @endforeach
+                        @foreach($permissionsUnchecked as $permissionsUnchecked) 
+                            <div class="col-md-4 form-group"><br>
+                      <input type="checkbox" name="permission[]"  value="{{ $permissionsUnchecked->id}}" id="permission" >&nbsp;&nbsp;{{ $permissionsUnchecked->name}}<br>
+                      <?php
+                          $user  = App\Models\User::where('name',Session::get('name'))->first();
+                      ?>
+                      <input type="hidden" class="form-control" name="user_id[]" value="{{$user->id}}">
+                      <input type="hidden" class="form-control"  value="{{$Roles->id}}" name="role_id[]"> 
+                      </div> 
+                        @endforeach
+</div></div>
+<p></p>
+<button type="button" class="collapsible1">Reports</button>
+<div class="content1">
+  <?php
+                        $permissionschecked  = App\Models\Permission::where('grouping','reports')->whereIn('id',$role_permissionspluck)->get();
+                         $permissionsUnchecked  = App\Models\Permission::where('grouping','reports')->whereNotIn('id',$role_permissionspluck)->get();
+                        ?>
+                        <div class="row">
+                        @foreach($permissionschecked as $permissionschecked) 
+                           <div class="col-md-4 form-group"><br>
+                               
+                                  <input type="checkbox" name="permission[]"  value="{{ $permissionschecked->id}}" id="permission" checked>&nbsp;&nbsp;{{ $permissionschecked->name}}<br>
+                                  <?php
+                                    $user  = App\Models\User::where('name',Session::get('name'))->first();
+                                ?>
+                                  <input type="hidden" class="form-control"  value="{{$Roles->id}}" name="role_id[]">                         
+                                
+                          </div>
+                        @endforeach
+                        @foreach($permissionsUnchecked as $permissionsUnchecked) 
+                            <div class="col-md-4 form-group"><br>
+                      <input type="checkbox" name="permission[]"  value="{{ $permissionsUnchecked->id}}" id="permission" >&nbsp;&nbsp;{{ $permissionsUnchecked->name}}<br>
+                      <?php
+                          $user  = App\Models\User::where('name',Session::get('name'))->first();
+                      ?>
+                      <input type="hidden" class="form-control" name="user_id[]" value="{{$user->id}}">
+                      <input type="hidden" class="form-control"  value="{{$Roles->id}}" name="role_id[]"> 
+                      </div> 
+                        @endforeach
+              </div>
+</div><p></p>
                <div style="max-width: 200px; margin: auto;">
                       <a href="/User" class="btn btn-primary">Cancel</a>
                       <button type="submit" class="btn btn-primary">Submit</button>

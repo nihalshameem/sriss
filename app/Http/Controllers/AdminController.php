@@ -123,7 +123,6 @@ class AdminController extends Controller
         
         $Role = Role::find($request->Id);
         $Role->name = $request->name;
-        $Role->slug = $request->name;
         $Role->save();
         return redirect(route('list.admin'))->withInput(['tab'=>'statedivision-tabs']);
     }

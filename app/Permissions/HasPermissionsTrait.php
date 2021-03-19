@@ -76,13 +76,19 @@ trait HasPermissionsTrait {
   
   public function hasPermission($permission,$role) 
   {
-    return (bool) DB::table('roles_permissions')->where('role_id',$role)->where('permission_id',$permission)->count();
+    $permission = Permission::where('slug',$permission)->first();
+    return (bool) DB::table('roles_permissions')->where('role_id',$role)->where('permission_id',$permission['id'])->count();
   }
 
   protected function getAllPermissions(array $permissions) {
 
     return Permission::whereIn('slug',$permissions)->get();
     
+  }
+   public function hasPermissions($permissions,$role) 
+  {
+    $permission = Permission::whereIn('slug',$permissions)->pluck('id');
+    return (bool) DB::table('roles_permissions')->where('role_id',$role)->count();
   }
 
 }
