@@ -129,14 +129,13 @@ class MembersController extends ApiController
             $user->save();
         
             $user = User::where('mobile_number', $request['mobile_number'])->first();
-            $language = Language::where('Language_lock', 'Y')->value('Language_lock');
             $member = Member::where('Mobile_No',$request['mobile_number'])->value('Profile_Picture');
 
                         return Response([
                             'status' => 'success',
                             'code' => $this->getStatusCode(),
                             'message' => 'Register Successfull',
-                            'data' => $this->user_transform($user,$language,$member)
+                            'data' => $this->user_transform($user,$member)
                         ]);   
             }
     }
@@ -178,13 +177,12 @@ class MembersController extends ApiController
                                     $user->save();
                                     $user = User::where('mobile_number', $request['mobile_number'])->first();
                                     $member = Member::where('Mobile_No', $request['mobile_number'])->value('Profile_Picture');
-                                    $language = Language::where('Language_lock', 'Y')->value('Language_lock');
                                     return Response([
                                         'status' => 'success',
                                         'code' => 200,
                                         'message' => 'Login Successfull',
                                         'IsApproval' => true,
-                                        'data' => $this->user_transform($user,$language,$member)
+                                        'data' => $this->user_transform($user,$member)
                                     ]);
                                 }catch(JWTException $e){
                                     $user->api_token =null;
@@ -240,14 +238,13 @@ class MembersController extends ApiController
         $user->api_token = $token;
         $user->save();
         $user = User::where('mobile_number','LIKE','%'.$mobile_number.'%')->first();
-        $language =  Language::value('Language_lock');
         $member = Member::where('Mobile_No', $mobile_number)->value('Profile_Picture');
         return Response([
             'status' => 'success',
             'code' => $this->getStatusCode(),
             'message' => 'Login successful!',
             'IsApproval' => true,
-            'data' => $this->user_transform($user,$language,$member)
+            'data' => $this->user_transform($user,$member)
         ]);
     }
     
@@ -291,14 +288,13 @@ class MembersController extends ApiController
         ];
     }
 
-    public function user_transform($user,$language,$member){
+    public function user_transform($user,$member){
         return [
             'name' => $user->name,
             'member_id' => $user->Member_Id,
             'mobile_number' => $user->mobile_number,
             'email' => $user->email,
             'api_token' => $user->api_token,
-            'language_lock' => $language,
             'is_volunteer' => $user->Is_Volunteer,
             'profile_pic' => $member,
 
@@ -581,8 +577,13 @@ class MembersController extends ApiController
     public function getProfileData()
     {
        
-        $profiles =  MemberProfile::pluck('active','field_name');
-        
+        $profiles =  MemberProfile::pluck('active','field_name')->toArray();
+        $labels =  MemberProfile::get();
+        foreach($labels as $label)
+        {
+
+            $profiles = array_merge($profiles, array($label->field_name.'_label'=>$label->label)); 
+        }
         if($profiles)
         {
             return $this->respond([
@@ -597,7 +598,7 @@ class MembersController extends ApiController
             return $this->respond([
                         'status' => 'Failed',
                         'code' => 400,
-                        'message' => 'Failed to Update',
+                        'message' => 'Data Not Found',
                         ]);
         }
     }
@@ -606,7 +607,7 @@ class MembersController extends ApiController
     {
 
         $rules = array (
-            'mobile_number' => 'required',
+            'member_id' => 'required',
             'token'=>'required',
             );
 
@@ -622,7 +623,7 @@ class MembersController extends ApiController
                 try
                 {   
                     
-                    $members = Member::where("Mobile_No", "=",$request['mobile_number'])->first();
+                    $members = Member::where("member_id", "=",$request['member_id'])->first();
 
 
                     if($request['first_name']){
@@ -660,6 +661,33 @@ class MembersController extends ApiController
                     }
                     if($request['pincode']){
                     $members->Pincode = $request['pincode'];
+                    }
+                    if($request['Text_Field_1']){
+                    $members->Text_Field_1 = $request['Text_Field_1'];
+                    }
+                    if($request['Text_Field_2']){
+                    $members->Text_Field_2 = $request['Text_Field_2'];
+                    }
+                    if($request['Text_Field_3']){
+                    $members->Text_Field_3 = $request['Text_Field_3'];
+                    }
+                    if($request['Text_Field_4']){
+                    $members->Text_Field_4 = $request['Text_Field_4'];
+                    }
+                    if($request['Date_Field_1']){
+                    $members->Date_Field_1 = $request['Date_Field_1'];
+                    }
+                    if($request['Date_Field_2']){
+                    $members->Date_Field_2 = $request['Date_Field_2'];
+                    }
+                    if($request['Date_Field_3']){
+                    $members->Date_Field_3 = $request['Date_Field_3'];
+                    }
+                    if($request['Yes_No_Field_1']){
+                    $members->Yes_No_Field_1 = $request['Yes_No_Field_1'];
+                    }
+                    if($request['Yes_No_Field_2']){
+                    $members->Yes_No_Field_2 = $request['Yes_No_Field_2'];
                     }
                     if($request['district']){
                     $district = District::where('District_desc',$request['district'])->first();
@@ -706,7 +734,7 @@ class MembersController extends ApiController
     public function getProfileStored(Request $request)
     {
         $rules = array (
-            'mobile_number' => 'required',
+            'member_id' => 'required',
             'token' => 'required',
             );
             
@@ -719,9 +747,11 @@ class MembersController extends ApiController
         {   
             if($user=$this->is_valid_token($request['token']))
             {
-                $details =array();
-                $member = Member::where('Mobile_No',$request->mobile_number)->first()->toArray();
-                $members = Member::where('Mobile_No',$request->mobile_number)->first();
+                $details = array();
+                $member = Member::where('Member_Id',$request->member_id)
+                                ->first()
+                                ->toArray();
+                $members = Member::where('Member_Id',$request->member_id)->first();
                 $districtscount = District::where('District_Id',$members->District_Id)->select('District_desc As District')->count();
                 if($districtscount>0)
                 {

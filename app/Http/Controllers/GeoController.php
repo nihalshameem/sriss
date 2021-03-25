@@ -206,7 +206,7 @@ class GeoController extends ApiController
 		$State = State::orderBy('State_desc')->get();
 		$Zones = Zones::where('Zone_id',$Zoneid)->first();
 
-		 return view('geo.edit.zoneedit',compact('GreaterZones'))->with([
+		 return view('geo.edit.zoneedit',compact('State'))->with([
             'Zones'   => $Zones,
             
         ]);

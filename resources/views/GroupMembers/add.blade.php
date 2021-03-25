@@ -87,10 +87,15 @@
           {{ Session::get('warning3') }}
       </div>
     @endif
+    @if( Session::has( 'warning4' ))
+     <div class="alert alert-danger" style="margin-top:15px;">
+          {{ Session::get('warning4') }}
+      </div>
+    @endif
 </div>
 <div class="col-md-4 form-group">
   <label for="exampleInputPassword1">Group Name</label><br>
-  <select name="multi_Group_id" id="group_name" class="selectpicker form-control memberdeactivate"  data-live-search="true" >
+  <select name="multi_Group_id" id="group_name" class="selectpicker form-control memberdeactivate" data-live-search="true" >
           <option value="">Group Name</option>
           @foreach ($memberGroups as $memberGroup)
           

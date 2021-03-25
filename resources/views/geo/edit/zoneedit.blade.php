@@ -64,7 +64,7 @@
             
           </div>
           <div style="max-width: 200px; margin: auto;">
-            <button type="submit"  class="btn btn-primary" value="Submit">submit</button>
+            <button type="submit"  class="btn btn-primary" value="Submit">Submit</button>
             <button type="button"  class="btn btn-primary" data-dismiss="modal">Cancel</button>
           </div>
         </form>

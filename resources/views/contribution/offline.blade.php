@@ -99,7 +99,7 @@
 </div>
 <div class="row">     
    <div class="col-md-4  form-group">
-      <label for="exampleInputPassword1">Karyakathas Name&nbsp;<span style="color:red">*</span></label>
+      <label for="exampleInputPassword1">Volunteer Name&nbsp;<span style="color:red">*</span></label>
       <input type="text" class="form-control" name="karyakathas_name" placeholder="Karyakathas Name" value="{{{ $offline->karyakathas_name ?? '' }}}" required>
       
   </div>

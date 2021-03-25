@@ -63,7 +63,7 @@
                 <div class="icheck-primary d-inline">
                   <input type="radio" id="checkboxPrimary2" value="V"  name="approve" >
                   <label for="checkboxPrimary2">
-                    Karyakarthas
+                    Volunteer
                   </label>
                 </div>
               </div>

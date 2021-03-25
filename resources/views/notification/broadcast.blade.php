@@ -183,7 +183,7 @@ td{
 </style>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed" style="background-color:#ffffb7">
+<body class="hold-transition sidebar-mini layout-fixed" style="background-color:#fafafa">
     <div class="wrapper">
      @include('layouts.header')
      @include('layouts.sidebar')
@@ -224,7 +224,7 @@ td{
         </div>
   </div><br>
   <div class="row">
-    <div class="col-md-4 form-group">
+    <div class="col-md-3 form-group">
       <label for="exampleInputPassword1">State</label><br>
       <select id="states" multiple="multiple" name="State_id[]" onchange="LoadZones(this)">
         <option disabled="">select state</option>
@@ -240,7 +240,7 @@ td{
 </div>
 
 <br>
-<div class="col-md-4 form-group">
+<div class="col-md-3 form-group">
   <label for="exampleInputPassword1">Zones</label><br>
   <select id="zone" multiple="multiple" name="Zone_id[]" onchange="LoadDistrict(this)">
     <option>Select Zones</option>
@@ -249,7 +249,7 @@ td{
 
 </div>
 
-<div class="col-md-4 form-group">
+<div class="col-md-3 form-group">
   <label for="exampleInputPassword1">District</label><br>
   <select id="district" multiple="multiple"  name="District_id[]" onchange="LoadUnion(this)">
     <option>Select district</option>
@@ -257,10 +257,10 @@ td{
 </select>
 
 </div>
-<div class="col-md-4 form-group">
-  <label for="exampleInputPassword1">Union</label><br>
+<div class="col-md-3 form-group">
+  <label for="exampleInputPassword1">Area</label><br>
   <select id="union"  name="Union_id[]" multiple="multiple">
-    <option>Select Union</option>
+    <option>Select Area</option>
 
 </select>
 
@@ -322,22 +322,22 @@ td{
       $('#states').multiselect('destroy');
   });
      $('#states').multiselect({
-        buttonWidth: '300px'
+        buttonWidth: '250px'
     });
      $('#StateDivision').multiselect({
-        buttonWidth: '300px'
+        buttonWidth: '250px'
     });
      $('#GreaterZones').multiselect({
-        buttonWidth: '300px'
+        buttonWidth: '250px'
     });
      $('#zone').multiselect({
-        buttonWidth: '300px'
+        buttonWidth: '250px'
     });
      $('#district').multiselect({
-        buttonWidth: '300px'
+        buttonWidth: '250px'
     });
      $('#union').multiselect({
-        buttonWidth: '300px'
+        buttonWidth: '250px'
     });
 
      $('#states').multiselect();
@@ -378,7 +378,7 @@ $.ajax({
         $('#zone').multiselect('destroy');
     });
      $('#zone').multiselect({
-        buttonWidth: '300px',
+        buttonWidth: '250px',
         enableFiltering: true,
         includeSelectAllOption: true,
         maxHeight: 200,
@@ -417,7 +417,7 @@ $.ajax({
         $('#district').multiselect('destroy');
     });
      $('#district').multiselect({
-      buttonWidth: '300px',
+      buttonWidth: '250px',
         enableFiltering: true,
         includeSelectAllOption: true,
         maxHeight: 200,
@@ -450,14 +450,13 @@ $.ajax({
     url : '{{URL::to('LoadUnion')}}',
     data : {'district_id':result},
     success:function(response){
-    console.log(response);
      $('#union').empty();
      var options = response.forEach( function(istate, index){
         $('#union').append('<option value="'+istate.Union_id+'">'+istate.Union_desc+'</option>').multiselect("refresh");
         $('#union').multiselect('destroy');
     });
      $('#union').multiselect({
-           buttonWidth: '300px',
+           buttonWidth: '250px',
         enableFiltering: true,
         includeSelectAllOption: true,
         maxHeight: 200,

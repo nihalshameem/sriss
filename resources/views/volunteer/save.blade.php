@@ -123,7 +123,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4 form-group">
+    <div class="col-md-3 form-group">
       <label for="exampleInputPassword1">State</label><br>
       <select class="form-control" id="states" name="State_id" onchange="LoadZones(this)">
         <option value="">Select State</option>
@@ -141,7 +141,7 @@
     @endif
     
 </div>
-<div class="col-md-4 form-group">
+<div class="col-md-3 form-group">
   <label for="exampleInputPassword1">Zones</label><br>
   <select class="form-control" id="zone" name="Zone_id" onchange="LoadDistrict(this)">
      
@@ -150,7 +150,7 @@
  </select>
  
 </div>
-<div class="col-md-4 form-group">
+<div class="col-md-3 form-group">
     <label for="exampleInputPassword1">District</label><br>
     <select class="form-control"  id="district" name="District_id" onchange="LoadUnion(this)">
        
@@ -159,11 +159,11 @@
    </select>
    
 </div>
-<div class="col-md-4 form-group">
-  <label for="exampleInputPassword1">Union</label><br>
+<div class="col-md-3 form-group">
+  <label for="exampleInputPassword1">Area</label><br>
   <select class="form-control" id="union"  name="Union_id" onchange="LoadPanchayat(this)">
     
-     <option value="">Select Union</option>
+     <option value="">Select Area</option>
      
  </select>
  

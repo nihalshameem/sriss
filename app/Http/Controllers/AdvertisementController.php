@@ -30,8 +30,8 @@ use \Illuminate\Http\Response as Res;
 class AdvertisementController extends ApiController
 {
 
-	/*******WEB SERVICE***********/
-	public function Advertisements(Request $request)
+    /*******WEB SERVICE***********/
+    public function Advertisements(Request $request)
     {
          $rules = array (
             'member_id' => 'required',
@@ -158,8 +158,8 @@ class AdvertisementController extends ApiController
 
 
 
-	/********WEB APPLICATION*********/
-    	public function GetAdvertisements()
+    /********WEB APPLICATION*********/
+        public function GetAdvertisements()
         {
             $Advertisements = Advertisement::orderby('id','DESC')->get();
             return view('Advertisement.list',compact('Advertisements'));
@@ -199,7 +199,7 @@ class AdvertisementController extends ApiController
                             $Ad_image_path = config('app.url').'storage/app/public/Advertisement/'.$imageName;
                 $advertisement->image_path = $Ad_image_path;  
                 }else{
-                	Session::put('Advertisement_id',$advertisement->id);
+                    Session::put('Advertisement_id',$advertisement->id);
                     return \Redirect::back()->withInput()->withWarning('Must upload image field');
                 }
                 $advertisement->save();
@@ -226,7 +226,7 @@ class AdvertisementController extends ApiController
                      $Advertisement = Advertisement::where("id", $request->Advertisement_id)->update(['from_date'=> $request->from_date,'to_date'=> $request->to_date,'active'=> $request->active,'description'=> $request->description,'image_path'=> $Ad_image_path, 'link'=> $request->link,'description'=> $request->description]);
                      
                      $adBroad=new AdvertisementBroadcast();
-                     $adBroad->advertisement_id=$advertisement->id;
+                     $adBroad->advertisement_id=$request->Advertisement_id;
                      $adBroad->State_id=1;
                      $adBroad->save();
 
@@ -270,7 +270,7 @@ class AdvertisementController extends ApiController
             {
                 $Advertisement = Advertisement::where("id", $request->Advertisement_id)->update(['from_date'=> $request->from_date,'to_date'=> $request->to_date,'active'=> $request->active,'description'=> $request->description, 'link'=> $request->link,'description'=> $request->description]); 
                 Session::put('Advertisement_id',$request->Advertisement_id);
-                return redirect(route('list.advertisementbroadcastedit')); 
+                return redirect(route('list.advertisements'));
             }
               
         }
@@ -342,21 +342,21 @@ class AdvertisementController extends ApiController
             {
                 foreach ($request->State_id as $keyS=>$State) {   
                 foreach ($request->Zone_id as $keyZ=>$Zone) {
-                	$zone  = Zones::where('State_id',$request->State_id[$keyS])->where('Zone_id',$request->Zone_id[$keyZ])->first();
+                    $zone  = Zones::where('State_id',$request->State_id[$keyS])->where('Zone_id',$request->Zone_id[$keyZ])->first();
                     if($zone==null)
                     {
-                    	$adBroad=new AdvertisementBroadcast();
-		                $adBroad->advertisement_id=$request->Advertisement_Id;
-		                $adBroad->State_id=$State;
-		                $adBroad->save();
+                        $adBroad=new AdvertisementBroadcast();
+                        $adBroad->advertisement_id=$request->Advertisement_Id;
+                        $adBroad->State_id=$State;
+                        $adBroad->save();
                          
                     }
                     else{
 
                         $adBroad=new AdvertisementBroadcast();
-		                $adBroad->advertisement_id=$request->Advertisement_Id;
-		                $adBroad->zone_id=$Zone;
-		                $adBroad->save();
+                        $adBroad->advertisement_id=$request->Advertisement_Id;
+                        $adBroad->zone_id=$Zone;
+                        $adBroad->save();
                     }
 
                        
@@ -377,9 +377,9 @@ class AdvertisementController extends ApiController
                         {
                         
                             $adBroad=new AdvertisementBroadcast();
-			                $adBroad->advertisement_id=$request->Advertisement_Id;
-			                $adBroad->district_id=$District;
-		                	$adBroad->save();
+                            $adBroad->advertisement_id=$request->Advertisement_Id;
+                            $adBroad->district_id=$District;
+                            $adBroad->save();
 
                         }
                         else
@@ -389,10 +389,10 @@ class AdvertisementController extends ApiController
                             if($advertisement==null)
                             {
                                  
-                            	$adBroad=new AdvertisementBroadcast();
-				                $adBroad->advertisement_id=$request->Advertisement_Id;
-				                $adBroad->zone_id=$Zones;
-			                	$adBroad->save();
+                                $adBroad=new AdvertisementBroadcast();
+                                $adBroad->advertisement_id=$request->Advertisement_Id;
+                                $adBroad->zone_id=$Zones;
+                                $adBroad->save();
                             }
                         }
                         }
@@ -412,9 +412,9 @@ class AdvertisementController extends ApiController
                         {
                            
                             $adBroad=new AdvertisementBroadcast();
-			                $adBroad->advertisement_id=$request->Advertisement_Id;
-			                $adBroad->taluk_id=$Union;
-		                	$adBroad->save(); 
+                            $adBroad->advertisement_id=$request->Advertisement_Id;
+                            $adBroad->taluk_id=$Union;
+                            $adBroad->save(); 
                         }
                         else
                         {
@@ -424,9 +424,9 @@ class AdvertisementController extends ApiController
                                 {
                                      
                                     $adBroad=new AdvertisementBroadcast();
-									$adBroad->advertisement_id=$request->Advertisement_Id;
-									$adBroad->district_id=$District;
-									$adBroad->save(); 
+                                    $adBroad->advertisement_id=$request->Advertisement_Id;
+                                    $adBroad->district_id=$District;
+                                    $adBroad->save(); 
                                 }
                              
                         }
@@ -466,9 +466,9 @@ class AdvertisementController extends ApiController
                 foreach ($request->State_id as $keys=>$State) {   
                 
                         $adBroad=new AdvertisementBroadcast();
-		                $adBroad->advertisement_id=$request->Advertisement_Id;
-		                $adBroad->State_id=$State;
-	                	$adBroad->save(); 
+                        $adBroad->advertisement_id=$request->Advertisement_Id;
+                        $adBroad->State_id=$State;
+                        $adBroad->save(); 
                 
                 }
             }
@@ -477,21 +477,21 @@ class AdvertisementController extends ApiController
             {
                 foreach ($request->State_id as $keyS=>$State) {   
                 foreach ($request->Zone_id as $keyZ=>$Zone) {
-                	$zone  = Zones::where('State_id',$request->State_id[$keyS])->where('Zone_id',$request->Zone_id[$keyZ])->first();
+                    $zone  = Zones::where('State_id',$request->State_id[$keyS])->where('Zone_id',$request->Zone_id[$keyZ])->first();
                     if($zone==null)
                     {
                          
                          $adBroad=new AdvertisementBroadcast();
-		                $adBroad->advertisement_id=$request->Advertisement_Id;
-		                $adBroad->State_id=$State;
-	                	$adBroad->save(); 
+                        $adBroad->advertisement_id=$request->Advertisement_Id;
+                        $adBroad->State_id=$State;
+                        $adBroad->save(); 
                     }
                     else{
                         
                         $adBroad=new AdvertisementBroadcast();
-		                $adBroad->advertisement_id=$request->Advertisement_Id;
-		                $adBroad->zone_id=$Zone;
-	                	$adBroad->save(); 
+                        $adBroad->advertisement_id=$request->Advertisement_Id;
+                        $adBroad->zone_id=$Zone;
+                        $adBroad->save(); 
                     }
 
                        
@@ -514,9 +514,9 @@ class AdvertisementController extends ApiController
                         {
                             
                             $adBroad=new AdvertisementBroadcast();
-		                $adBroad->advertisement_id=$request->Advertisement_Id;
-		                $adBroad->District_id=$District;
-	                	$adBroad->save(); 
+                        $adBroad->advertisement_id=$request->Advertisement_Id;
+                        $adBroad->District_id=$District;
+                        $adBroad->save(); 
                         }
                         else
                         {
@@ -526,9 +526,9 @@ class AdvertisementController extends ApiController
                             {
                                  
                                  $adBroad=new AdvertisementBroadcast();
-		                $adBroad->advertisement_id=$request->Advertisement_Id;
-		                $adBroad->Zone_id=$Zones;
-	                	$adBroad->save(); 
+                        $adBroad->advertisement_id=$request->Advertisement_Id;
+                        $adBroad->Zone_id=$Zones;
+                        $adBroad->save(); 
                             }
                         }
                         }
@@ -548,9 +548,9 @@ class AdvertisementController extends ApiController
                         {
                              
                             $adBroad=new AdvertisementBroadcast();
-		                $adBroad->advertisement_id=$request->Advertisement_Id;
-		                $adBroad->Taluk_id=$Union;
-	                	$adBroad->save(); 
+                        $adBroad->advertisement_id=$request->Advertisement_Id;
+                        $adBroad->Taluk_id=$Union;
+                        $adBroad->save(); 
                         }
                         else
                         {
@@ -559,9 +559,9 @@ class AdvertisementController extends ApiController
                                 if($notification==null)
                                 {
                                  $adBroad=new AdvertisementBroadcast();
-				                $adBroad->Advertisement_id=$request->Advertisement_Id;
-				                $adBroad->State_id=$District;
-			                	$adBroad->save(); 
+                                $adBroad->Advertisement_id=$request->Advertisement_Id;
+                                $adBroad->State_id=$District;
+                                $adBroad->save(); 
                                 }
                         }
                     }

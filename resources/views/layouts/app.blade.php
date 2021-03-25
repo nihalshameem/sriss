@@ -107,7 +107,7 @@
 </style>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed" style="background-color:#ffffb7; ">
+<body class="hold-transition sidebar-mini layout-fixed" style="background-color:#fafafa; ">
     <div class="wrapper">
         @include('layouts.header')
         @include('layouts.sidebar')

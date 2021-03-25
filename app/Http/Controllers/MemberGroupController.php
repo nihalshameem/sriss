@@ -85,36 +85,43 @@ class MemberGroupController extends ApiController
     }
 
     public function SaveMultiGroupMember(Request $request){
-		$warn="";
-		$added="";
-    	foreach (explode(',',$request->multi_member_id) as $row){
-    		if($row!=""){
-    			$member_reg=Member::where('Mobile_No',$row)->first();
-		    	$count = GroupMembers::where('Group_id', $request->multi_Group_id)
-		    				->where('Member_tbl_id',$member_reg->id)->count();		
-		    	if($count>0){
-		    		$warn=$warn.$row.", ";
-		    	}else if($count==0){
-		    		$added.=$row.", ";
-		    		$GroupMembers = new GroupMembers();
-			        $GroupMembers->Group_id = $request->multi_Group_id;
-			        $GroupMembers->Member_tbl_id = $member_reg->id;
-			        $GroupMembers->Member_Id = $member_reg->Member_Id;
-			        $GroupMembers->active = 'Y';
-			        $GroupMembers->save();
-		    	}
-		    	}
+        
+        $warn="";
+        $added="";
+        $invalid="";
+        foreach (explode(',',$request->multi_member_id) as $row){
+            if($row!=""){
+                $member_reg=Member::where('Mobile_No',$row)->first();
+                if($member_reg==null){
+                    $invalid.=$row.", ";
+                }
+                else{
+                   $count = GroupMembers::where('Group_id', $request->multi_Group_id)
+                            ->where('Member_tbl_id',$member_reg->id)->count();      
+                if($count>0){
+                    $warn=$warn.$row.", ";
+                }else if($count==0){
+                    $added.=$row.", ";
+                    $GroupMembers = new GroupMembers();
+                    $GroupMembers->Group_id = $request->multi_Group_id;
+                    $GroupMembers->Member_tbl_id = $member_reg->id;
+                    $GroupMembers->Member_Id = $member_reg->Member_Id;
+                    $GroupMembers->active = 'Y';
+                    $GroupMembers->save();
+                } 
+                }
+                }
         }
-        if($warn==""){
-	    		return redirect()->back()->with('warning2',$warn.'Success');
-	    	}else{
-	    		if($added==""){
-	    			return redirect()->back()->with('warning2',$warn.' Already Exist!');
-	    		}else{
-	    			return redirect()->back()->with('warning2',$warn.' Already Exist!')->with('warning3',$added.' Updated!');
-	    		}
-	    		
-	    	}
+        if($warn=="" && $invalid==""){
+                return redirect()->back()->with('warning3',$warn.'Success');
+            }else{
+                if($added=="" ){
+                    return redirect()->back()->with('warning2',$warn.' Already Exist!,'.$invalid."Not Exist");
+                }else{
+                    return redirect()->back()->with('warning2',$warn.' Already Exist!,'.$invalid."Not Exist")->with('warning3',$added.' Updated!');
+                }
+                
+            }
     }
 
     public function ShowGroupMember(){

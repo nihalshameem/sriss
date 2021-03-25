@@ -103,7 +103,7 @@ class VolunteerController extends ApiController
 
     public function Volunteer()
     {
-        $State = State::get();
+        $State = State::where('State_active', 'Y')->get();
         
         $user = User::where('name',Session::get('name'))->first();
         $volunteer = Member::where('Member_Id',$user->Member_Id)->first();

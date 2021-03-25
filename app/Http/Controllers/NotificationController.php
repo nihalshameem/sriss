@@ -136,8 +136,6 @@ class NotificationController extends ApiController
                     
                     
                     $Notifications= array_reduce($Notifications, 'array_merge', array());
-                    $Notifications = collect($Notifications)->sortBy('Notification_id');
-
                         
                         
                     if(count($Notifications)>0)
@@ -191,14 +189,15 @@ class NotificationController extends ApiController
             { 
                 if($user=$this->is_valid_token($request['token']))
                 {
-                    
+                    $StartDateFormat = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y-m-d');
+                    $EndDateFormat = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y-m-d');
                     
                     $Notifications = array();
 
                     $notification = new Notification();
                     $notification->Notification_mesage = $request->message;
-                    $notification->Notification_start_date = $request->start_date;
-                    $notification->Notification_end_date = $request->end_date;
+                    $notification->Notification_start_date = $StartDateFormat;
+                    $notification->Notification_end_date = $EndDateFormat;
                     $notification->Notification_active = $request->active;
                     $notification->Notification_approved = $request->approved;
                     if ($request->hasFile('notification'))
@@ -271,6 +270,8 @@ class NotificationController extends ApiController
             { 
                 if($user=$this->is_valid_token($request['token']))
                 {
+                    $StartDateFormat = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y-m-d');
+                    $EndDateFormat = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y-m-d');
                     
                     if ($request->hasFile('notification'))
                     {
@@ -280,8 +281,8 @@ class NotificationController extends ApiController
                         $filePath = $request->file('notification')->storeAs('Notification', $imageName,'public');
 
                         $Notification = Notification::where("Notification_id", $request->notification_id)->update([
-                        'Notification_start_date'=> $request->start_date,
-                        'Notification_end_date'=> $request->end_date,
+                        'Notification_start_date'=> $StartDateFormat,
+                        'Notification_end_date'=> $EndDateFormat,
                         'Notification_active'=> $request->active,
                         'Notification_approved'=> $request->approved,
                         'Notification_mesage'=> $request->message,
@@ -291,8 +292,8 @@ class NotificationController extends ApiController
                     else
                     {
                          $Notification = Notification::where("Notification_id", $request->notification_id)->update([
-                        'Notification_start_date'=> $request->start_date,
-                        'Notification_end_date'=> $request->end_date,
+                        'Notification_start_date'=> $StartDateFormat,
+                        'Notification_end_date'=> $EndDateFormat,
                         'Notification_active'=> $request->active,
                         'Notification_approved'=> $request->approved,
                         'Notification_mesage'=> $request->message]);

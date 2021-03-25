@@ -19,7 +19,7 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" style="height:auto;">
         
-         @if($role->hasPermission('Dashboard',$role->role_id))
+         @if($role->havePermission('Dashboard',$role->role_id))
          <?php
 
     $permission = App\Models\Permission::where('slug','Dashboard')->first();
@@ -43,7 +43,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview" style=" padding-left:20px">
-               @if($role->hasPermission('News Letter',$role->role_id)) 
+               @if($role->havePermission('News Letter',$role->role_id)) 
                <?php
 
     $permission = App\Models\Permission::where('slug','News Letter')->first();
@@ -55,7 +55,7 @@
                       </a>
                     </li>
                 @endif 
-              @if($role->hasPermission('Member (Activate / De activate)',$role->role_id))
+              @if($role->havePermission('Member (Activate / De activate)',$role->role_id))
               <?php
 
     $permission = App\Models\Permission::where('slug','Member (Activate / De activate)')->first();
@@ -67,7 +67,7 @@
                   </a>
                 </li> 
               @endif
-              @if($role->hasPermission('Search Members',$role->role_id))
+              @if($role->havePermission('Search Members',$role->role_id))
               <?php
 
     $permission = App\Models\Permission::where('slug','Search Members')->first();
@@ -79,7 +79,7 @@
           </a>
       </li> 
       @endif
-                    @if($role->hasPermission('Notifications',$role->role_id))
+                    @if($role->havePermission('Notifications',$role->role_id))
                     <?php
 
     $permission = App\Models\Permission::where('slug','Notifications')->first();
@@ -91,7 +91,7 @@
                     </a>
                 </li> 
                 @endif
-                      @if($role->hasPermission('Polls',$role->role_id))
+                      @if($role->havePermission('Polls',$role->role_id))
                       <?php
 
     $permission = App\Models\Permission::where('slug','Polls')->first();
@@ -104,7 +104,7 @@
                         </a>
                       </li> 
                       @endif
-                      @if($role->hasPermission('Contributions',$role->role_id))
+                      @if($role->havePermission('Contributions',$role->role_id))
                       <?php
 
     $permission = App\Models\Permission::where('slug','Contributions')->first();
@@ -116,7 +116,7 @@
                         </a>
                       </li>
                       @endif
-                      @if($role->hasPermission('Feedback',$role->role_id))
+                      @if($role->havePermission('Feedback',$role->role_id))
                       <?php
 
                           $permission = App\Models\Permission::where('slug','Feedback')->first();
@@ -129,7 +129,7 @@
                         </li> 
 
                         @endif
-                        @if($role->hasPermission('Member Approval',$role->role_id))
+                        @if($role->havePermission('Member Approval',$role->role_id))
                         <?php
 
                           $permission = App\Models\Permission::where('slug','Member Approval')->first();
@@ -141,7 +141,7 @@
                           </a>
                         </li>
                         @endif
-                        @if($role->hasPermission('Volunteer',$role->role_id))
+                        @if($role->havePermission('Volunteer',$role->role_id))
                         <?php
 
                           $permission = App\Models\Permission::where('slug','Volunteer')->first();
@@ -154,7 +154,7 @@
 </li> 
 
 @endif
-@if($role->hasPermission('Advertisement',$role->role_id)) 
+@if($role->havePermission('Advertisement',$role->role_id)) 
  <?php
 
                           $permission = App\Models\Permission::where('slug','Advertisement')->first();
@@ -166,7 +166,7 @@
   </a>
 </li>
 @endif
-@if($role->hasPermission('Member Group',$role->role_id))
+@if($role->havePermission('Member Group',$role->role_id))
 <?php
 
                           $permission = App\Models\Permission::where('slug','Member Group')->first();
@@ -178,7 +178,7 @@
   </a>
 </li> 
 @endif
-@if($role->hasPermission('Add Group Members',$role->role_id))
+@if($role->havePermission('Add Members to Group',$role->role_id))
 <?php
 
                           $permission = App\Models\Permission::where('slug','Add Group Members')->first();
@@ -206,7 +206,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview" style=" padding-left:20px">
-               @if($role->hasPermission('Reports View & Download',$role->role_id))
+               @if($role->havePermission('Reports View & Download',$role->role_id))
                <?php
 
                           $permission = App\Models\Permission::where('slug','Reports View & Download')->first();
@@ -219,7 +219,7 @@
               </li> 
 
               @endif
-              @if($role->hasPermission('Reports',$role->role_id))
+              @if($role->havePermission('Reports',$role->role_id))
               <?php
 
                           $permission = App\Models\Permission::where('slug','Reports')->first();
@@ -248,7 +248,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview" style=" padding-left:20px">
-               @if($role->hasPermission('SSS Org Structure',$role->role_id))
+               @if($role->havePermission('SSS Org Structure',$role->role_id))
                <?php
 
                           $permission = App\Models\Permission::where('slug','SSS Org Structure')->first();
@@ -260,7 +260,7 @@
                 </a>
               </li>
               @endif
-              @if($role->hasPermission('Assign Volunteer To Geo',$role->role_id))
+              @if($role->havePermission('Assign Volunteer To Geo',$role->role_id))
               <?php
 
                           $permission = App\Models\Permission::where('slug','Assign Volunteer To Geo')->first();
@@ -290,7 +290,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview" style=" padding-left:20px">
-              @if($role->hasPermission('About Us',$role->role_id))
+              @if($role->havePermission('About Us',$role->role_id))
               <?php
 
                           $permission = App\Models\Permission::where('slug','About Us')->first();
@@ -302,7 +302,7 @@
                 </a>
               </li> 
               @endif
-              @if($role->hasPermission('Compliance',$role->role_id))
+              @if($role->havePermission('Compliance',$role->role_id))
               <?php
 
                           $permission = App\Models\Permission::where('slug','Compliance')->first();
@@ -316,7 +316,7 @@
               @endif
 
 
-              @if($role->hasPermission('Language Permission',$role->role_id))
+              @if($role->havePermission('Language Permission',$role->role_id))
               <?php
 
                           $permission = App\Models\Permission::where('slug','Language Permission')->first();
@@ -328,7 +328,7 @@
                 </a>
               </li> 
               @endif
-              @if($role->hasPermission('App Image',$role->role_id))
+              @if($role->havePermission('App Image',$role->role_id))
               <?php
 
                           $permission = App\Models\Permission::where('slug','App Image')->first();
@@ -340,7 +340,7 @@
                 </a>
               </li>
               @endif
-              @if($role->hasPermission('App Icon',$role->role_id))   
+              @if($role->havePermission('App Icon',$role->role_id))   
               <?php
 
                           $permission = App\Models\Permission::where('slug','App Icon')->first();
@@ -352,7 +352,7 @@
                 </a>
               </li>
               @endif
-              @if($role->hasPermission('Profile Configuration',$role->role_id))
+              @if($role->havePermission('Profile Configuration',$role->role_id))
               <?php
 
                           $permission = App\Models\Permission::where('slug','Profile Configuration')->first();
@@ -364,7 +364,7 @@
                 </a>
               </li> 
               @endif    
-              @if($role->hasPermission('AddUser',$role->role_id))
+              @if($role->havePermission('AddUser',$role->role_id))
               <?php
 
                           $permission = App\Models\Permission::where('slug','AddUser')->first();
@@ -376,7 +376,7 @@
               </a>
             </li>
             @endif
-            @if($role->hasPermission('Member Category -SA',$role->role_id)) 
+            @if($role->havePermission('Member Category -SA',$role->role_id)) 
             <?php
 
                           $permission = App\Models\Permission::where('slug','Member Category -SA')->first();

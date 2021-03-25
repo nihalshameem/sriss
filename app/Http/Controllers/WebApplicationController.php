@@ -365,7 +365,7 @@ class WebApplicationController extends ApiController
                     {
                         return $this->respond([
                         'status' => 'success',
-                        'status_code' => $this->getStatusCode(),
+                        'code' => $this->getStatusCode(),
                         'message' => 'Language Updated',
                         'data'=>$members
                         ]);
@@ -374,7 +374,7 @@ class WebApplicationController extends ApiController
                     {
                         return $this->respond([
                         'status' => 'Failed',
-                        'status_code' => $this->getStatusCode(),
+                        'code' => $this->getStatusCode(),
                         'message' => 'Failed to Update',
                         ]);
                     }

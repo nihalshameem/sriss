@@ -185,7 +185,7 @@
 </style>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed" style="background-color:#ffffb7">
+<body class="hold-transition sidebar-mini layout-fixed" style="background-color:#fafafa">
   <div class="wrapper">
    @include('layouts.header')
    @include('layouts.sidebar')
@@ -297,7 +297,7 @@
         </div>
   </div><br>
         <div class="row">
-          <div class="col-md-4 form-group">
+          <div class="col-md-3 form-group">
             <label >State&nbsp;<span style="color:red">*</span></label><br>
             <select id="states" multiple="multiple" name="State_id[]" onchange="LoadZones(this)">
               <option disabled="">Select State</option>
@@ -312,7 +312,7 @@
             
           </div>
 
-          <div class="col-md-4 form-group">
+          <div class="col-md-3 form-group">
             <label >Zones</label><br>
             <select id="zone" multiple="multiple" name="Zone_id[]" onchange="LoadDistrict(this)">
               <option>Select Zones</option>
@@ -321,7 +321,7 @@
             
           </div>
 
-          <div class="col-md-4 form-group">
+          <div class="col-md-3 form-group">
             <label >District</label><br>
             <select id="district" multiple="multiple"  name="District_id[]" onchange="LoadUnion(this)">
               <option>Select district</option>
@@ -329,7 +329,7 @@
             </select>
             
           </div>
-          <div class="col-md-4 form-group">
+          <div class="col-md-3 form-group">
             <label >Union</label><br>
             <select id="union"  name="Union_id[]" multiple="multiple">
               <option>Select Union</option>
@@ -338,7 +338,7 @@
             
           </div>
         </div>
-        <div style="margin: auto; max-width: 300px;">
+        <div style="margin: auto; max-width: 250px;">
           <a href="/EditPoll/{{Session::get('PollsId')}}" class="btn btn-primary">Previous</a>
           <button type="submit" class="btn btn-primary">Submit</button>
         </div><br>
@@ -392,22 +392,22 @@
     $('#states').multiselect('destroy');
   });
    $('#states').multiselect({
-    buttonWidth: '300px'
+    buttonWidth: '250px'
   });
    $('#StateDivision').multiselect({
-    buttonWidth: '300px'
+    buttonWidth: '250px'
   });
    $('#GreaterZones').multiselect({
-    buttonWidth: '300px'
+    buttonWidth: '250px'
   });
    $('#zone').multiselect({
-    buttonWidth: '300px'
+    buttonWidth: '250px'
   });
    $('#district').multiselect({
-    buttonWidth: '300px'
+    buttonWidth: '250px'
   });
    $('#union').multiselect({
-    buttonWidth: '300px'
+    buttonWidth: '250px'
   });
 
    $('#states').multiselect();
@@ -445,7 +445,7 @@
       $('#zone').multiselect('destroy');
     });
      $('#zone').multiselect({
-      buttonWidth: '300px',
+      buttonWidth: '250px',
         enableFiltering: true,
         includeSelectAllOption: true,
         maxHeight: 200,
@@ -484,7 +484,7 @@
       $('#district').multiselect('destroy');
     });
      $('#district').multiselect({
-        buttonWidth: '300px',
+        buttonWidth: '250px',
         enableFiltering: true,
         includeSelectAllOption: true,
         maxHeight: 200,
@@ -523,7 +523,7 @@
       $('#union').multiselect('destroy');
     });
      $('#union').multiselect({
-         buttonWidth: '300px',
+         buttonWidth: '250px',
         enableFiltering: true,
         includeSelectAllOption: true,
         maxHeight: 200,
