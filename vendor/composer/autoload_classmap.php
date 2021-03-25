@@ -63,6 +63,7 @@ return array(
     'App\\Models\\Member' => $baseDir . '/app/Models/Member.php',
     'App\\Models\\MemberCategory' => $baseDir . '/app/Models/MemberCategory.php',
     'App\\Models\\MemberCategoryAppIcon' => $baseDir . '/app/Models/MemberCategoryAppIcon.php',
+    'App\\Models\\MemberDesignation' => $baseDir . '/app/Models/MemberDesignation.php',
     'App\\Models\\MemberGroup' => $baseDir . '/app/Models/MemberGroup.php',
     'App\\Models\\MemberIdConfig' => $baseDir . '/app/Models/MemberIdConfig.php',
     'App\\Models\\MemberProfile' => $baseDir . '/app/Models/MemberProfile.php',

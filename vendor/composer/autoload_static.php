@@ -760,6 +760,7 @@ class ComposerStaticInit5e8d7bd20336e256e9f68cb73b81b1fa
         'App\\Models\\Member' => __DIR__ . '/../..' . '/app/Models/Member.php',
         'App\\Models\\MemberCategory' => __DIR__ . '/../..' . '/app/Models/MemberCategory.php',
         'App\\Models\\MemberCategoryAppIcon' => __DIR__ . '/../..' . '/app/Models/MemberCategoryAppIcon.php',
+        'App\\Models\\MemberDesignation' => __DIR__ . '/../..' . '/app/Models/MemberDesignation.php',
         'App\\Models\\MemberGroup' => __DIR__ . '/../..' . '/app/Models/MemberGroup.php',
         'App\\Models\\MemberIdConfig' => __DIR__ . '/../..' . '/app/Models/MemberIdConfig.php',
         'App\\Models\\MemberProfile' => __DIR__ . '/../..' . '/app/Models/MemberProfile.php',

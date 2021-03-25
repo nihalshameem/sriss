@@ -180,7 +180,12 @@
 <div class="col-md-4">
    <div class="form-group">
       <label for="exampleInputPassword1">Member Designation</label>
-      <input type="text" class="form-control" name="member_designation" value="{{ old('member_designation') }}" id="member_designation" required>
+      <select class="form-control" name="member_designation" id="member_designation" required>
+                <option value="">Select Member Designation</option>
+                @foreach($MemberDesignation as $MemberDesignation) 
+                <option value="{{$MemberDesignation->designation}}">{{ $MemberDesignation->designation}}</option>
+                @endforeach
+            </select>
       
   </div>
 </div>

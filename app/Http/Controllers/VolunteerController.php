@@ -9,6 +9,7 @@ use App\Models\State;
 use App\Models\Volunteer;
 use App\Models\MemberCategory;
 use App\Models\MemberCategoryAppIcon;
+use App\Models\MemberDesignation;
 use Session;
 use DateTime;
 use View;
@@ -104,10 +105,10 @@ class VolunteerController extends ApiController
     public function Volunteer()
     {
         $State = State::where('State_active', 'Y')->get();
-        
         $user = User::where('name',Session::get('name'))->first();
         $volunteer = Member::where('Member_Id',$user->Member_Id)->first();
-        return view('volunteer.save',compact('State','user','volunteer'));
+        $MemberDesignation = MemberDesignation::get();
+        return view('volunteer.save',compact('State','user','volunteer','MemberDesignation'));
     }
 
     public function VolunteerSave(Request $request)
