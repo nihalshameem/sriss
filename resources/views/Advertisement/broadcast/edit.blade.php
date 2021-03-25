@@ -201,7 +201,6 @@ td{
                   <th>State</th>
                   <th>Zones</th>
                   <th>District</th>
-                  <th>Taluk</th>
               </tr>
           </thead>
           <tbody>
@@ -225,21 +224,14 @@ td{
                 @endif
 
                 <?php
-                $District = App\Models\District::where('District_id',$broadcast->District_id)->first();
+                $District = App\Models\District::where('District_id',$broadcast->district_id)->first();
                 ?>
                 @if($District!=null)
                 <td>{{$District->District_desc}}</td>
                 @else
                 <td></td>
                 @endif
-                <?php
-                $Union = App\Models\Union::where('Union_id',$broadcast->Union_id)->first();
-                ?>
-                @if($Union!=null)
-                <td>{{$Union->Union_desc}}</td>
-                @else
-                <td></td>
-                @endif
+                
 
             </tr>
             @endforeach
