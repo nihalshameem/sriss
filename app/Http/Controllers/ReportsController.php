@@ -210,6 +210,53 @@ class ReportsController extends Controller
         return Response::json(['contributionKaryakarthas' => $contributionKaryakarthas]);
     }
 
+    public function MemberReferalReports()
+    {
+        
+        $member = Member::where('ReferedBy','!=',null)->orderby('id','desc')->get();
+        $members = Member::get();
+        return view('reports.member_referal_list',compact('member','members'));
+    }
+
+    public function MemberReferalReportsFilter(Request $request)
+    {
+
+       if($request->updatedDate!=null)
+        {
+            $members = Member::where('Mobile_No',$request->member_id)                    
+                             ->first();
+
+            $member = Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)->whereDate('created_at','>=',$request->createdDate)
+                        ->whereDate('updated_at','<=',$request->updatedDate)
+                        ->get();
+        }
+        else
+        {
+            if($request->createdDate!=null)
+            {
+                $members = Member::where('Mobile_No',$request->member_id)
+                             ->first();
+
+                  $member =Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)->whereDate('created_at','>=',$request->createdDate)
+                                        ->whereDate('updated_at','<=',date('Y-m-d'))
+                        ->get();
+            }
+            else
+            {
+                $members = Member::where('Mobile_No',$request->member_id)
+                             ->first();
+                 
+                $member = Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)
+                        ->get();
+            }
+
+            
+        }
+
+        $member = View::make('reports.reportsfilter.member_referal_filter', compact('member','members'))->render();
+        return Response::json(['member' => $member]);
+    }
+
     /******** Web Application Reports View **********/
 
     public function ListReportsView()
@@ -402,6 +449,51 @@ class ReportsController extends Controller
 
         $contributionKaryakarthas = View::make('reportsview.reportsfilter.karyakarthas_offline_contribution_filter', compact('contributionKaryakarthas'))->render();
         return Response::json(['contributionKaryakarthas' => $contributionKaryakarthas]);
+    }
+     public function MemberReferalReportsView()
+    {
+        
+        $member = Member::where('ReferedBy','!=',null)->orderby('id','desc')->get();
+        $members = Member::get();
+        return view('reportsview.member_referal_list',compact('member','members'));
+    }
+
+    public function MemberReferalReportsFilterView(Request $request)
+    {
+
+       if($request->updatedDate!=null)
+        {
+            $members = Member::where('Mobile_No',$request->member_id)
+                             ->first();
+              $member = Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)->whereDate('created_at','>=',$request->createdDate)
+                        ->whereDate('updated_at','<=',$request->updatedDate)
+                        ->get();
+        }
+        else
+        {
+            if($request->createdDate!=null)
+            {
+                $members = Member::where('Mobile_No',$request->member_id)
+                             ->first();
+
+                  $member =Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)->whereDate('created_at','>=',$request->createdDate)
+                                        ->whereDate('updated_at','<=',date('Y-m-d'))
+                        ->get();
+            }
+            else
+            {
+                $members = Member::where('Mobile_No',$request->member_id)
+                             ->first();
+                 
+                $member = Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)
+                        ->get();
+            }
+
+            
+        }
+
+        $member = View::make('reportsview.reportsfilter.member_referal_filter', compact('member','members'))->render();
+        return Response::json(['member' => $member]);
     }
 
 

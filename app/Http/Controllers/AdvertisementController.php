@@ -205,12 +205,9 @@ class AdvertisementController extends ApiController
                 $advertisement->save();
                 $advertisement = Advertisement::orderby('id','DESC')->first();
                 
-                $adBroad=new AdvertisementBroadcast();
-                $adBroad->advertisement_id=$advertisement->id;
-                $adBroad->State_id=1;
-                $adBroad->save();
+             
                
-                return redirect(route('list.advertisements'));
+                return redirect(route('list.AdvertisementBroadcast'));
            }
             else
             {
@@ -225,12 +222,9 @@ class AdvertisementController extends ApiController
 
                      $Advertisement = Advertisement::where("id", $request->Advertisement_id)->update(['from_date'=> $request->from_date,'to_date'=> $request->to_date,'active'=> $request->active,'description'=> $request->description,'image_path'=> $Ad_image_path, 'link'=> $request->link,'description'=> $request->description]);
                      
-                     $adBroad=new AdvertisementBroadcast();
-                     $adBroad->advertisement_id=$request->Advertisement_id;
-                     $adBroad->State_id=1;
-                     $adBroad->save();
+                
 
-                    return redirect(route('list.advertisements'));
+                    return redirect(route('list.AdvertisementBroadcast'));
                 }
                 else
                 {
@@ -264,13 +258,13 @@ class AdvertisementController extends ApiController
 
                  $Advertisement = Advertisement::where("id", $request->Advertisement_id)->update(['from_date'=> $request->from_date,'to_date'=> $request->to_date,'active'=> $request->active,'description'=> $request->description,'image_path'=> $Advertisement_image_path, 'link'=> $request->link,'description'=> $request->description]);
                  Session::put('Advertisement_id',$request->Advertisement_id);
-                return redirect(route('list.advertisements')); 
+                return redirect(route('list.advertisementbroadcastedit')); 
             }
             else
             {
                 $Advertisement = Advertisement::where("id", $request->Advertisement_id)->update(['from_date'=> $request->from_date,'to_date'=> $request->to_date,'active'=> $request->active,'description'=> $request->description, 'link'=> $request->link,'description'=> $request->description]); 
                 Session::put('Advertisement_id',$request->Advertisement_id);
-                return redirect(route('list.advertisements'));
+                return redirect(route('list.advertisementbroadcastedit'));
             }
               
         }

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+        
 @section('content')
 <div class="content-wrapper">
 
@@ -6,9 +7,11 @@
     <div class="container-fluid">
 
       <div class="col-12">
-
         <div class="row mb-2">
-          <div class="col-sm-5">
+          <div class="col-sm-2">
+            <a href="/home" class="btn btn-back" style="float:left;border-radius: 3px;background-color: aqua;margin-top: 0px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
+          </div>
+          <div class="col-sm-3">
           </div>
           <div class="col-sm-4">
             <h3 class="title-head">Add Group Members</h3>
@@ -49,8 +52,8 @@
     @endif
 </div>
 <div class="col-md-4 form-group">
-  <label for="exampleInputPassword1">Group Name</label><br>
-  <select name="Group_id" id="group_name" class="selectpicker form-control memberdeactivate"  data-live-search="true" >
+  <label >Group Name</label><br>
+  <select name="group_multi_id" id="group_name1" multiple="multiple" >
           <option value="">Group Name</option>
           @foreach ($memberGroups as $memberGroup)
           
@@ -87,7 +90,7 @@
           {{ Session::get('warning3') }}
       </div>
     @endif
-    @if( Session::has( 'warning4' ))
+     @if( Session::has( 'warning4' ))
      <div class="alert alert-danger" style="margin-top:15px;">
           {{ Session::get('warning4') }}
       </div>
@@ -95,7 +98,7 @@
 </div>
 <div class="col-md-4 form-group">
   <label for="exampleInputPassword1">Group Name</label><br>
-  <select name="multi_Group_id" id="group_name" class="selectpicker form-control memberdeactivate" data-live-search="true" >
+  <select name="group_multi_id[]" id="group_name2"  multiple="multiple">
           <option value="">Group Name</option>
           @foreach ($memberGroups as $memberGroup)
           
@@ -123,9 +126,5 @@
 </section>
 </div>
 
-<script type="text/javascript">
-  function print(value){
-    alert(value);
-  }
-</script>
+
 @endsection

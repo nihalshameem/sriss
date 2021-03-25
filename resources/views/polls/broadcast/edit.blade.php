@@ -311,6 +311,8 @@
             @endif
             
           </div>
+          <div class="col-md-1">
+  </div>
 
           <div class="col-md-3 form-group">
             <label >Zones</label><br>
@@ -320,6 +322,8 @@
             </select>
             
           </div>
+          <div class="col-md-1">
+  </div>
 
           <div class="col-md-3 form-group">
             <label >District</label><br>
@@ -329,14 +333,7 @@
             </select>
             
           </div>
-          <div class="col-md-3 form-group">
-            <label >Union</label><br>
-            <select id="union"  name="Union_id[]" multiple="multiple">
-              <option>Select Union</option>
-              
-            </select>
-            
-          </div>
+        
         </div>
         <div style="margin: auto; max-width: 250px;">
           <a href="/EditPoll/{{Session::get('PollsId')}}" class="btn btn-primary">Previous</a>

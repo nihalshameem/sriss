@@ -486,6 +486,10 @@ Route::get('/KaryakarthaProfile/Filter', [App\Http\Controllers\ReportsController
 
 Route::get('/KaryakarthaContribution/Filter', [App\Http\Controllers\ReportsController::class,'KaryakarthaContributionReportsFilter'])->name('reports.KaryakarthaContribution.Filter');
 
+Route::get('/MemberReferal',[App\Http\Controllers\ReportsController::class, 'MemberReferalReports'])->name('MemberReferal.reports');
+
+Route::get('/MemberReferal/Filter', [App\Http\Controllers\ReportsController::class,'MemberReferalReportsFilter'])->name('reports.MemberReferal.Filter');
+
 });
 
 Route::group(['prefix' => 'ReportsView'], function () {
@@ -517,6 +521,10 @@ Route::get('/KaryakarthaProfile/Filter', [App\Http\Controllers\ReportsController
 
 Route::get('/KaryakarthaContribution/Filter', [App\Http\Controllers\ReportsController::class,'KaryakarthaContributionReportsFilterView'])->name('reports.KaryakarthaContribution.Filterview');
 
+Route::get('/MemberReferal',[App\Http\Controllers\ReportsController::class, 'MemberReferalReportsView'])->name('MemberReferal.reportsview');
+
+Route::get('/MemberReferal/Filter', [App\Http\Controllers\ReportsController::class,'MemberReferalReportsFilterView'])->name('reports.MemberReferal.Filterview');
+
 });
 
 Route::get('/forgotpassword',[App\Http\Controllers\ReportsController::class, 'forgotpassword']);
@@ -534,6 +542,9 @@ Route::get('/EditMemberGroup/{memberGroupId}', [App\Http\Controllers\MemberGroup
 Route::post('/UpdateMemberGroup', [App\Http\Controllers\MemberGroupController::class, 'UpdateMemberGroup'])->name('update.memberGroup');
 
 Route::get('/DeleteMemberGroup', [App\Http\Controllers\MemberGroupController::class, 'DeleteMemberGroup'])->name('delete.memberGroup');
+
+Route::get('/GroupMembers/{GroupId}', [App\Http\Controllers\MemberGroupController::class, 'ListGroupMembers'])->name('list.groupMembers');
+
 
 /*Add Member to Group */
 Route::get('/groupMember', [App\Http\Controllers\MemberGroupController::class, 'ShowGroupMember'])->name('add.groupMember');

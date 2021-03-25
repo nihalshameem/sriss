@@ -178,7 +178,7 @@
   </a>
 </li> 
 @endif
-@if($role->havePermission('Add Members to Group',$role->role_id))
+@if($role->havePermission('Add Group Members',$role->role_id))
 <?php
 
                           $permission = App\Models\Permission::where('slug','Add Group Members')->first();

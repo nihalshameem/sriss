@@ -161,7 +161,7 @@ td{
 </style>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed" style="background-color:#ffffb7">
+<body class="hold-transition sidebar-mini layout-fixed" style="background-color:#fafafa">
   <div class="wrapper">
      @include('layouts.header')
      @include('layouts.sidebar')
@@ -267,7 +267,7 @@ td{
         </div>
   </div><br>
         <div class="row">
-          <div class="col-md-4 form-group">
+          <div class="col-md-3 form-group">
             <label >State</label><br>
             <select id="states" multiple="multiple" name="State_id[]" >
               <option disabled="">select state</option>
@@ -284,7 +284,9 @@ td{
           @endif
           
       </div>
-<div class="col-md-4 form-group">
+      <div class="col-md-1">
+  </div>
+<div class="col-md-3 form-group">
     <label >Zones</label><br>
     <select id="zone" multiple="multiple" name="Zone_id[]" onchange="LoadDistrict(this)">
       <option>Select Zones</option>
@@ -296,8 +298,9 @@ td{
   </select>
   
 </div>
-
-<div class="col-md-4 form-group">
+<div class="col-md-1">
+  </div>
+<div class="col-md-3 form-group">
     <label >District</label><br>
     <select id="district" multiple="multiple"  name="District_id[]" onchange="LoadUnion(this)">
       <option>Select district</option>
@@ -305,14 +308,7 @@ td{
   </select>
   
 </div>
-<div class="col-md-4 form-group">
-    <label >Union</label><br>
-    <select id="union"  name="Taluk_id[]" multiple="multiple">
-      <option>Select Union</option>
-      
-  </select>
-  
-</div>
+
 </div>
 <div style="max-width: 200px; margin: auto;">
   <a href="/Edit/{{Session::get('Advertisement_id')}}" class="btn btn-primary">Previous</a>

@@ -239,7 +239,8 @@ td{
 
 </div>
 
-<br>
+<div class="col-md-1">
+  </div>
 <div class="col-md-3 form-group">
   <label for="exampleInputPassword1">Zones</label><br>
   <select id="zone" multiple="multiple" name="Zone_id[]" onchange="LoadDistrict(this)">
@@ -248,7 +249,8 @@ td{
 </select>
 
 </div>
-
+<div class="col-md-1">
+  </div>
 <div class="col-md-3 form-group">
   <label for="exampleInputPassword1">District</label><br>
   <select id="district" multiple="multiple"  name="District_id[]" onchange="LoadUnion(this)">
@@ -257,14 +259,7 @@ td{
 </select>
 
 </div>
-<div class="col-md-3 form-group">
-  <label for="exampleInputPassword1">Area</label><br>
-  <select id="union"  name="Union_id[]" multiple="multiple">
-    <option>Select Area</option>
 
-</select>
-
-</div>
 </div>
 <div style="max-width: 250px; margin: auto;">
   <a href="/AddNotification" class="btn btn-primary">Previous</a>

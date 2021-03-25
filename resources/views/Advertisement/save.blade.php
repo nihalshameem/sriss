@@ -70,6 +70,7 @@
                 <span class="input-group-text" id="">Upload</span>
               </div>
             </div>
+            <p style="color: red">Banner image dimension must be 320*50 px</p>
           </div>
 
           <div class="form-group col-md-6">
@@ -83,6 +84,7 @@
                 <span class="input-group-text" id="">Upload</span>
               </div>
             </div>
+            <p style="color: red">Pop image dimension must be 300*300 px</p>
           </div>
 
 </div>

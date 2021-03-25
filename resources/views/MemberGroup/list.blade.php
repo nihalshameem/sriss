@@ -67,7 +67,7 @@
         @foreach ($membersGroup as $i => $membersGroup)
         <tr>
          <td>{{ $i+1 }}</td>
-         <td>{{ $membersGroup->Group_name }}</td>
+         <td><a href="{{ route('list.groupMembers', ['GroupId' => $membersGroup->Group_id]) }}">{{ $membersGroup->Group_name }}</a></td>
          <td>{{ $membersGroup->active }}</td>
          <td>
           <a href="{{ route('edit.memberGroup', ['memberGroupId' => $membersGroup->Group_id]) }}"><span class="badge bg-danger"><i class="fa fa-edit fa-lg" style="text-align:center;"></i></span></a>

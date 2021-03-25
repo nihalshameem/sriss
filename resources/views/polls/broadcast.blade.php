@@ -200,6 +200,8 @@
             @endif
 
           </div>
+          <div class="col-md-1">
+  </div>
        
           <div class="col-md-3 form-group">
             <label for="exampleInputPassword1">Zones</label><br>
@@ -209,6 +211,8 @@
             </select>
 
           </div>
+          <div class="col-md-1">
+  </div>
 
           <div class="col-md-3 form-group">
             <label for="exampleInputPassword1">District</label><br>
@@ -219,14 +223,7 @@
             </select>
 
           </div>
-          <div class="col-md-3 form-group">
-            <label for="exampleInputPassword1">Union</label><br>
-            <select id="union"  name="Union_id[]" multiple="multiple">
-              <option>Select Union</option>
-
-            </select>
-
-          </div>
+          
         </div>
         <div style="margin: auto; max-width: 250px;">
           <a href="/Polls" class="btn btn-primary">Cancel</a>

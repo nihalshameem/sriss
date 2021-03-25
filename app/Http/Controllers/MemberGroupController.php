@@ -84,8 +84,9 @@ class MemberGroupController extends ApiController
         return redirect()->back()->withSuccess('Successfully Updated!');
     }
 
-    public function SaveMultiGroupMember(Request $request){
-        
+    public function SaveMultiGroupMember(Request $request)
+    {
+
         $warn="";
         $added="";
         $invalid="";
@@ -96,19 +97,22 @@ class MemberGroupController extends ApiController
                     $invalid.=$row.", ";
                 }
                 else{
-                   $count = GroupMembers::where('Group_id', $request->multi_Group_id)
+                    foreach ($request->group_multi_id as $row2){
+                        $count = GroupMembers::where('Group_id', $request->row2)
                             ->where('Member_tbl_id',$member_reg->id)->count();      
-                if($count>0){
-                    $warn=$warn.$row.", ";
-                }else if($count==0){
-                    $added.=$row.", ";
-                    $GroupMembers = new GroupMembers();
-                    $GroupMembers->Group_id = $request->multi_Group_id;
-                    $GroupMembers->Member_tbl_id = $member_reg->id;
-                    $GroupMembers->Member_Id = $member_reg->Member_Id;
-                    $GroupMembers->active = 'Y';
-                    $GroupMembers->save();
+                            if($count>0){
+                                $warn=$warn.$row.", ";
+                            }else if($count==0){
+                                $added.=$row.", ";
+                                $GroupMembers = new GroupMembers();
+                                $GroupMembers->Group_id = $row2;
+                                $GroupMembers->Member_tbl_id = $member_reg->id;
+                                $GroupMembers->Member_Id = $member_reg->Member_Id;
+                                $GroupMembers->active = 'Y';
+                                $GroupMembers->save();
                 } 
+                    }
+                   
                 }
                 }
         }
@@ -130,7 +134,13 @@ class MemberGroupController extends ApiController
         return view('GroupMembers.add',compact('memberGroups','members'));
     }
 
-
+    public function ListGroupMembers($GroupId)
+    {
+        $memberGroups = MemberGroup::where('Group_id',$GroupId)->first();
+        $memberId = GroupMembers::where('Group_id',$GroupId)->pluck('Member_Id');
+        $members = Member::whereIn('Member_Id',$memberId)->get();
+         return view('MemberGroup.ListGroupMembers',compact('members','memberGroups'));
+    }
 
 
     ///API Services

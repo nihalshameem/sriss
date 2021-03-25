@@ -145,6 +145,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+ $(document).ready(function(){
+   
+  $('#group_name1').multiselect({
+    buttonWidth: '300px'
+  });
+  $('#group_name2').multiselect({
+    buttonWidth: '300px'
+  });
+    });
+  
+  
+</script>
 <script>
 var coll = document.getElementsByClassName("collapsible1");
 var i;
