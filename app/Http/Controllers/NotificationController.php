@@ -41,6 +41,7 @@ class NotificationController extends ApiController
 
     /******Web Services******/
 
+
     public function Notifications(Request $request)
     {
          $rules = array (
@@ -166,9 +167,7 @@ class NotificationController extends ApiController
     }
 
     public function addAppNotification(Request $request)
-        {   
-
-            $rules = array (
+        {    $rules = array (
             'member_id' => 'required',
             'token' => 'required',
             'start_date' => 'required',
@@ -176,7 +175,6 @@ class NotificationController extends ApiController
             'message' => 'required',
             'active' => 'required',
             'approved' => 'required',
-            
             );
             $validator = Validator::make($request->all(),$rules);
 
@@ -209,10 +207,9 @@ class NotificationController extends ApiController
                         $notification->Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
                     }
                     $notification->save();
-
                     if($request->is_group=='N'){
                         NotificationBroadcast::create([
-                            'Notification_id' => $request->NotificationId,
+                            'Notification_id' => $notification->id,
                             'State_id' => 1,
                         ]);
 

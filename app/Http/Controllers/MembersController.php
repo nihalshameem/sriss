@@ -794,6 +794,67 @@ class MembersController extends ApiController
     } 
     }
 
+    public function getMemberProfileDetails(Request $request)
+    {
+        $rules = array (
+            'mobile_number' => 'required',
+            'token' => 'required',
+            );
+            
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator-> fails())
+        {
+            return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+        }
+        else
+        {   
+            if($user=$this->is_valid_token($request['token']))
+            {
+                $details =array();
+                $member = Member::where('Mobile_No',$request->mobile_number)->first()->toArray();
+                $members = Member::where('Mobile_No',$request->mobile_number)->first();
+                $districtscount = District::where('District_Id',$members->District_Id)->select('District_desc As District')->count();
+                if($districtscount>0)
+                {
+                    $district = District::where('District_Id',$members->District_Id)->select('District_desc As District')->first()->toArray();
+                   $arr1 = array_merge($member,$district); 
+                   array_push($details,$arr1);
+                   $single= array_reduce($details, 'array_merge', array());
+                }
+                else
+                {
+                    $district =  array("District" => null);
+                    $arr1 = array_merge($member,$district); 
+                    array_push($details,$arr1);
+                    $single= array_reduce($details, 'array_merge', array());
+                }
+                
+                 
+                if($member)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'message' => 'Success',
+                        'data' => $single
+                    ]);
+                }
+                else
+                {
+                    return $this->respond([
+                        'status' => 'Failed',
+                        'code' => $this->getStatusCode(),
+                        'message' => 'Failed to Update',
+                        ]);
+                }
+            }
+            else
+            {
+                return $this->respondTokenError("Token Mismatched");
+            } 
+    } 
+    }
+
     public function MemberReferal(Request $request)
     {
         $rules = array (

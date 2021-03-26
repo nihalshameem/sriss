@@ -66,22 +66,33 @@ class MemberGroupController extends ApiController
 
     public function SaveSingleGroupMember(Request $request){
     	
+        $warn="";
+        $added="";
     	$member_reg_id=Member::where('id',$request->member_id)->pluck('Member_Id');
-    	$count = GroupMembers::where('Group_id', $request->Group_id)
+        
+        foreach ($request->group_multi_id1 as $row2){
+    	$count = GroupMembers::where('Group_id', $row2)
 	    				->where('Member_tbl_id',$request->member_id)
 	    				->count();
 		if($count>0){
-			return redirect()->back()->with('warning1','Already Exist!');
+            $warn.= $row2.",";
+			
 		}else if($count==0){
 	        $GroupMembers = new GroupMembers();
-	        $GroupMembers->Group_id = $request->Group_id;
+	        $GroupMembers->Group_id = $row2;
 	        $GroupMembers->Member_tbl_id = $request->member_id;
 	        $GroupMembers->Member_Id = $member_reg_id[0];
 	        $GroupMembers->active = 'Y';
 	        $GroupMembers->save();
+            $added.= $row2.",";
 	    }
+    }
+        if($warn==""){
+            return redirect()->back()->withSuccess('Successfully Updated!');
+        }else{
+            return redirect()->back()->with('warning1','Already Exist in Group id'.$warn)->withSuccess(' Successfully Updated in Group id '.$added);;
+        }
         
-        return redirect()->back()->withSuccess('Successfully Updated!');
     }
 
     public function SaveMultiGroupMember(Request $request)
@@ -98,7 +109,7 @@ class MemberGroupController extends ApiController
                 }
                 else{
                     foreach ($request->group_multi_id as $row2){
-                        $count = GroupMembers::where('Group_id', $request->row2)
+                        $count = GroupMembers::where('Group_id', $row2)
                             ->where('Member_tbl_id',$member_reg->id)->count();      
                             if($count>0){
                                 $warn=$warn.$row.", ";

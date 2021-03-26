@@ -48,18 +48,7 @@
       border-color: #0640b5 !important;
       display: inline-block;
   }
-  .btn-primary:focus
-  {
-      color: #fff !important;
-      background-color: #0640b5 !important;
-      border-color: #0640b5 !important;
-  }
-  .btn-primary:visited
-  { 
-      color: #fff !important;
-      background-color: #0640b5 !important;
-      border-color: #0640b5 !important;
-  }
+  
   .content-wrapper{
       background-color: #FAFAFA;
   }

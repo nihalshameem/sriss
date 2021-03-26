@@ -53,7 +53,7 @@
 </div>
 <div class="col-md-4 form-group">
   <label >Group Name</label><br>
-  <select name="group_multi_id" id="group_name1" multiple="multiple" >
+  <select name="group_multi_id1[]" id="group_name1" multiple="multiple" >
           <option value="">Group Name</option>
           @foreach ($memberGroups as $memberGroup)
           

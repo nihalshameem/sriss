@@ -48,18 +48,7 @@
             border: 2px solid #333 !important;
             display: inline-block;
         }
-        .btn-primary:focus
-        {
-            background-color: #333;
-            color:#fafafa;
-            border:1px solid #fafafa;
-        }
-        .btn-primary:visited
-        { 
-            background-color: #333;
-            color:#fafafa;
-            border:1px solid #fafafa;
-        }
+        
         .content-wrapper{
             background-color: #FAFAFA;
         }

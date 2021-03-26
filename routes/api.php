@@ -26,7 +26,7 @@ Route::group(['prefix' => '/v2'], function () {
 
 		Route::post('/mobile_verification', [App\Http\Controllers\MembersController::class,'Mobile_Verification']);
 
-		Route::get('/language_lock', [App\Http\Controllers\WebApplicationController::class,'getLanguageLock']);
+		Route::get('/compliance_lock', [App\Http\Controllers\WebApplicationController::class,'getComplianceLock']);
 
 		Route::post('/reset_password', [App\Http\Controllers\MembersController::class,'Forgot_password']);
 
@@ -68,6 +68,8 @@ Route::group(['prefix' => '/v2'], function () {
 		Route::post('/profileupdate', [App\Http\Controllers\MembersController::class,'profileupdate']);
 
 		Route::post('/memberprofile', [App\Http\Controllers\MembersController::class,'getProfileStored']);
+		
+		Route::post('/memberProfileDetails', [App\Http\Controllers\MembersController::class,'getMemberProfileDetails']);
 
 		Route::post('/contribution', [App\Http\Controllers\ContributionController::class,'storeContribution']);
 

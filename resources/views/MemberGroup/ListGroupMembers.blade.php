@@ -54,17 +54,20 @@
         <thead>
          <tr>
            <th>Sl No</th>
+           <th>Name</th>  
            <th>Member Id</th>
-           <th>Name</th>           
+           <th>Mobile No.</th>
+                    
          </tr>
        </thead>
        <tbody>
         @foreach ($members as $i => $member)
+        
         <tr>
          <td>{{ $i+1 }}</td>
+         <td>{{ $member->First_Name }} {{ $member->Last_Name}}</td>
          <td>{{ $member->Member_Id }}</td>
-         <td>{{ $member->First_Name }}</td>
-         
+         <td>{{ $member->Mobile_No }}</td>
       </tr>
       @endforeach
 

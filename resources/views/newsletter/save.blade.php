@@ -58,7 +58,7 @@
           </div>
         </div>
       </div>
-      <div class="card-footer" style="padding: 1.90rem 23.25rem">
+      <div style="max-width: 200px; margin: auto; margin-bottom: 20px;">
         <a href="/NewsLetter" class="btn btn-primary">Cancel</a>
         <button type="submit" class="btn btn-primary">Submit</button>
       </div>

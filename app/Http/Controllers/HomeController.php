@@ -8,6 +8,8 @@ use App\Models\PollsQuestions;
 use App\Models\Member;
 use App\Models\OfflineContribution;
 use App\Models\OnlineContribution;
+use App\Models\Feedback;
+use App\Models\User;
 use carbon\carbon;
 use DB;
 
@@ -30,7 +32,9 @@ class HomeController extends Controller
         $Notification_count = Notification::where('Notification_active','Y')->count();
         $online_amount = OnlineContribution::where('payment_status','Payment Successfull')->sum('Online_Contribution_amount');
         $offline_amount = OfflineContribution::where('Offline_Contribution_payment_status','Completed')->sum('Offline_Contribution_amount');
-        return view('home',compact('members_count','Notification_count','online_amount','offline_amount'));
+        $feedback_count = Feedback::count();
+        $profileKaryakarthas = User::where('Intrs_to_volunteer','Yes')->count();
+        return view('home',compact('members_count','Notification_count','online_amount','offline_amount', 'feedback_count', 'profileKaryakarthas'));
     }
 
     public function OnlineContributions()

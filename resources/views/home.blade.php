@@ -22,6 +22,7 @@
     <!-- Info boxes -->
     <div class="row">
       <div class="col-12 col-sm-6 col-md-3">
+        <a href="/Reports/MembersListView"  style="color: black">
         <div class="info-box mb-3">
           <span class="info-box-icon"><i class="fas fa-users"></i></span>
 
@@ -32,8 +33,10 @@
           <!-- /.info-box-content -->
         </div>
         <!-- /.info-box -->
+      </a>
       </div>
       <div class="col-12 col-sm-6 col-md-3">
+        <a href="/Reports/MembersListView" style="color: black">
         <div class="info-box">
           <span class="info-box-icon "><i class="fas fa-bell"></i></span>
 
@@ -46,6 +49,7 @@
          <!-- /.info-box-content -->
        </div>
        <!-- /.info-box -->
+     </a>
      </div>
      <!-- /.col -->
      <div class="col-12 col-sm-6 col-md-3">
@@ -84,6 +88,41 @@
       <!-- /.info-box -->
     </div>
     <!-- /.col -->
+
+    <div class="col-12 col-sm-6 col-md-3">
+       <a href="{{ route('listfeedback') }}" style="color:black">
+        <div class="info-box mb-3">
+          <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Feedback</span>
+            <span class="info-box-number">{{$feedback_count}}<small></small></span>
+          </div>
+
+
+          <!-- /.info-box-content -->
+        </div></a>
+
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+       <div class="col-12 col-sm-6 col-md-3">
+       <a href="{{ route('volunteer.reportsview') }}" style="color:black">
+        <div class="info-box mb-3">
+          <span class="info-box-icon"><i class="fas fa-users"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Volunteer Report</span>
+            <span class="info-box-number">{{$profileKaryakarthas}}<small></small></span>
+          </div>
+
+
+          <!-- /.info-box-content -->
+        </div></a>
+
+        <!-- /.info-box -->
+      </div>
     
     <!-- /.col -->
   </div>

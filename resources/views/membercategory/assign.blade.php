@@ -70,7 +70,7 @@
 
                 
                        <div class="col-md-4 form-group">
-                      <input type="checkbox" name="AppIcon[]"  value="{{ $AppIconsUnchecked->AppIcon_id}}" id="permission" >&nbsp;&nbsp;{{ $AppIconsUnchecked->L1_text}}{{ $AppIconschecked->L2_text}} {{ $AppIconschecked->L3_text}}<br>
+                      <input type="checkbox" name="AppIcon[]"  value="{{ $AppIconsUnchecked->AppIcon_id}}" id="permission" >&nbsp;&nbsp;{{ $AppIconsUnchecked->L1_text}}{{ $AppIconsUnchecked->L2_text}} {{ $AppIconsUnchecked->L3_text}}<br>
                       </div> 
                       <input type="hidden" class="form-control"  name="categoryId[]" value="{{$membercategory->MemberCategory_id}}"> 
                       @endforeach

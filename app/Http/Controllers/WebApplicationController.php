@@ -26,6 +26,7 @@ use Auth;
 use DB;
 use Route;
 use \Illuminate\Http\Response as Res;
+use Illuminate\Support\Str;
 
 class WebApplicationController extends ApiController
 {
@@ -291,7 +292,7 @@ class WebApplicationController extends ApiController
 
     /***Language***/
 
-    public function getLanguageLock(Request $request)
+    public function getComplianceLock(Request $request)
     {
         $rules = array (
             'member_id' => 'required',
@@ -307,18 +308,20 @@ class WebApplicationController extends ApiController
         {
             if($user=$this->is_valid_token($request['token']))
             {
-                $language = DB::table('drs_language_tbl')->where('Language_lock', 'Y')->value('Language_lock');
-                
-                $languagecount = DB::table('drs_language_tbl')->where('Language_lock', 'Y')->count();
-                
-                if($languagecount)
+               
+                $compliance_lock = Compliance::pluck('Compliance_active', 'Compliance_desc');
+                $compliancecount = $compliance_lock->count();
+              
+                if($compliancecount)
                 {
+                    foreach ($compliance_lock as $key => $value) {
+                        $newCompliance[Str::slug($key,'_')]=$value;
+                    }
                     return $this->respond([
                         'status' => 'success',
                         'code' => $this->getStatusCode(),
-                        'data' =>[
-                           'language_lock'=> $language
-                            ],
+                        'data' =>$newCompliance
+                            ,
                         'message'=>'success',   
                         ]);
                 }

@@ -49,18 +49,6 @@
       border: 1px solid #0653c8 !important;
       display: inline-block;
     }
-    .btn-primary:focus
-    {
-      background-color: #0653c8;
-      color:#ffffff;
-      border:1px solid #0653c8;
-    }
-    .btn-primary:visited
-    { 
-      background-color: #0653c8;
-      color:#ffffff;
-      border:1px solid #0653c8;
-    }
     .btn-back {
       color: #ffffff !important;
       background-color: #0653c8 !important;
