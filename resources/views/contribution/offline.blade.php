@@ -131,12 +131,9 @@
 </div>
 
 <div class="row">
-  <div class="col-md-1"> 
-  </div>
   
-  <div class="col-md-2">  
-  </div>
-  <div class="card-footer">
+  <div style="max-width: 200px; margin: auto; margin-bottom: 20px;">
+
     <a href="/Contributions" class="btn btn-primary">Cancel</a>
 
     <button type="submit" class="btn btn-primary">Next</button>

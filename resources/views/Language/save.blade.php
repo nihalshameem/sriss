@@ -49,7 +49,7 @@
 </div>
 </div>
 <div style="padding: 1.75rem 9.25rem">
-  <a href="/languageLock" class="btn btn-primary">Cancel</a>
+  <a href="/language" class="btn btn-primary">Cancel</a>
   <button type="submit" class="btn btn-primary">Submit</button>
 </div>
 </form>

@@ -1,4 +1,12 @@
 <form role="form" method="post" action="{{ route('MemberApproval.Update') }}">
+  @if( Session::has( 'warning' ))
+   <div class="alert alert-danger alert-block" style="border-color: #FFA07A;color: #388E3C;">
+                <a class="close" data-dismiss="alert" href="#">×</a>
+               
+                <p style="font-weight:bold;color:white;">{{ Session::get('warning') }}</p>
+              </div>
+
+    @endif
               @csrf
 <table id="approvalreport" class="table table-borderless">
                                       <thead>
@@ -35,7 +43,7 @@
                                         </tbody>
                     </table>
                     <div style="max-width: 400px; margin: auto;">
-  <a href="#" class="btn btn-primary">Cancel</a>
+  <a href="/home" class="btn btn-primary">Cancel</a>
   <button type="submit" name = "submit" value = "Approve" class="btn btn-primary">Approve</button>
   <button type="submit" name = "submit" value = "Reject" class="btn btn-primary">Reject</button>
 </div>

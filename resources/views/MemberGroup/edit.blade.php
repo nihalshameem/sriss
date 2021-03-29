@@ -55,7 +55,7 @@
                 
               </div>
               <div style="max-width: 200px; margin: auto;">
-                <a href="/geo" class="btn btn-primary">Cancel</a>
+                <a href="/memberGroup" class="btn btn-primary">Cancel</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>

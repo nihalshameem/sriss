@@ -1420,7 +1420,8 @@ class MembersController extends ApiController
 
     public function UpdateMemberApprovalPending(Request $request)
     {
-        if($request->submit == "Approve")
+        if($request->member_id!=null){
+            if($request->submit == "Approve")
             {
              $MemberUpdate = Member::whereIn('Member_Id',$request->member_id)->update(['Is_Approved'=>'Y']);
             }
@@ -1430,6 +1431,11 @@ class MembersController extends ApiController
             }
         
         return redirect(route('MemberPending.list'));
+
+        }else{
+            return \Redirect::back()->withInput()->withWarning( 'Select atleast one member!');
+        }
+        
     }
 
 

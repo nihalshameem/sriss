@@ -37,7 +37,7 @@
                 @csrf
     <div class="col-md-4 form-group">
       <label for="exampleInputPassword1">Mobile Number</label><br>
-      <select name="member_id" id="mobile_number" class="selectpicker form-control memberdeactivate"  data-live-search="true">
+      <select name="member_id" id="mobile_number" class="selectpicker form-control memberdeactivate"  data-live-search="true" required="">
           <option value="">Mobile Number</option>
           @foreach ($members as $member)
           
@@ -53,7 +53,7 @@
 </div>
 <div class="col-md-4 form-group">
   <label >Group Name</label><br>
-  <select name="group_multi_id1[]" id="group_name1" multiple="multiple" >
+  <select name="group_multi_id1[]" id="group_name1" multiple="multiple" required="">
           <option value="">Group Name</option>
           @foreach ($memberGroups as $memberGroup)
           
@@ -77,7 +77,7 @@
     @csrf
     <div class="col-md-4 form-group">
       <label for="exampleInputPassword1">Mobile Numbers</label><br>
-      <textarea name="multi_member_id" class=" col-md-12 memberdeactivate"rows="4" ></textarea>
+      <textarea name="multi_member_id" class=" col-md-12 memberdeactivate"rows="4" required=""></textarea>
       <br>
       <p>Separate each mobile number with comma only.</p>
     @if( Session::has( 'warning2' ))
@@ -98,7 +98,7 @@
 </div>
 <div class="col-md-4 form-group">
   <label for="exampleInputPassword1">Group Name</label><br>
-  <select name="group_multi_id[]" id="group_name2"  multiple="multiple">
+  <select name="group_multi_id[]" id="group_name2"  multiple="multiple" required="">
           <option value="">Group Name</option>
           @foreach ($memberGroups as $memberGroup)
           
