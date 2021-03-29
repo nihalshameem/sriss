@@ -67,7 +67,7 @@
     <input type="text" class="form-control" id="AppText" name="AppText">                   
 </div>
 <div style="padding: 1.45rem 9.25rem">
-  <a href="/home" class="btn btn-primary">Cancel</a>
+  <a href="/AppImage/List" class="btn btn-primary">Cancel</a>
   <button type="submit" class="btn btn-primary">Submit</button>
 </div>
 </form>
