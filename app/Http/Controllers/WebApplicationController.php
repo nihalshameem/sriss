@@ -108,7 +108,6 @@ class WebApplicationController extends ApiController
                                         ->update(['AppIcon_image_path'=> config('app.url').'storage/app/public/AppIcon/'.$imageName,'L1_text'=> $request->l1_text,
                                             'L2_text'=> $request->l2_text,
                                             'L3_text'=> $request->l3_text,
-                                            'AppIcon_text_ta'=>$request->AppIconTamil,
                                             'AppIcon_visible'=>$request->App_Icon_status]);
 
             return redirect(route('list.appIcon'));
@@ -262,12 +261,11 @@ class WebApplicationController extends ApiController
 
         if($Compliance)
         {
-            $vision = Compliance::where('Compliance_id','1')->where('Compliance_active','Y')->first();
-            $terms = Compliance::where('Compliance_id','2')->where('Compliance_active','Y')->first();
-            $privacy = Compliance::where('Compliance_id','3')->where('Compliance_active','Y')->first();
+            $vision = Compliance::where('Compliance_id','1')->where('Compliance_active','N')->first();
+            $terms = Compliance::where('Compliance_id','2')->where('Compliance_active','N')->first();
+            $privacy = Compliance::where('Compliance_id','3')->where('Compliance_active','N')->first();
             $language = Language::where('Language_active','D')->get();
-           
-            
+
              return response()->json([
                     'status' => 'success',
                             'code' => $this->getStatusCode(),

@@ -32,12 +32,8 @@
               <thead>
                 <tr>
                   <th>Sl No</th>
-                  <?php
-                    $languages = \App\Models\Language::where('Language_active','D')->get();
-                  ?>
-                  @foreach($languages as $i => $language)
-                  <th>{{$language->Language_name}}</th>
-                  @endforeach
+                  <th>English</th>
+                  <th>Tamil</th>
                   <th>Image</th>
                   <th>Status</th>
                   <th>Action</th>
@@ -49,7 +45,6 @@
                   <td>{{ $i+1 }}</td>
                   <td>{{ $appIcon->L1_text }}</td>
                   <td>{{ $appIcon->L2_text }}</td>
-                  <td>{{ $appIcon->L3_text }}</td>
                   <td><img src="{{ $appIcon->AppIcon_image_path }}" width="120px" height="60px"></td>
                   <td><span class="badge bg-success">{{ $appIcon->AppIcon_visible }}</span></td>
                   
