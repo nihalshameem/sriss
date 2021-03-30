@@ -22,7 +22,7 @@ class NewsLetterController extends ApiController
 
     public function listNewsLetter()
     {
-    	$NewsLetter = NewsLetter::get();
+    	$NewsLetter = NewsLetter::orderby('Newsletter_id','desc')->get();
     	return view('newsletter.list',compact('NewsLetter'));
     }
 

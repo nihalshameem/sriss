@@ -1115,7 +1115,10 @@ class NotificationController extends ApiController
         public function editNotificationGroupBroadcast(){
             $Groups=MemberGroup::where('active','Y')->get();
             $notifications=Notification::where('Notification_id',Session::get('notificationId'))->first();
-            return view('notification.broadcast.editGroup',compact('Groups','notifications'));
+            $NotificationGroupBroadcast = NotificationGroupBroadcast::where('Notification_id',Session::get('notificationId'))->get();
+            
+            
+            return view('notification.broadcast.editGroup',compact('Groups','notifications','NotificationGroupBroadcast'));
         }
 
         public function updateNotificationGroupBroadcast(Request $request){

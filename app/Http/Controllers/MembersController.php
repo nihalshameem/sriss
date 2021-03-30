@@ -1186,7 +1186,7 @@ class MembersController extends ApiController
 
     public function MemberDetails()
     {
-        $Member = Member::get();
+        $Member = Member::orderby('id','desc')->get();
         $created_at = Member::distinct('created_at')->get();
         return view('Member.member_details',compact('Member','created_at'));
     }
@@ -1202,7 +1202,7 @@ class MembersController extends ApiController
 
             if($request->VolunteerSearch=='M')
             {
-                $members = Member::where('Mobile_NO','LIKE','%'.$request->membersearch."%")->orWhere('Email_Id','LIKE','%'.$request->membersearch."%")->orWhere('Member_Id','LIKE','%'.$request->membersearch."%")->orWhere('created_at','LIKE','%'.$request->membersearch."%")->get();
+                $members = Member::where('Mobile_NO','LIKE','%'.$request->membersearch."%")->orWhere('Email_Id','LIKE','%'.$request->membersearch."%")->orWhere('Member_Id','LIKE','%'.$request->membersearch."%")->orWhere('created_at','LIKE','%'.$request->membersearch."%")->orderby('id','desc')->get();
 
             }
             else
@@ -1226,7 +1226,13 @@ class MembersController extends ApiController
             {
                 
                    foreach ($members as $key => $member) {
-                 
+                    
+                 $status="";
+             if($member->active_flag=='Y'){
+                $status='<span class="right badge badge-success">Yes</span>';
+            }else{
+                $status='<span class="right badge badge-danger">No</span>';
+            }
                 $output.='<tr>'.
                  
                 '<td>'.$member->First_Name.'</td>'.
@@ -1236,6 +1242,7 @@ class MembersController extends ApiController
                 '<td>'.$member->Pincode.'</td>'.
                 '<td>'.$member->created_at->toDateString().'</td>'.
                 '<td>'.$member->Address1.'</td>'.
+                '<td>'.$status.'</td>'.
                 '</tr>';
                  
                 }  
@@ -1250,8 +1257,8 @@ class MembersController extends ApiController
 
     public function MemberDeactivateList()
     {    
-        $Member = Member::get();
-        $demembers=Member::Where('active_flag','N')->get();
+        $Member = Member::orderby('id','desc')->get();
+        $demembers=Member::Where('active_flag','N')->orderby('id','desc')->get();
         return view('Member.member_deactivation',compact('Member','demembers'));
     }
 
@@ -1264,7 +1271,7 @@ class MembersController extends ApiController
      
             $output="";
      
-            $members=Member::where('Mobile_NO','LIKE','%'.$request->memberdeactivate."%")->orWhere('Email_Id','LIKE','%'.$request->memberdeactivate."%")->orWhere('Member_Id','LIKE','%'.$request->memberdeactivate."%")->get();
+            $members=Member::where('Mobile_NO','LIKE','%'.$request->memberdeactivate."%")->orWhere('Email_Id','LIKE','%'.$request->memberdeactivate."%")->orWhere('Member_Id','LIKE','%'.$request->memberdeactivate."%")->orderby('id','desc')->get();
      
             if($members)
             {
@@ -1382,7 +1389,7 @@ class MembersController extends ApiController
 
     public function ListMemberPending()
     {
-       $member = Member::where('Is_Approved','N')->get();
+       $member = Member::where('Is_Approved','N')->orderby('id','desc')->get();
        return view('Member.pendinglist',compact('member'));
     }
     public function MemberPendingFilter(Request $request)
@@ -1401,13 +1408,13 @@ class MembersController extends ApiController
                   $member =Member::whereDate('created_at','>=',$request->createdDate)
                                         ->whereDate('updated_at','<=',date('Y-m-d'))
                                         ->where('Is_Approved',$request->status)
-                        ->get();
+                        ->orderby('id','desc')->get();
             }
             else
             {
                  
                 $member = Member::where('Is_Approved',$request->status)
-                                ->get();
+                                ->orderby('id','desc')->get();
             }
 
             

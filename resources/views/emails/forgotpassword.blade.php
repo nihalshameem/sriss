@@ -12,7 +12,7 @@
 	</div><br>
 	<p style="text-align:center">If you did not request a password reset, no further action is required.</p>
 	<span>Regards</span><br>
-	<span>Dharma Rakshana Samiti</span><br>
+	<span>Sri Solutions & Services</span><br>
 	<hr>
 	{{env('EMAIL_URL')}}forgotpassword/{{$details['email']}}/{{$details['token']}}
 </body>

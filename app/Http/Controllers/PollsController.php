@@ -815,7 +815,8 @@ class PollsController extends ApiController
     {
         $Groups=MemberGroup::where('active','Y')->get();
         $Polls = PollsQuestions::where('id',Session::get('PollsId'))->first();
-        return view('polls.broadcast.editGroup',compact('Groups','Polls'));
+        $PollsGroupBroadcast = PollsGroupBroadcast::where('Polls_id',Session::get('PollsId'))->get();
+        return view('polls.broadcast.editGroup',compact('Groups','Polls','PollsGroupBroadcast'));
     }
 
     public function updatePollsGroupBroadCast(Request $request)

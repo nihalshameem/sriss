@@ -266,7 +266,7 @@ class ReportsController extends Controller
 
     public function MembersListView()
     {
-        $Member = Member::get();
+        $Member = Member::orderby('id','desc')->get();
         $District = District::get();
         return view('reportsview.member_list',compact('Member','District'));
     }
@@ -285,7 +285,7 @@ class ReportsController extends Controller
 
     public function MemberDeactivationReportsView()
     {
-        $Member = Member::Where('active_flag','N')->get();
+        $Member = Member::Where('active_flag','N')->orderby('id','desc')->get();
         return view('reportsview.member_deactivation_report',compact('Member'));
     }
 
@@ -304,6 +304,7 @@ class ReportsController extends Controller
                         ->whereDate('updated_at','<=',$request->updatedDate)
                         ->where('District_Id','=',$request->District)
                         ->where('Pincode','=',$request->Pincode)
+                        ->orderby('id','desc')
                         ->get();
         }
         elseif($request->updatedDate!='' && $request->Pincode!='')
@@ -312,6 +313,7 @@ class ReportsController extends Controller
                         ->whereDate('created_at','>=',$request->createdDate)
                         ->whereDate('updated_at','<=',$request->updatedDate)
                         ->where('Pincode','=',$request->Pincode)
+                        ->orderby('id','desc')
                         ->get();
         }
         elseif($request->updatedDate!='' && $request->District!='')
@@ -320,24 +322,28 @@ class ReportsController extends Controller
                         ->whereDate('created_at','>=',$request->createdDate)
                         ->whereDate('updated_at','<=',$request->updatedDate)
                         ->where('District_Id','=',$request->District)
+                        ->orderby('id','desc')
                         ->get();
         }
         elseif($request->updatedDate=='' && $request->Pincode!='')
         {
              $Member= Member::where('active_flag','Y')
                         ->where('Pincode','=',$request->Pincode)
+                        ->orderby('id','desc')
                         ->get();
         }
         elseif($request->updatedDate=='' && $request->District!='')
         {
              $Member= Member::where('active_flag','Y')
                         ->where('District_Id','=',$request->District)
+                        ->orderby('id','desc')
                         ->get();
         }
         elseif($request->createdDate!='')
         {
              $Member= Member::where('active_flag','Y')
                         ->whereDate('created_at','=',$request->createdDate)
+                        ->orderby('id','desc')
                         ->get();
         }
         else
@@ -345,6 +351,7 @@ class ReportsController extends Controller
              $Member= Member::where('active_flag','Y')
                         ->whereDate('created_at','>=',$request->createdDate)
                         ->whereDate('updated_at','<=',$request->updatedDate)
+                        ->orderby('id','desc')
                         ->get();
         }
 
@@ -357,9 +364,12 @@ class ReportsController extends Controller
     public function MemberDeactivationReportsFilterView(Request $request)
     {
 
-        $Member= Member::where('active_flag','N')->whereDate('created_at','>=',$request->createdDate)
-                                                    ->whereDate('updated_at','<=',$request->updatedDate)
-                                                    ->get();
+        $Member= Member::where('active_flag','N')
+                        ->whereDate('created_at','>=',$request->createdDate)
+                        ->whereDate('updated_at','<=',$request->updatedDate)
+                        ->orderby('id','desc')
+                        ->get();
+
         Session::put("membeDeactivationreports",$Member);
         $Member = View::make('reportsview.reportsfilter.member_deactivation_filter', compact('Member'))->render();
         return Response::json(['Member' => $Member]);
@@ -401,6 +411,7 @@ class ReportsController extends Controller
     {
                 $Volunteer = Volunteer::whereDate('created_at','>=',$request->createdDate)
                         ->whereDate('updated_at','<=',$request->updatedDate)
+                        ->orderby('Volunteer_id','desc')
                         ->get();
 
        Session::put("volunteer_reports",$Volunteer);
@@ -412,7 +423,7 @@ class ReportsController extends Controller
     public function KaryakarthaReportsView()
     {
         
-        $Volunteer = Volunteer::get();
+        $Volunteer = Volunteer::orderby('Volunteer_id','desc')->get();
         return view('reportsview.volunteer_list',compact('Volunteer'));
     }
 
@@ -421,6 +432,7 @@ class ReportsController extends Controller
 
         $Volunteer = Volunteer::whereDate('created_at','>=',$request->createdDate)
                         ->whereDate('updated_at','<=',$request->updatedDate)
+                        ->orderby('Volunteer_id','desc')
                         ->get();
 
         $Volunteer = View::make('reportsview.reportsfilter.volunteer_list_filter', compact('Volunteer'))->render();
@@ -454,7 +466,7 @@ class ReportsController extends Controller
     {
         
         $member = Member::where('ReferedBy','!=',null)->orderby('id','desc')->get();
-        $members = Member::get();
+        $members = Member::orderby('id','desc')->get();
         return view('reportsview.member_referal_list',compact('member','members'));
     }
 
@@ -467,6 +479,7 @@ class ReportsController extends Controller
                              ->first();
               $member = Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)->whereDate('created_at','>=',$request->createdDate)
                         ->whereDate('updated_at','<=',$request->updatedDate)
+                        ->orderby('id','desc')
                         ->get();
         }
         else
@@ -476,17 +489,22 @@ class ReportsController extends Controller
                 $members = Member::where('Mobile_No',$request->member_id)
                              ->first();
 
-                  $member =Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)->whereDate('created_at','>=',$request->createdDate)
-                                        ->whereDate('updated_at','<=',date('Y-m-d'))
-                        ->get();
+                  $member =Member::where('ReferedBy','!=',null)
+                                    ->where('ReferedBy',$request->member_id)
+                                    ->whereDate('created_at','>=',$request->createdDate)
+                                    ->whereDate('updated_at','<=',date('Y-m-d'))
+                                    ->orderby('id','desc')
+                                    ->get();
             }
             else
             {
                 $members = Member::where('Mobile_No',$request->member_id)
                              ->first();
                  
-                $member = Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)
-                        ->get();
+                $member = Member::where('ReferedBy','!=',null)
+                                ->where('ReferedBy',$request->member_id)
+                                ->orderby('id','desc') 
+                                ->get();
             }
 
             

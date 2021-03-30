@@ -36,7 +36,7 @@
       </a>
       </div>
       <div class="col-12 col-sm-6 col-md-3">
-        <a href="/Reports/MembersListView" style="color: black">
+        <a href="/Notifications" style="color: black">
         <div class="info-box">
           <span class="info-box-icon "><i class="fas fa-bell"></i></span>
 

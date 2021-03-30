@@ -68,7 +68,7 @@
            border: 1px solid #ddd;
        }
        .table{
-          background-color:#ffffcc;
+          background-color:#edf6fe;
       }
       .card-header{
         background-color:#ffffcc;
@@ -102,7 +102,7 @@
   {
       text-align: left;
       border: 1px solid #ddd;
-      color:#8f3319;
+      color:#3e3e3e;
       font-size:16px;
       font-family: sans-serif;
   }
@@ -114,7 +114,7 @@
   }
 
   tr:nth-child(even) {
-      background-color: #fde0d7;
+      background-color: #fafafa;
   }
   .bg-danger1
   {
@@ -198,7 +198,49 @@ td{
             </div>
 
         </div>
-    </div><br>
+    </div>
+    
+    <div id="accordion">
+             <!-- we are adding the .class so bootstrap.js collapse plugin detects it -->
+                  <div class="card card-primary">
+                    <div class="">
+                      <h4 class="">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"class="btn btn-primary" style="float:right">
+                          View Geo
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                      <div class="card-body">
+                          <table id="example1" class="table table-borderless">
+              <thead>
+
+                <tr>
+                  <th>Group Name</th>
+                
+              </tr>
+          </thead>
+          <tbody>
+             @foreach($NotificationGroupBroadcast as $broadcast)
+
+             <tr>
+                <?php
+                $group = App\Models\MemberGroup::where('Group_id',$broadcast->Group_id)->first();
+                ?>
+                @if($group!= null)
+                <td>{{$group->Group_name}}</td>
+                @else
+                <td></td>
+                @endif
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+                      </div>
+                    </div>
+                  </div>
+           
+    </div>
     <form role="form" method="post" onSubmit="return confirm('Please note that all the previous broadcast options will be removed and you have to re-enter broadcast details again');" action="{{ route('update.NotificationGroupBroadcast') }}" enctype="multipart/form-data" >
       @csrf
       <div class="row">
@@ -221,7 +263,6 @@ td{
     <div class="col-md-6 form-group">
       <label for="exampleInputPassword1">Select Group</label><br>
       <select id="group" multiple="multiple" name="Group_id[]" >
-        <option disabled="">Select Group</option>
         @foreach($Groups as $Group)
           <option value="{{$Group->Group_id}}">{{$Group->Group_name}}</option>
         @endforeach
@@ -241,7 +282,7 @@ td{
 
 </div>
 <div style="max-width: 250px; margin: auto;">
-  <a href="/AddNotification" class="btn btn-primary">Previous</a>
+  <a href="{{ route('edit.notification', ['Notification' => $notifications->Notification_id]) }}" class="btn btn-primary">Previous</a>
   <button type="submit" class="btn btn-primary">Submit</button>
 </div><br><br>
 </form>
@@ -284,7 +325,8 @@ td{
 
 <script type="text/javascript">
   $('#group').multiselect({
-        buttonWidth: '300px'
+        buttonWidth: '300px',
+        includeSelectAllOption: true,
     });
 
      $('#group').multiselect();
