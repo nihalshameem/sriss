@@ -60,6 +60,7 @@
            <th>Question</th>
            <th>From Date</th>
            <th>To Date</th>
+           <th>Broadcast</th>
            <th colspan="3">Action</th>
            
          </tr>
@@ -71,6 +72,17 @@
          <td>{{ $PollsQuestions->Polls_Questions }}</td>
          <td>{{ $PollsQuestions->Polls_Questions_From_date }}</td>
          <td>{{ $PollsQuestions->Polls_Questions_To_date }}</td>
+         <?php
+         $BroadcastGeo  = App\Models\PollsBroadcast::where('Polls_id',$PollsQuestions->id)->count();
+        $BroadcastGroup  = App\Models\PollsGroupBroadcast::where('Polls_id',$PollsQuestions->id)->count();
+        $type="Empty";
+        if($BroadcastGeo!=0){
+          $type="Geo";
+        }else if($BroadcastGroup!=0){
+          $type="Group";
+        }
+         ?>
+         <td>{{$type}}</td>
          <td>
           <a href="{{ route('edit.question', ['QuestionId' => $PollsQuestions->id]) }}"><span class="badge bg-danger"><i class="fa fa-edit fa-lg" style="text-align:center;"></i></span></a>
         </td>

@@ -152,7 +152,7 @@ class MemberGroupController extends ApiController
     }
 
     public function ShowGroupMember(){
-        $memberGroups = MemberGroup::get();
+        $memberGroups = MemberGroup::where('active','Y')->get();
         $members = Member::get();
         return view('GroupMembers.add',compact('memberGroups','members'));
     }
@@ -185,7 +185,7 @@ class MemberGroupController extends ApiController
         {
             if($user=$this->is_valid_token($request['token']))
             {
-                $memberGroups = MemberGroup::get();
+                $memberGroups = MemberGroup::where('active','Y')->get();
                 if($memberGroups)
                 {
                     return $this->respond([

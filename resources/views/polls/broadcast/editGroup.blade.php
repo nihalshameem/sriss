@@ -187,7 +187,7 @@ td{
 
             <div class="row mb-2">
               <div class="col-sm-2">
-                <a href="/Notifications" class="btn btn-back" style="float:left;border-radius: 3px;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
+                <a href="{{ route('edit.question', ['QuestionId' => $Polls->id]) }}" class="btn btn-back" style="float:left;border-radius: 3px;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
             </div>
             <div class="col-sm-2">
             </div>
@@ -331,7 +331,8 @@ td{
 
 <script type="text/javascript">
   $('#group').multiselect({
-        buttonWidth: '300px'
+        buttonWidth: '300px',
+        includeSelectAllOption: true,
     });
 
      $('#group').multiselect();

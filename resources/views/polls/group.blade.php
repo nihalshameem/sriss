@@ -220,7 +220,7 @@ td{
     <div class="col-md-6 form-group">
       <label for="exampleInputPassword1">Select Group</label><br>
       <select id="group" multiple="multiple" name="Group_id[]" required="">
-        <option disabled="">Select Group</option>
+        
         @foreach($Groups as $Group)
           <option value="{{$Group->Group_id}}">{{$Group->Group_name}}</option>
         @endforeach
@@ -283,7 +283,8 @@ td{
 
 <script type="text/javascript">
   $('#group').multiselect({
-        buttonWidth: '300px'
+        buttonWidth: '300px',
+        includeSelectAllOption: true,
     });
 
      $('#group').multiselect();
