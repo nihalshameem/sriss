@@ -9,6 +9,7 @@
       <th>Pincode</th>
       <th>Reg Date</th>
       <th>Address</th>
+      <th>Status</th>
     </tr>
   </thead>
   <tbody id="membersearch">
@@ -20,11 +21,10 @@
       <td>{{ $member->Mobile_No }}</td>   
       <td>{{ $member->Member_Id }}</td>  
       <td>{{ $member->Pincode }}</td>
-       <td class="col-sm-2">{{ $member->created_at->toDateString() }} </td> 
-              <?php
-              $value = str_replace( ',', '<br />', $member->Address1 )
-              ?>
-              <td>{!! html_entity_decode($value) !!}</td>                  
+      <td>{{ $member->created_at->toDateString() }} </td> 
+      <?php $value = str_replace( ',', '<br />', $member->Address1 ) ?>
+      <td>{!! html_entity_decode($value) !!}</td>
+      <td>@if($member->active_flag=='Y')<span class="right badge badge-success">Yes</span>@else<span class="right badge badge-danger">No</span>@endif</td>
       
     </tr>
     @endforeach

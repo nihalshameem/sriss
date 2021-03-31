@@ -56,6 +56,7 @@ class ReportsController extends Controller
 
     public function MemberReportsFilter(Request $request)
     {
+
         if($request->updatedDate!='' && $request->Pincode!='' && $request->District!='')
         {
              $Member= Member::where('active_flag','Y')
@@ -98,6 +99,10 @@ class ReportsController extends Controller
              $Member= Member::where('active_flag','Y')
                         ->whereDate('created_at','=',$request->createdDate)
                         ->get();
+        }
+        elseif($request->updatedDate=='' && $request->Pincode=='' && $request->District=='' && $request->createdDate=='')
+        {
+             $Member= Member::get();
         }
         else
         {
@@ -345,6 +350,10 @@ class ReportsController extends Controller
                         ->whereDate('created_at','=',$request->createdDate)
                         ->orderby('id','desc')
                         ->get();
+        }
+        elseif($request->createdDate=='' && $request->updatedDate=='' && $request->Pincode=='' && $request->District=='')
+        {
+             $Member= Member::get();
         }
         else
         {

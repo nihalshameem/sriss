@@ -8,7 +8,7 @@
 
           <div class="row mb-2">
             <div class="col-sm-2">
-              <a href="/Contributions" class="btn btn-back" style="float:left;border-radius: 3px;background-color: aqua;margin-top: -12px;margin-left: -16px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
+              <a href="/Contributions" class="btn btn-back" style="float:left;border-radius: 3px;margin-top: -12px;margin-left: -16px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
           </div>
           <div class="col-sm-3">
           </div>
@@ -132,7 +132,7 @@
 
 <div class="row">
   
-  <div style="max-width: 200px; margin: auto; margin-bottom: 20px;">
+ <div style="max-width: 200px; margin: auto; margin-bottom: 20px;">
 
     <a href="/Contributions" class="btn btn-primary">Cancel</a>
 

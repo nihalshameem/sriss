@@ -95,7 +95,7 @@
     var District = val.value;
     var pval = document.getElementById("pincode");
     var Pincode = pval.value;
-    console.log(Pincode);
+    console.log(Pincode,District,updatedDate,currentVal);
     $.ajax({
         type : 'get',
         url : '{{URL::to('ReportsView/MemberList/Filter')}}',
