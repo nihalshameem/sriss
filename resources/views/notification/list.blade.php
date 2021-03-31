@@ -61,6 +61,7 @@
              <th>Start Date</th>
              <th>End Date</th>
              <th>Image</th>
+             <th>Broadcast</th>
              <th>Status</th>
              <th>Edit</th>
              <th>Delete</th>
@@ -79,6 +80,21 @@
          @else
          <td>No</td> 
          @endif 
+         <?php
+         $BroadcastGeo  = App\Models\NotificationBroadcast::where('Notification_id',$Notification->Notification_id)
+                        ->count();
+        $BroadcastGroup  = App\Models\NotificationGroupBroadcast::where('Notification_id',$Notification->Notification_id)
+                        ->count();
+                       
+$type="Empty";
+if($BroadcastGeo!=0){
+  $type="Geo";
+}else if($BroadcastGroup!=0){
+  $type="Group";
+}
+         ?>
+         <td>{{$type}}</td>
+
          @if($Notification->Notification_active=='Y' && $Notification->Notification_approved=='Y')
          <td><span class="right badge badge-success">Yes</span></td>
          @else

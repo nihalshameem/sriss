@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'info@sriss.in'),
-        'name' => env('MAIL_FROM_NAME', 'Dharma Rakshana Samiti'),
+        'name' => env('MAIL_FROM_NAME', 'Sri Solutions & Services'),
     ],
     
    

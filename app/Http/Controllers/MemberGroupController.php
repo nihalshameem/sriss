@@ -58,7 +58,7 @@ class MemberGroupController extends ApiController
         $membersGroup = MemberGroup::where('Group_id',$request->id)->
         update(['Group_name'=> $request->name,'active'=> $request->Status]);
         $membersGroup = MemberGroup::where('Group_id',$request->id)->first();
-        return view('MemberGroup.edit',compact('membersGroup'));
+        return redirect()->back()->withSuccess('Successfully Updated!');
     }
 
 
@@ -88,9 +88,17 @@ class MemberGroupController extends ApiController
 	    }
     }
         if($warn==""){
+
             return redirect()->back()->withSuccess('Successfully Updated!');
         }else{
-            return redirect()->back()->with('warning1','Already Exist in Group id'.$warn)->withSuccess(' Successfully Updated in Group id '.$added);;
+            $warn=explode(',',$warn);
+            $warnGrpName=MemberGroup::whereIn('Group_id',$warn)->get();
+            $warn = $warnGrpName->implode('Group_name', ', ');
+            $added=explode(',',$added);
+            $addedGrpName=MemberGroup::whereIn('Group_id',$added)->get();
+            $added = $addedGrpName->implode('Group_name', ', ');
+
+            return redirect()->back()->with('warning1','Already Exist in '.$warn)->withSuccess(' Successfully Updated in Group id '.$added);;
         }
         
     }
@@ -105,16 +113,18 @@ class MemberGroupController extends ApiController
             if($row!=""){
                 $member_reg=Member::where('Mobile_No',$row)->first();
                 if($member_reg==null){
-                    $invalid.=$row.", ";
+                    $invalid.=$row." is Invalid, ";
                 }
                 else{
                     foreach ($request->group_multi_id as $row2){
                         $count = GroupMembers::where('Group_id', $row2)
-                            ->where('Member_tbl_id',$member_reg->id)->count();      
+                            ->where('Member_tbl_id',$member_reg->id)->count();
+                        $grpName = MemberGroup::where('Group_id', $row2)
+                            ->first();      
                             if($count>0){
-                                $warn=$warn.$row.", ";
+                                $warn=$warn.$row." alredy exist in ".$grpName->Group_name.", ";
                             }else if($count==0){
-                                $added.=$row.", ";
+                                $added.=$row." added ".$grpName->Group_name;
                                 $GroupMembers = new GroupMembers();
                                 $GroupMembers->Group_id = $row2;
                                 $GroupMembers->Member_tbl_id = $member_reg->id;
@@ -130,10 +140,12 @@ class MemberGroupController extends ApiController
         if($warn=="" && $invalid==""){
                 return redirect()->back()->with('warning3',$warn.'Success');
             }else{
+                $err="";
                 if($added=="" ){
-                    return redirect()->back()->with('warning2',$warn.' Already Exist!,'.$invalid."Not Exist");
+                    return redirect()->back()->with('warning2',$warn."<br/>".$invalid);
                 }else{
-                    return redirect()->back()->with('warning2',$warn.' Already Exist!,'.$invalid."Not Exist")->with('warning3',$added.' Updated!');
+                
+                    return redirect()->back()->with('warning2',$warn."<br/>".$invalid)->with('warning3',$added);
                 }
                 
             }

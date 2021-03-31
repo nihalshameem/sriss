@@ -148,10 +148,12 @@
  $(document).ready(function(){
    
   $('#group_name1').multiselect({
-    buttonWidth: '300px'
+    buttonWidth: '300px',
+    includeSelectAllOption: true,
   });
   $('#group_name2').multiselect({
-    buttonWidth: '300px'
+    buttonWidth: '300px',
+    includeSelectAllOption: true,
   });
     });
   
