@@ -185,6 +185,7 @@ class ReportsController extends Controller
         ->groupBy('ReferedBy')
         ->orderby('memberCount','desc')
         ->get();
+        $members = Member::get();
         
         return view('reports.member_referal_list',compact('member','members'));
     }
