@@ -74,10 +74,10 @@
           </div>
 
           <div class="form-group col-md-6">
-            <label for="exampleInputFile">Popup</label>
+            <label for="exampleInputFile">Popup Image</label>
             <div class="input-group">
               <div class="custom-file">
-                <input type="file" class="custom-file-input" name="BannerImg" id="exampleInputFile2" accept=" image/gif, image/jpeg ,image/png" onchange="upload_check2()">
+                <input type="file" class="custom-file-input" name="PopupImg" id="exampleInputFile2" accept=" image/gif, image/jpeg ,image/png" onchange="upload_check2()">
                 <label class="custom-file-label"  for="exampleInputFile2">Choose file</label>
               </div>
               <div class="input-group-append">

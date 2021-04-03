@@ -57,6 +57,7 @@
            <th>Name</th>  
            <th>Member Id</th>
            <th>Mobile No.</th>
+           <th>Delete</th>
                     
          </tr>
        </thead>
@@ -68,6 +69,9 @@
          <td>{{ $member->First_Name }} {{ $member->Last_Name}}</td>
          <td>{{ $member->Member_Id }}</td>
          <td>{{ $member->Mobile_No }}</td>
+         <td>
+            <a style="cursor: pointer;" onclick="Delete('{{ $member->Member_Id }}','{{$memberGroups->Group_id}}')"><span class="badge bg-danger"><i class="fas fa-trash"></i></span></a>
+        </td>
       </tr>
       @endforeach
 
@@ -86,5 +90,25 @@
 </section>
 </div>
 <br>
+
+<script>
+    function Delete (value1,value2) {
+
+      if (confirm("Are your sure you want to delete this member?")) {
+        $.ajax({
+            type : 'get',
+            url : '{{URL::to('groupMemberOnly_delete')}}',
+            data : {'member_id':value1,'group_id':value2,},
+            success:function(data){
+
+              window.location.reload();
+          } 
+      });
+
+    } else {
+     
+    }
+}
+</script>
 
 @endsection

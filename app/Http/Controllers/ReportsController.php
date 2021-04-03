@@ -57,63 +57,26 @@ class ReportsController extends Controller
     public function MemberReportsFilter(Request $request)
     {
 
-        if($request->updatedDate!='' && $request->Pincode!='' && $request->District!='')
+        $Member= Member::where('active_flag','Y');
+        if($request->createdDate!=null)
         {
-             $Member= Member::where('active_flag','Y')
-                        ->whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
-                        ->where('District_Id','=',$request->District)
-                        ->where('Pincode','=',$request->Pincode)
-                        ->get();
+           $Member= $Member->whereDate('created_at','>=',$request->createdDate); 
         }
-        elseif($request->updatedDate!='' && $request->Pincode!='')
+        if($request->updatedDate!=null)
         {
-             $Member= Member::where('active_flag','Y')
-                        ->whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
-                        ->where('Pincode','=',$request->Pincode)
-                        ->get();
+           $Member= $Member->whereDate('created_at','<=',$request->updatedDate);
         }
-        elseif($request->updatedDate!='' && $request->District!='')
+        if($request->District!=null)
         {
-             $Member= Member::where('active_flag','Y')
-                        ->whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
-                        ->where('District_Id','=',$request->District)
-                        ->get();
+           $Member= $Member->where('District_Id',$request->District); 
         }
-        elseif($request->updatedDate=='' && $request->Pincode!='')
+        if($request->Pincode!=null)
         {
-             $Member= Member::where('active_flag','Y')
-                        ->where('Pincode','=',$request->Pincode)
-                        ->get();
-        }
-        elseif($request->updatedDate=='' && $request->District!='')
-        {
-             $Member= Member::where('active_flag','Y')
-                        ->where('District_Id','=',$request->District)
-                        ->get();
-        }
-        elseif($request->createdDate!='')
-        {
-             $Member= Member::where('active_flag','Y')
-                        ->whereDate('created_at','=',$request->createdDate)
-                        ->get();
-        }
-        elseif($request->updatedDate=='' && $request->Pincode=='' && $request->District=='' && $request->createdDate=='')
-        {
-             $Member= Member::get();
-        }
-        else
-        {
-             $Member= Member::where('active_flag','Y')
-                        ->whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
-                        ->get();
+           $Member= $Member->where('Pincode',$request->Pincode); 
         }
 
-       
-       Session::put("member_reports",$Member);
+        $Member = $Member->orderby('id','desc')->get();
+
         $Member = View::make('reports.reportsfilter.member_list_filter', compact('Member'))->render();
         return Response::json(['Member' => $Member]);
     }
@@ -218,49 +181,22 @@ class ReportsController extends Controller
     public function MemberReferalReports()
     {
         
-        $member = Member::where('ReferedBy','!=',null)->orderby('id','desc')->get();
-        $members = Member::get();
+        $member = Member::where('ReferedBy','!=',null)->select('Member_Id','First_Name','Last_Name','Mobile_No','ReferedBy',\DB::raw('count(ReferedBy) as memberCount'))
+        ->groupBy('ReferedBy')
+        ->orderby('memberCount','desc')
+        ->get();
+        
         return view('reports.member_referal_list',compact('member','members'));
     }
 
-    public function MemberReferalReportsFilter(Request $request)
+    public function ReferalMembersList($mobile_number)
     {
-
-       if($request->updatedDate!=null)
-        {
-            $members = Member::where('Mobile_No',$request->member_id)                    
-                             ->first();
-
-            $member = Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)->whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
-                        ->get();
-        }
-        else
-        {
-            if($request->createdDate!=null)
-            {
-                $members = Member::where('Mobile_No',$request->member_id)
-                             ->first();
-
-                  $member =Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)->whereDate('created_at','>=',$request->createdDate)
-                                        ->whereDate('updated_at','<=',date('Y-m-d'))
-                        ->get();
-            }
-            else
-            {
-                $members = Member::where('Mobile_No',$request->member_id)
-                             ->first();
-                 
-                $member = Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)
-                        ->get();
-            }
-
-            
-        }
-
-        $member = View::make('reports.reportsfilter.member_referal_filter', compact('member','members'))->render();
-        return Response::json(['member' => $member]);
+        $member = Member::where('ReferedBy',$mobile_number)->get();
+        $members = Member::where('Mobile_No',$mobile_number)->first();
+        return view('reports.referred_members_list',compact('member','members'));
     }
+
+    
 
     /******** Web Application Reports View **********/
 
@@ -302,70 +238,29 @@ class ReportsController extends Controller
 
     public function MemberReportsFilterView(Request $request)
     {
-        if($request->updatedDate!='' && $request->Pincode!='' && $request->District!='')
+        
+
+        $Member= Member::where('active_flag','Y');
+        if($request->createdDate!=null)
         {
-             $Member= Member::where('active_flag','Y')
-                        ->whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
-                        ->where('District_Id','=',$request->District)
-                        ->where('Pincode','=',$request->Pincode)
-                        ->orderby('id','desc')
-                        ->get();
+           $Member= $Member->whereDate('created_at','>=',$request->createdDate); 
         }
-        elseif($request->updatedDate!='' && $request->Pincode!='')
+        if($request->updatedDate!=null)
         {
-             $Member= Member::where('active_flag','Y')
-                        ->whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
-                        ->where('Pincode','=',$request->Pincode)
-                        ->orderby('id','desc')
-                        ->get();
+           $Member= $Member->whereDate('created_at','<=',$request->updatedDate);
         }
-        elseif($request->updatedDate!='' && $request->District!='')
+        if($request->District!=null)
         {
-             $Member= Member::where('active_flag','Y')
-                        ->whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
-                        ->where('District_Id','=',$request->District)
-                        ->orderby('id','desc')
-                        ->get();
+           $Member= $Member->where('District_Id',$request->District); 
         }
-        elseif($request->updatedDate=='' && $request->Pincode!='')
+        if($request->Pincode!=null)
         {
-             $Member= Member::where('active_flag','Y')
-                        ->where('Pincode','=',$request->Pincode)
-                        ->orderby('id','desc')
-                        ->get();
-        }
-        elseif($request->updatedDate=='' && $request->District!='')
-        {
-             $Member= Member::where('active_flag','Y')
-                        ->where('District_Id','=',$request->District)
-                        ->orderby('id','desc')
-                        ->get();
-        }
-        elseif($request->createdDate!='')
-        {
-             $Member= Member::where('active_flag','Y')
-                        ->whereDate('created_at','=',$request->createdDate)
-                        ->orderby('id','desc')
-                        ->get();
-        }
-        elseif($request->createdDate=='' && $request->updatedDate=='' && $request->Pincode=='' && $request->District=='')
-        {
-             $Member= Member::get();
-        }
-        else
-        {
-             $Member= Member::where('active_flag','Y')
-                        ->whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
-                        ->orderby('id','desc')
-                        ->get();
+           $Member= $Member->where('Pincode',$request->Pincode); 
         }
 
-       
-       Session::put("member_reports",$Member);
+        $Member = $Member->orderby('id','desc')->get();
+
+
         $Member = View::make('reportsview.reportsfilter.member_list_filter', compact('Member'))->render();
         return Response::json(['Member' => $Member]);
     }
@@ -474,57 +369,22 @@ class ReportsController extends Controller
      public function MemberReferalReportsView()
     {
         
-        $member = Member::where('ReferedBy','!=',null)->orderby('id','desc')->get();
-        $members = Member::orderby('id','desc')->get();
+        $member = Member::where('ReferedBy','!=',null)->select('Member_Id','First_Name','Last_Name','Mobile_No','ReferedBy',\DB::raw('count(ReferedBy) as memberCount'))
+        ->groupBy('ReferedBy')
+        ->orderby('memberCount','desc')
+        ->get();
+        $members = Member::get();
         return view('reportsview.member_referal_list',compact('member','members'));
     }
 
-    public function MemberReferalReportsFilterView(Request $request)
+    
+
+public function ReferalMembersListReportsView($mobile_number)
     {
-
-       if($request->updatedDate!=null)
-        {
-            $members = Member::where('Mobile_No',$request->member_id)
-                             ->first();
-              $member = Member::where('ReferedBy','!=',null)->where('ReferedBy',$request->member_id)->whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
-                        ->orderby('id','desc')
-                        ->get();
-        }
-        else
-        {
-            if($request->createdDate!=null)
-            {
-                $members = Member::where('Mobile_No',$request->member_id)
-                             ->first();
-
-                  $member =Member::where('ReferedBy','!=',null)
-                                    ->where('ReferedBy',$request->member_id)
-                                    ->whereDate('created_at','>=',$request->createdDate)
-                                    ->whereDate('updated_at','<=',date('Y-m-d'))
-                                    ->orderby('id','desc')
-                                    ->get();
-            }
-            else
-            {
-                $members = Member::where('Mobile_No',$request->member_id)
-                             ->first();
-                 
-                $member = Member::where('ReferedBy','!=',null)
-                                ->where('ReferedBy',$request->member_id)
-                                ->orderby('id','desc') 
-                                ->get();
-            }
-
-            
-        }
-
-        $member = View::make('reportsview.reportsfilter.member_referal_filter', compact('member','members'))->render();
-        return Response::json(['member' => $member]);
+        $member = Member::where('ReferedBy',$mobile_number)->get();
+        $members = Member::where('Mobile_No',$mobile_number)->first();
+        return view('reportsview.referred_members_list',compact('member','members'));
     }
-
-
-
 
 
 }

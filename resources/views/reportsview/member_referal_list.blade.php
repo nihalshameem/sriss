@@ -11,7 +11,7 @@
 
       <div class="row mb-2">
         <div class="col-sm-2">
-          <a href="/ReportsView" class="btn btn-back" style="float:left;border-radius: 3px;background-color: aqua;margin-top: -12px;margin-left: -16px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
+          <a href="/Reports" class="btn btn-back" style="float:left;border-radius: 3px;background-color: aqua;margin-top: -12px;margin-left: -16px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
         </div>
         <div class="col-sm-3">
         </div>
@@ -24,34 +24,7 @@
         
       </div>
     </div>
-    <div class="col-12">
-      <div class="row">
-        <div class="col-sm-1">
-        </div>
-       <div class="col-sm-3">
-         <label>Mobile Number</label>
-         <input type="text" name="membersearch" id="member_id" class="form-control"  required>
-           
-       </div>
-        <div class="col-sm-3">
-         <label>Start Date</label>
-         <input type="date" class="form-control" id="start_date" >
-       </div>
-       <div class="col-sm-3">
-         <label>End Date</label>
-         <input type="date" class="form-control" id="end_date">
-         
-       </div>
-       
-       <div class="col-sm-1" style="padding-top:30px">
-         <button type="button" class="btn btn-primary" onclick="CollectionFilter()">Search</button>
-         
-       </div>
-       <div class="col-sm-1">
-       
-      </div>
-    </div>
-  </div>
+
   <div class="col-12">
 
    
@@ -59,8 +32,31 @@
      <div class="col-12">
        <div class="card">
          <!-- /.card-header -->
-         <div class="card-body" id="referalreport">
-          
+         <div class="card-body" id="referal_reports">
+           
+            <table  class="table table-borderless" cellpadding="0" cellspacing="0" >
+                                      <thead>
+                                        <tr>
+                                          <th>Member Id</th>
+                                          <th>First Name</th>
+                                          <th>Mobile Number</th>
+                                          <th style="text-align:center">Total Members</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody >
+                                        @foreach($member as $members)
+                                        <tr>
+                                         
+                                          <td style="width: 25%;">{{ $members->Member_Id }}</td>
+                                          <td style="width: 25%;">{{ $members->First_Name }} {{ $members->Last_Name }}</td>
+                                           <td style="width: 25%;">{{ $members->Mobile_No }}</td>
+                                          
+                                          <td style="width: 25%;text-align:center"><a href="{{ route('MemberReferal.reports.members.list', ['mobile_number' => $members->ReferedBy]) }}" style="color:blue;font-weight:bolder">{{ $members->memberCount }}</a></td>
+                                        </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table><br>
+           
          </div>
          <!-- /.card-body -->
        </div>
@@ -75,35 +71,5 @@
 </div>
 </section>
 </div>
-<script>
-  function CollectionFilter(updatedDate)
-  {
-     var startDate = document.getElementById("start_date").value;
-    var endDate = document.getElementById("end_date").value;
-     if ((Date.parse(endDate) <= Date.parse(startDate))) 
-     {
-      alert("End date should be greater than Start date");
-      document.getElementById("end_date").value="";
-      document.getElementById("start_date").value="";
-    }
-    else
-    {
-        var x = document.getElementById("start_date");
-      var currentVal = x.value;
-      var EndDate = document.getElementById("end_date");
-      var updatedDate = EndDate.value;
-      var member_id = document.getElementById("member_id");
-      var member_id = member_id.value;
-        $.ajax({
-          type : 'get',
-          url : '{{URL::to('ReportsView/MemberReferal/Filter')}}',
-          data : {'createdDate':currentVal,'updatedDate':updatedDate,'member_id':member_id},
-          success:function(data){
-           $('#referalreport').empty();
-           $('#referalreport').html(data['member']);
-         } 
-       });
-    }
-  }
-</script>
+
 @endsection

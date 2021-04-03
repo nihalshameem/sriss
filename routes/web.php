@@ -459,6 +459,7 @@ Route::get('/StreetFilter', [App\Http\Controllers\GeoController::class, 'StreetF
 
 Route::group(['prefix' => 'Reports'], function () {
 
+Route::get('/MemberReferal/Members/List/{mobile_number}',[App\Http\Controllers\ReportsController::class, 'ReferalMembersList'])->name('MemberReferal.reports.members.list');
 
 Route::get('/', [App\Http\Controllers\ReportsController::class,'ListReports'])->name('list.reports');
 
@@ -552,6 +553,8 @@ Route::get('/groupMember', [App\Http\Controllers\MemberGroupController::class, '
 Route::POST('/groupSingleMember', [App\Http\Controllers\MemberGroupController::class, 'SaveSingleGroupMember'])->name('save.singleGroupMember');
 
 Route::POST('/groupMultiMember', [App\Http\Controllers\MemberGroupController::class, 'SaveMultiGroupMember'])->name('save.multiGroupMember');
+
+Route::get('/groupMemberOnly_delete',[App\Http\Controllers\MemberGroupController::class, 'DeleteGroupMember'])->name('delete.groupMember');
 
 /** Advertisement **/
 

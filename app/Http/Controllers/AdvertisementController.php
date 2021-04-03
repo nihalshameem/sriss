@@ -123,7 +123,8 @@ class AdvertisementController extends ApiController
                     if(count($Advertisements)>0)
                     {
                         $data=array('image_path' => $Advertisements['image_path'],
-                                            'link' => $Advertisements['link'] );
+                                    'link' => $Advertisements['link'],
+                                    'popup_image_path' => $Advertisements['popup_image_path']);
 
                             return $this->respond([
                                             'status' => 'success',
@@ -192,12 +193,21 @@ class AdvertisementController extends ApiController
                 $advertisement->link = $request->link;
                 if ($request->hasFile('AdvertisementImg'))
                 {
-                $image_ext = $request->file('AdvertisementImg')->getClientOriginalExtension();
-                            $image_extn = strtolower($image_ext);
-                            $imageName = time() .'_'. $request->AdvertisementImg->getClientOriginalName();
-                            $filePath = $request->file('AdvertisementImg')->storeAs('Advertisement', $imageName,'public');
-                            $Ad_image_path = config('app.url').'storage/app/public/Advertisement/'.$imageName;
-                $advertisement->image_path = $Ad_image_path;  
+                    $image_ext = $request->file('AdvertisementImg')->getClientOriginalExtension();
+                    $image_extn = strtolower($image_ext);
+                    $imageName = time() .'_'. $request->AdvertisementImg->getClientOriginalName();
+                    $filePath = $request->file('AdvertisementImg')->storeAs('Advertisement', $imageName,'public');
+                    $Ad_image_path = config('app.url').'storage/app/public/Advertisement/'.$imageName;
+                    $advertisement->image_path = $Ad_image_path; 
+                if ($request->hasFile('PopupImg'))
+                {
+                    $image_ext = $request->file('PopupImg')->getClientOriginalExtension();
+                    $image_extn = strtolower($image_ext);
+                    $imageName = time() .'_'. $request->PopupImg->getClientOriginalName();
+                    $filePath = $request->file('PopupImg')->storeAs('Advertisement', $imageName,'public');
+                    $Ad_image_path = config('app.url').'storage/app/public/Advertisement/'.$imageName;
+                    $advertisement->popup_image_path = $Ad_image_path;  
+                } 
                 }else{
                     Session::put('Advertisement_id',$advertisement->id);
                     return \Redirect::back()->withInput()->withWarning('Must upload image field');

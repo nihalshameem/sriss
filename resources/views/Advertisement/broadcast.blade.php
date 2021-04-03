@@ -34,18 +34,15 @@
         }
         .btn-primary
         {
-            color: #333 !important;
-            background-color: #fafafa !important;
-            border-color: #333 !important;
-            transition: all 0.4s ease 0s;
-
-        }
-        .btn-primary:hover
-        {
-
             color: #fafafa !important;
-            background: #333 !important;
-            border: 2px solid #333 !important;
+            background-color: #0640b5;
+            border-color: #0640b5 !important;
+            transition: all 0.4s ease 0s;
+        }
+        .btn-primary:hover {
+            color: #0640b5 !important;
+            background: #fafafa !important;
+            border: 1px solid #0640b5 !important;
             display: inline-block;
         }
         

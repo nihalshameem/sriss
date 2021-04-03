@@ -206,7 +206,7 @@ td{
                     <div class="">
                       <h4 class="">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"class="btn btn-primary" style="float:right">
-                          View Geo
+                          View Group
                         </a>
                       </h4>
                     </div>

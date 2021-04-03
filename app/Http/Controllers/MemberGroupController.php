@@ -122,7 +122,7 @@ class MemberGroupController extends ApiController
                         $grpName = MemberGroup::where('Group_id', $row2)
                             ->first();      
                             if($count>0){
-                                $warn=$warn.$row." alredy exist in ".$grpName->Group_name.", ";
+                                $warn=$warn.$row." already existing in ".$grpName->Group_name.", ";
                             }else if($count==0){
                                 $added.=$row." added ".$grpName->Group_name;
                                 $GroupMembers = new GroupMembers();
@@ -160,9 +160,19 @@ class MemberGroupController extends ApiController
     public function ListGroupMembers($GroupId)
     {
         $memberGroups = MemberGroup::where('Group_id',$GroupId)->first();
-        $memberId = GroupMembers::where('Group_id',$GroupId)->pluck('Member_Id');
+        $memberId = GroupMembers::where('Group_id',$GroupId)->where('active','Y')->pluck('Member_Id');
         $members = Member::whereIn('Member_Id',$memberId)->get();
          return view('MemberGroup.ListGroupMembers',compact('members','memberGroups'));
+    }
+
+    public function DeleteGroupMember(Request $request)
+    {
+        GroupMembers::where('Member_Id', $request->member_id)
+                    ->where('Group_id', $request->group_id)
+                    ->update(['active'=> 'N']);
+                    $val=GroupMembers::where('Member_Id', $request->member_id)
+                    ->where('Group_id', $request->group_id)->first();
+        echo json_encode($val->active);
     }
 
 
