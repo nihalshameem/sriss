@@ -32,9 +32,9 @@
               <thead>
                 <tr>
                   <th>Sl No</th>
-                  <th>English</th>
-                  <th>Tamil</th>
-                  <th>Image</th>
+                  <th>Default Language</th>
+                  <th>2nd Language</th>
+                  <th>3rd Language</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -45,6 +45,7 @@
                   <td>{{ $i+1 }}</td>
                   <td>{{ $appIcon->L1_text }}</td>
                   <td>{{ $appIcon->L2_text }}</td>
+                  <td>{{ $appIcon->L3_text }}</td>
                   <td><img src="{{ $appIcon->AppIcon_image_path }}" width="120px" height="60px"></td>
                   <td><span class="badge bg-success">{{ $appIcon->AppIcon_visible }}</span></td>
                   

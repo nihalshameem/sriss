@@ -14,7 +14,11 @@
         <div class="col-sm-3">
         </div>
         <div class="col-sm-4">
-          <h3 class="title-head">Search Members</h3>
+           <?php
+
+                          $permission = App\Models\Permission::where('id','11')->first();
+                      ?> 
+                      <h3 class="title-head">{{$permission->name}}</h3>
         </div>
         <div class="col-sm-3">
           
@@ -36,7 +40,7 @@
           </select>
         </div>
         <div class="col-md-3">
-          <select name="membersearch" id="member_id" class="selectpicker form-control membersearch"  data-live-search="true">
+          <select name="membersearch" id="Email_Id" class="selectpicker form-control membersearch"  data-live-search="true">
             <option value="">Email</option>
             @foreach ($Member as $member)
             <option value="{{ $member->Email_Id }}">{{ $member->Email_Id }}</option>
@@ -51,24 +55,15 @@
             @endforeach 
           </select>
         </div>
-        <div class="col-md-3">
-
-           <div class="form-group clearfix">
-                <div class="icheck-primary d-inline">
-                  <input type="radio" id="checkboxPrimary1" value="M" name="approve" checked="">
-                  <label for="checkboxPrimary1">Member
-                  </label>
-                </div>
-                
-                <div class="icheck-primary d-inline">
-                  <input type="radio" id="checkboxPrimary2" value="V"  name="approve" >
-                  <label for="checkboxPrimary2">
-                    Volunteer
-                  </label>
-                </div>
-              </div>
+         <div class="col-md-3">
+          <select name="membercategory" id="membercategory" class="form-control membercategory" onchange="MemberCategory(this.value)">
+            <option value="">Member Category</option>
+            @foreach ($MemberCategory as $MemberCategory)
+            <option value="{{ $MemberCategory->MemberCategory_id }}">{{ $MemberCategory->Category }}</option>
+            @endforeach 
+          </select>
         </div>
-        
+       
       </div>
     </div>
     
@@ -94,6 +89,7 @@
             <tr>
               
               <td>{{ $member->First_Name }} {{ $member->Last_Name }}</td>
+              
               <td >{{ $member->Email_Id }} </td>  
               <td>{{ $member->Mobile_No }}</td>   
               <td>{{ $member->Member_Id }}</td>  
@@ -103,8 +99,7 @@
               $value = str_replace( ',', '<br />', $member->Address1 )
               ?>
               <td>{!! html_entity_decode($value) !!}</td>
-              <td>@if($member->active_flag=='Y')<span class="right badge badge-success">Yes</span>@else<span class="right badge badge-danger">No</span>@endif</td>
-                                
+                     <td>@if($member->active_flag=='Y')<span class="right badge badge-success">Yes</span>@else<span class="right badge badge-danger">No</span>@endif</td>           
               
             </tr>
             @endforeach

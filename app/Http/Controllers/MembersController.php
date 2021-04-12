@@ -15,6 +15,7 @@ use App\Models\Compliance;
 use App\Models\Language;
 use App\Models\MemberGroup;
 use App\Models\GroupMembers;
+use App\Models\MemberCategory;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
 use JWTAuth;
@@ -1187,52 +1188,46 @@ class MembersController extends ApiController
     public function MemberDetails()
     {
         $Member = Member::orderby('id','desc')->get();
+        $MemberCategory = MemberCategory::where('Category_active','Y')->get();
         $created_at = Member::distinct('created_at')->get();
-        return view('Member.member_details',compact('Member','created_at'));
+        return view('Member.member_details',compact('Member','created_at','MemberCategory'));
     }
 
     public function membersearch(Request $request)
     {
-     
+
         if($request->ajax())
      
         {
      
             $output="";
 
-            if($request->VolunteerSearch=='M')
-            {
-                $members = Member::where('Mobile_NO','LIKE','%'.$request->membersearch."%")->orWhere('Email_Id','LIKE','%'.$request->membersearch."%")->orWhere('Member_Id','LIKE','%'.$request->membersearch."%")->orWhere('created_at','LIKE','%'.$request->membersearch."%")->orderby('id','desc')->get();
+           
+                $members = Member::where('Mobile_No','LIKE','%'.$request->membersearch."%")->orWhere('Email_Id','LIKE','%'.$request->membersearch."%")->orWhere('Member_Id','LIKE','%'.$request->membersearch."%")->first();
 
-            }
-            else
-            {
-                $memberId = Member::where('Mobile_NO','LIKE','%'.$request->membersearch."%")->orWhere('Email_Id','LIKE','%'.$request->membersearch."%")->orWhere('Member_Id','LIKE','%'.$request->membersearch."%")->orWhere('created_at','LIKE','%'.$request->membersearch."%")->pluck('Member_Id');
-
-                $volunteer = Volunteer::whereIn('Member_id',$memberId)->pluck('Member_id');
-                if($volunteer!=null)
+                if($request->memberCategory!=null)
                 {
-                   $members = Member::whereIn('Member_Id',$volunteer)->get(); 
+                    if($members->Member_Category_Id==$request->memberCategory)
+                    {
+                        $members = Member::where('Mobile_No','LIKE','%'.$request->membersearch."%")->orWhere('Email_Id','LIKE','%'.$request->membersearch."%")->orWhere('Member_Id','LIKE','%'.$request->membersearch."%")->get();
+                    }
+                    else
+                    {
+                        $members =array();
+                    }
                 }
                 else
                 {
-                    $members = array();
-                } 
-
-            }
-                            
+                    $members = Member::where('Mobile_No','LIKE','%'.$request->membersearch."%")->orWhere('Email_Id','LIKE','%'.$request->membersearch."%")->orWhere('Member_Id','LIKE','%'.$request->membersearch."%")->get();
+                }
+               
+                     
             if($members)
          
             {
                 
                    foreach ($members as $key => $member) {
-                    
-                 $status="";
-             if($member->active_flag=='Y'){
-                $status='<span class="right badge badge-success">Yes</span>';
-            }else{
-                $status='<span class="right badge badge-danger">No</span>';
-            }
+                 
                 $output.='<tr>'.
                  
                 '<td>'.$member->First_Name.'</td>'.
@@ -1242,7 +1237,7 @@ class MembersController extends ApiController
                 '<td>'.$member->Pincode.'</td>'.
                 '<td>'.$member->created_at->toDateString().'</td>'.
                 '<td>'.$member->Address1.'</td>'.
-                '<td>'.$status.'</td>'.
+                '<td>'.$member->active_flag.'</td>'.
                 '</tr>';
                  
                 }  

@@ -381,20 +381,51 @@ for (i = 0; i < coll.length; i++) {
 });
 </script>
 
+<script type="text/javascript">
+  function MemberCategory(category)
+  {
+
+    var mobile_number = document.getElementById("mobile_number").value;
+    if(mobile_number=='')
+    {
+      mobile_number = document.getElementById("Email_Id").value;
+    }
+    else if(mobile_number=='')
+    {
+      mobile_number = document.getElementById("Email_Id").value;
+    }
+    else
+    {
+      mobile_number = document.getElementById("mobile_number").value;
+    }
+    console.log("mobile_number");
+
+      $.ajax({
+        type : 'get',
+        url : '{{URL::to('MemberSearch')}}',
+        data : {'membersearch':mobile_number,'memberCategory':category},
+        success:function(data){
+          $('#membersearch').empty();
+          
+          $('#membersearch').html(data);
+      } 
+  });
+  }
+</script>
+
 <script>
     $('.membersearch').on('change',function(){
       var value=$(this).val();
       var volunteer='';
-      var volunteer = document.getElementsByName("approve");
+      var volunteer = document.getElementsByName("membercategory");
       for(i = 0; i < volunteer.length; i++) { 
-                if(volunteer[i].checked)
-                volunteer = volunteer[i].value; 
-               
+                values = value[i].value; 
+                console.log(values);
             } 
       $.ajax({
         type : 'get',
         url : '{{URL::to('MemberSearch')}}',
-        data : {'membersearch':value,'VolunteerSearch':volunteer},
+        data : {'membersearch':value,'memberCategory':values},
         success:function(data){
           $('#membersearch').empty();
           $('#membersearch').html(data);

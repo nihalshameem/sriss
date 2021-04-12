@@ -64,7 +64,8 @@ class WebApplicationController extends ApiController
 
     public function UpdateLanguage(Request $request)
     {
-         Language::where("Language_id", '=', '1')
+       
+         Language::where("Language_id", '=', $request->Language_id)
                     ->update(['Language_name'=> $request->Language_name,'Language_active'=> $request->active]);
         return redirect(route('list.languageLock'));
     }

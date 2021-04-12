@@ -1,136 +1,117 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content-wrapper">
-
-  <!-- Main content -->
-  <section class="content" style="padding-top:25px">
-   <div class="container-fluid">
-     <div class="col-12">
-
-      <div class="row mb-2">
-        <div class="col-sm-5">
-        </div>
-        <div class="col-sm-2">
-          <h3 class="title-head">Dashboard</h3>
-        </div>
-        <div class="col-sm-5">
-        </div>
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" style="padding-top:30px;">
+   <br>
+   <br>
+    <section class="content">
+        <div class="col-md-12">
+            <div class="row">
         
-      </div>
-    </div><br>
-    <!-- Info boxes -->
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
-        <a href="/Reports/MembersListView"  style="color: black">
-        <div class="info-box mb-3">
-          <span class="info-box-icon"><i class="fas fa-users"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Members</span>
-            <span class="info-box-number">{{$members_count}}</span>
+        
+          <div class="col-md-12 card">
+          
+            <div class="card-body">
+                
+              <table id="example2" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th style="width:150px;">#</th>
+                  <th style="width:150px;text-align:center">Members</th>
+                  <th style="width:150px;text-align:center">Notifications</th>
+                  <th style="width:150px;text-align:center">Online Contributions</th>
+                  <th style="width:150px;text-align:center">Offline Contributions</th>
+                  <th style="width:150px;text-align:center">Feedback</th>
+                  <th style="width:150px;text-align:center">Volunteer Report</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td >Today</td>
+                  <td style="text-align:center">{{$Todaymember}}</td>
+                  <td style="text-align:center">{{$Todaynotification}}</td>
+                  <td style="text-align:center"> {{$Todayonline_amount}}</td>
+                  <td style="text-align:center">{{$Todayoffline_amount}}</td>
+                  <td style="text-align:center"> {{$Todayfeedback_count}}</td>
+                  <td style="text-align:center">{{$TodayprofileKaryakarthas}}</td>
+                </tr>
+                 <tr>
+                  <td>Yesterday</td>
+                  <td style="text-align:center">{{$Previousmember}}</td>
+                  <td style="text-align:center">{{$Previousnotification}}</td>
+                  <td style="text-align:center"> {{$Previousonline_amount}}</td>
+                  <td style="text-align:center">{{$Previousoffline_amount}}</td>
+                  <td style="text-align:center"> {{$Previousfeedback_count}}</td>
+                  <td style="text-align:center">{{$PreviousprofileKaryakarthas}}</td>
+                </tr>
+                <tr>
+                  <td>This Week</td>
+                  <td style="text-align:center">{{$Thisweekmember}}</td>
+                  <td style="text-align:center">{{$Thisweeknotification}}</td>
+                  <td style="text-align:center"> {{$Thisweekonline_amount}}</td>
+                  <td style="text-align:center">{{$Thisweekoffline_amount}}</td>
+                  <td style="text-align:center"> {{$Thisweekfeedback_count}}</td>
+                  <td style="text-align:center">{{$ThisweekprofileKaryakarthas}}</td>
+                </tr>
+                <tr>
+                  <td>This Month</td>
+                  <td style="text-align:center">{{$ThisMonthmember}}</td>
+                  <td style="text-align:center">{{$ThisMonthnotification}}</td>
+                  <td style="text-align:center"> {{$ThisMonthonline_amount}}</td>
+                  <td style="text-align:center">{{$ThisMonthoffline_amount}}</td>
+                  <td style="text-align:center"> {{$ThisMonthfeedback_count}}</td>
+                  <td style="text-align:center">{{$ThisMonthprofileKaryakarthas}}</td>
+                </tr>
+                <tr>
+                  <td>Previous Month</td>
+                  <td style="text-align:center">{{$PreviousMonthmember}}</td>
+                  <td style="text-align:center">{{$Previousmonthnotification}}</td>
+                  <td style="text-align:center"> {{$Previousmonthonline_amount}}</td>
+                  <td style="text-align:center">{{$Previousmonthoffline_amount}}</td>
+                  <td style="text-align:center"> {{$Previousmonthfeedback_count}}</td>
+                  <td style="text-align:center">{{$PreviousMonthprofileKaryakarthas}}</td>
+                </tr>
+                <tr>
+                  <td>This Year</td>
+                  <td style="text-align:center">{{$ThisYearmember}} </td>
+                  <td style="text-align:center">{{$ThisYearnotification}}</td>
+                  <td style="text-align:center"> {{$ThisYearonline_amount}}</td>
+                  <td style="text-align:center">{{$ThisYearoffline_amount}}</td>
+                  <td style="text-align:center"> {{$ThisYearfeedback_count}}</td>
+                  <td style="text-align:center">{{$ThisYearprofileKaryakarthas}}</td>
+                </tr>
+                <tr>
+                  <td>All</td>
+                  <td style="text-align:center">{{$members_count}}</td>
+                  <td style="text-align:center">{{$Notification_count}}</td>
+                  <td style="text-align:center">{{$online_amount}}</td>
+                  <td style="text-align:center">{{$offline_amount}}</td>
+                  <td style="text-align:center">{{$feedback_count}}</td>
+                  <td style="text-align:center">{{$profileKaryakarthas}}</td>
+                </tr>
+             
+                </tbody>
+                
+              </table>
+            </div>
+            <!-- /.card-body -->
           </div>
-          <!-- /.info-box-content -->
+          <!-- /.card -->
+         
+
+          
+           
         </div>
-        <!-- /.info-box -->
-      </a>
+        <!-- /.col -->
       </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <a href="/Notifications" style="color: black">
-        <div class="info-box">
-          <span class="info-box-icon "><i class="fas fa-bell"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Notifications</span>
-            <span class="info-box-number">
-             {{$Notification_count}}
-           </span>
-         </div>
-         <!-- /.info-box-content -->
-       </div>
-       <!-- /.info-box -->
-     </a>
-     </div>
-     <!-- /.col -->
-     <div class="col-12 col-sm-6 col-md-3">
-       <a href="{{ route('OnlineContributions') }}" style="color:black">
-        <div class="info-box mb-3">
-          <span class="info-box-icon"><i class="fas fa-donate"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Online Contributions</span>
-            <span class="info-box-number">{{$online_amount}}<small></small></span>
-          </div>
-
-
-          <!-- /.info-box-content -->
-        </div></a>
-
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-
-      <!-- fix for small devices only -->
-      <div class="clearfix hidden-md-up"></div>
-
-      <div class="col-12 col-sm-6 col-md-3">
-       <a href="{{ route('OfflineContributions') }}" style="color:black">
-        <div class="info-box mb-3">
-          <span class="info-box-icon"><i class="fas fa-donate"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Offline Contributions</span>
-            <span class="info-box-number">{{$offline_amount}}</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-      </a>
-      <!-- /.info-box -->
-    </div>
-    <!-- /.col -->
-
-    <div class="col-12 col-sm-6 col-md-3">
-       <a href="{{ route('listfeedback') }}" style="color:black">
-        <div class="info-box mb-3">
-          <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Feedback</span>
-            <span class="info-box-number">{{$feedback_count}}<small></small></span>
-          </div>
-
-
-          <!-- /.info-box-content -->
-        </div></a>
-
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-
-       <div class="col-12 col-sm-6 col-md-3">
-       <a href="{{ route('volunteer.reportsview') }}" style="color:black">
-        <div class="info-box mb-3">
-          <span class="info-box-icon"><i class="fas fa-users"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Volunteer Report</span>
-            <span class="info-box-number">{{$profileKaryakarthas}}<small></small></span>
-          </div>
-
-
-          <!-- /.info-box-content -->
-        </div></a>
-
-        <!-- /.info-box -->
-      </div>
-    
-    <!-- /.col -->
+      <!-- /.row -->
+    </section>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
   </div>
-  <!-- /.row -->
-  <!-- /.col -->
-</div>
-
-<!-- /.container-fluid -->
-</section>
-</div>
+  <!-- /.content-wrapper -->
 @endsection
+
+
