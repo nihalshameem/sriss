@@ -64,6 +64,7 @@
             <textarea class="form-control" name="message" placeholder="Enter Message" value="{{$Notifications->Notification_mesage }}" required> {{ $Notifications->Notification_mesage}}</textarea>
             
           </div>
+          @if($Notifications->Notification_image_path!=null)
           <div class="row">
             <div class="col-md-4 form-group">
               <label>Uploaded Image</label><br>
@@ -75,7 +76,7 @@
               <input type="hidden" name="Notification_id" value="{{ $Notifications->Notification_id}}">
               <div class="input-group">
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" name="NotificationPath" id="exampleInputFile2" onchange="upload_check2()">
+                  <input type="file" class="custom-file-input" name="NotificationPath" id="NotificationPath" onchange="return ImageValidation()">
                   <label class="custom-file-label"  for="exampleInputFile2">Choose file</label>
                 </div>
                 <div class="input-group-append">
@@ -84,6 +85,56 @@
               </div>
             </div>
           </div>
+          @endif
+           @if($Notifications->Notification_video_path!=null)
+           <div class="row">
+            <div class="col-md-4 form-group">
+              <label>Uploaded Video</label><br>
+              <video width="150" height="100" controls>
+  <source src="{{ $Notifications->Notification_video_path}}" >
+  </video>
+            </div>
+            <div class="col-md-8 form-group">
+              <label for="exampleInputFile">Notification Video Path</label>
+              <input type="hidden" name="VideoNotification" value="{{ $Notifications->Notification_video_path}}">
+              <input type="hidden" name="Notification_id" value="{{ $Notifications->Notification_id}}">
+              <div class="input-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" name="VideoPath" id="VideoPath" accept=" video/*" onchange="return VideoValidation()">
+                <label class="custom-file-label"  for="exampleInputFile2">Choose Video</label>
+              </div>
+              <div class="input-group-append">
+                <span class="input-group-text" id="">Upload</span>
+              </div>
+            </div>
+            </div>
+          </div>
+          @endif
+           @if($Notifications->Notification_voice_path!=null)
+          <div class="row">
+            <div class="col-md-4 form-group">
+              <label>Uploaded Audio</label><br>
+              <audio controls  width="50" height="100">
+  <source src="{{ $Notifications->Notification_voice_path}}" >
+ 
+</audio>
+            </div>
+            <div class="col-md-8 form-group">
+              <label for="exampleInputFile">Notification Audio Path</label>
+              <input type="hidden" name="AudioNotification" value="{{ $Notifications->Notification_voice_path}}">
+              <input type="hidden" name="Notification_id" value="{{ $Notifications->Notification_id}}">
+              <div class="input-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" name="AudioPath" id="AudioPath" accept=" audio/*" onchange="return AudioValidation()">
+                <label class="custom-file-label"  for="exampleInputFile2">Choose Audio / Voice</label>
+              </div>
+              <div class="input-group-append">
+                <span class="input-group-text" id="">Upload</span>
+              </div>
+            </div>
+            </div>
+          </div>
+          @endif
           <div class="row">
            <div class="col-sm-4">
             <div class="form-group">
@@ -161,4 +212,46 @@
 </div>
 </section>
 </div>
+<script>
+        function ImageValidation() {
+            var fileInput = 
+            document.getElementById('NotificationPath');
+            var filePath = fileInput.value;
+            var fname = filePath;
+            var re = /(\.jpg|\.jpeg|\.png)$/i;
+            if (!re.exec(fname)) {
+                alert('Allow Only jpg,jpeg and png file types');
+                fileInput.value = '';
+                return false;
+            } 
+        }
+    </script>
+    <script>
+        function VideoValidation() {
+            var fileInput = 
+            document.getElementById('VideoPath');
+            var filePath = fileInput.value;
+            var fname = filePath;
+            var re = /(\.mp4|\.mov|\.wmv|\.avi|\.flv|\.webm)$/i;
+            if (!re.exec(fname)) {
+                alert('Allow Only mp4,mov,wmv,avi,flv and webm file types');
+                fileInput.value = '';
+                return false;
+            } 
+        }
+    </script>
+     <script>
+        function AudioValidation() {
+            var fileInput = 
+            document.getElementById('AudioPath');
+            var filePath = fileInput.value;
+            var fname = filePath;
+            var re = /(\.mp3|\.aac|\.wav)$/i;
+            if (!re.exec(fname)) {
+                alert('Allow Only mp3,aac and wav file types');
+                fileInput.value = '';
+                return false;
+            } 
+        }
+    </script>
 @endsection

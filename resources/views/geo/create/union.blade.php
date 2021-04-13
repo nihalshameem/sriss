@@ -16,7 +16,7 @@
             <div class="col-sm-3">
             </div>
             <div class="col-sm-5">
-              <h3 class="title-head">Add Area</h3>
+              <h3 class="title-head">Add Taluk</h3>
             </div>
             <div class="col-sm-3">
             </div>
@@ -45,7 +45,7 @@
                   
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Number Of Area</label>
+                  <label for="exampleInputPassword1">Number Of Taluk</label>
                   <input type="Number" class="form-control" onfocus="this.oldvalue = this.value;"     onkeyup ="responses(this);this.oldvalue = this.value;"  id="response" required>
 
                 </div>

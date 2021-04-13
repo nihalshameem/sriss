@@ -40,7 +40,7 @@
 										<a class="nav-link {{old('tab') == 'custom-tabs-three-settings' ? ' active' : null}}" id="district-tabs" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="false" style="color:#3a3a3a;font-weight:bold">District</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link {{old('tab') == 'custom-tabs-three-union' ? ' active' : null}}" id="Union-tabs" data-toggle="pill" href="#custom-tabs-three-union" role="tab" aria-controls="custom-tabs-three-union" aria-selected="false" style="color:#3a3a3a;font-weight:bold"  onclick="DistrictReset();">Area</a>
+										<a class="nav-link {{old('tab') == 'custom-tabs-three-union' ? ' active' : null}}" id="Union-tabs" data-toggle="pill" href="#custom-tabs-three-union" role="tab" aria-controls="custom-tabs-three-union" aria-selected="false" style="color:#3a3a3a;font-weight:bold"  onclick="DistrictReset();">Taluk</a>
 									</li>
 								</ul>
 							</div>
@@ -119,8 +119,27 @@
 
 <script type="text/javascript">
 	
+	function DeleteState (StateId){
+		if (confirm("Are your sure you want to delete state?")) {
+			$.ajax({
+				type : 'get',
+				url : '{{URL::to('DeleteState')}}',
+				data : {'StateId':StateId},
+				success:function(data){
+					window.location.reload();
+				} 
+			});
+
+		} else {
+
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	
 	function DeleteZone(zoneId){
-		if (confirm("Are your sure you want to delete zone")) {
+		if (confirm("Are your sure you want to delete zone?")) {
 			$.ajax({
 				type : 'get',
 				url : '{{URL::to('DeleteZone')}}',
@@ -139,7 +158,7 @@
 <script type="text/javascript">
 	
 	function DeleteDistrict(districtId){
-		if (confirm("Are your sure you want to delete district")) {
+		if (confirm("Are your sure you want to delete district?")) {
 			$.ajax({
 				type : 'get',
 				url : '{{URL::to('DeleteDistrict')}}',
@@ -158,7 +177,7 @@
 <script type="text/javascript">
 	
 	function DeleteUnion(UnionId){
-		if (confirm("Are your sure you want to delete union")) {
+		if (confirm("Are your sure you want to delete taluk?")) {
 			$.ajax({
 				type : 'get',
 				url : '{{URL::to('DeleteUnion')}}',

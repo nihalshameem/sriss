@@ -168,7 +168,7 @@ class NotificationController extends ApiController
 
     public function addAppNotification(Request $request)
         {   
-            Log::info($request);
+
             $rules = array (
             'member_id' => 'required',
             'token' => 'required',
@@ -177,6 +177,7 @@ class NotificationController extends ApiController
             'message' => 'required',
             'active' => 'required',
             'approved' => 'required',
+            
             );
             $validator = Validator::make($request->all(),$rules);
 
@@ -189,8 +190,6 @@ class NotificationController extends ApiController
             { 
                 if($user=$this->is_valid_token($request['token']))
                 {
-                   // $StartDateFormat = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y-m-d');
-//$EndDateFormat = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y-m-d');
                     
                     $Notifications = array();
 
@@ -208,7 +207,32 @@ class NotificationController extends ApiController
                         $filePath = $request->file('notification')->storeAs('Notification', $imageName,'public');
                         $notification->Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
                     }
+                    if ($request->hasFile('notificationvideo'))
+                    {
+                        $image_ext = $request->file('notificationvideo')->getClientOriginalExtension();
+                                    $image_extn = strtolower($image_ext);
+                                    $imageName = time() .'_'. $request->notificationvideo->getClientOriginalName();
+                                    $filePath = $request->file('notificationvideo')->storeAs('Notification', $imageName,'public');
+                        $notification->Notification_video_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
+                    }
+                    if ($request->hasFile('notificationaudio'))
+                    {
+                        $image_ext = $request->file('notificationaudio')->getClientOriginalExtension();
+                                    $image_extn = strtolower($image_ext);
+                                    $imageName = time() .'_'. $request->notificationaudio->getClientOriginalName();
+                                    $filePath = $request->file('notificationaudio')->storeAs('Notification', $imageName,'public');
+                        $notification->Notification_voice_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
+                    }
+                    if($request->is_group=='N')
+                    {
+                         $notification->broadcast_type='Geo';
+                    }
+                    else
+                    {
+                        $notification->broadcast_type='Group';
+                    }
                     $notification->save();
+
                     if($request->is_group=='N'){
                         NotificationBroadcast::create([
                             'Notification_id' => $notification->id,
@@ -246,7 +270,6 @@ class NotificationController extends ApiController
 
         public function UpdateAppNotification(Request $request)
         { 
-            Log::info($request);
             $rules = array(
             'notification_id' => 'required',
             'member_id' => 'required',
@@ -270,8 +293,6 @@ class NotificationController extends ApiController
             { 
                 if($user=$this->is_valid_token($request['token']))
                 {
-                   // $StartDateFormat = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y-m-d');
-                    //$EndDateFormat = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y-m-d');
                     
                     if ($request->hasFile('notification'))
                     {
@@ -279,15 +300,66 @@ class NotificationController extends ApiController
                         $image_extn = strtolower($image_ext);
                         $imageName = time() .'_'. $request->notification->getClientOriginalName();
                         $filePath = $request->file('notification')->storeAs('Notification', $imageName,'public');
-
-                        $Notification = Notification::where("Notification_id", $request->notification_id)->update([
+                        if($request->is_group=='N')
+                        {
+                         $Notification = Notification::where("Notification_id", $request->notification_id)->update([
                         'Notification_start_date'=> $request->start_date,
                         'Notification_end_date'=> $request->end_date,
                         'Notification_active'=> $request->active,
                         'Notification_approved'=> $request->approved,
                         'Notification_mesage'=> $request->message,
-                        'Notification_image_path'=> config('app.url').'storage/app/public/Notification/'.$imageName]);
+                        'Notification_image_path'=> config('app.url').'storage/app/public/Notification/'.$imageName,'broadcast_type'=>'Geo']);
+                        }
+                        else
+                        {
+                            $Notification = Notification::where("Notification_id", $request->notification_id)->update([
+                            'Notification_start_date'=> $request->start_date,
+                            'Notification_end_date'=> $request->end_date,
+                            'Notification_active'=> $request->active,
+                            'Notification_approved'=> $request->approved,
+                            'Notification_mesage'=> $request->message,
+                            'Notification_image_path'=> config('app.url').'storage/app/public/Notification/'.$imageName,'broadcast_type'=>'Group']);
+                        }
+
+                     
                           
+                    }
+                    if ($request->hasFile('notificationvideo'))
+                    {
+                        $image_ext = $request->file('notificationvideo')->getClientOriginalExtension();
+                        $image_extn = strtolower($image_ext);
+                        $imageName = time() .'_'. $request->notificationvideo->getClientOriginalName();
+                        $filePath = $request->file('notificationvideo')->storeAs('Notification', $imageName,'public');
+
+                        $Notification_video_path = config('app.url').'storage/app/public/Notification/'.$imageName; 
+
+                        if($request->is_group=='N')
+                        {
+                         $Notification = Notification::where("Notification_id", $request->notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approved,'Notification_mesage'=> $request->message,'Notification_video_path'=>$Notification_video_path,'broadcast_type'=>'Geo']);
+                        }
+                        else
+                        {
+                            $Notification = Notification::where("Notification_id", $request->notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approved,'Notification_mesage'=> $request->message,'Notification_video_path'=>$Notification_video_path,'broadcast_type'=>'Group']);
+                        }
+
+                    }
+                    if ($request->hasFile('notificationaudio'))
+                    {
+                        $image_ext = $request->file('notificationaudio')->getClientOriginalExtension();
+                                $image_extn = strtolower($image_ext);
+                                $imageName = time() .'_'. $request->notificationaudio->getClientOriginalName();
+                                $filePath = $request->file('notificationaudio')->storeAs('Notification', $imageName,'public');
+                                $Notification_audio_path = config('app.url').'storage/app/public/Notification/'.$imageName; ;
+
+                                if($request->is_group=='N')
+                                {
+                                 $Notification = Notification::where("Notification_id", $request->notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approved,'Notification_mesage'=> $request->message,'Notification_voice_path'=>$Notification_audio_path,'broadcast_type'=>'Geo']);
+                                }
+                                else
+                                {
+                                    $Notification = Notification::where("Notification_id", $request->notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approved,'Notification_mesage'=> $request->message,'Notification_voice_path'=>$Notification_audio_path,'broadcast_type'=>'Group']);
+                                }
+
                     }
                     else
                     {
@@ -306,12 +378,6 @@ class NotificationController extends ApiController
                             'Notification_id' => $request->notification_id,
                             'State_id' => 1,
                         ]);
-                        
-                        return Response([
-                                'status' => 'success',
-                                'code' => $this->getStatusCode(),
-                                'message' => 'Uploded Successfull'
-                            ]); 
 
                     }else
                     {
@@ -329,12 +395,13 @@ class NotificationController extends ApiController
                         NotificationGroupBroadcast::insert($data);
             
                     
-                    return Response([
+                   
+                }
+                 return Response([
                                 'status' => 'success',
                                 'code' => $this->getStatusCode(),
                                 'message' => 'Uploded Successfull'
                             ]); 
-                }
                 }
                 else
                 {
@@ -411,6 +478,24 @@ class NotificationController extends ApiController
                     $NotificationGroupBroadcast = NotificationGroupBroadcast::where('Notification_id', $request->notification_id)->pluck('Group_id');
 
                     $MemberGroup = MemberGroup::whereIn('Group_id',$NotificationGroupBroadcast)->get()->toArray();
+
+                    if($Notification->Notification_image_path!=null)
+                    {
+                        $is_media = 'I';
+                    }
+                    else if($Notification->Notification_voice_path!=null)
+                    {
+                        $is_media = 'A';
+                    }
+                    else if($Notification->Notification_video_path!=null)
+                    {
+                        $is_media = 'V';
+                    }
+                    else
+                    {
+                        $is_media = null;
+                    }
+
                     if($MemberGroup)
                     {
                     $data=array('Notification_id'=>$Notification->Notification_id,
@@ -419,8 +504,11 @@ class NotificationController extends ApiController
                                 'Notification_start_date' => $Notification->Notification_start_date,
                                 'Notification_end_date' => $Notification->Notification_end_date,
                                 'Notification_image_path' => $Notification->Notification_image_path,
+                                'Notification_video_path' => $Notification->Notification_video_path,
+                                'Notification_voice_path' => $Notification->Notification_voice_path,
                                 'Notification_active' => $Notification->Notification_active,
                                 'Notification_approved' => $Notification->Notification_approved,
+                                'is_media'=>$is_media,
                                 'Group'=>$MemberGroup );
                     }
                     else
@@ -431,8 +519,11 @@ class NotificationController extends ApiController
                                 'Notification_start_date' => $Notification->Notification_start_date,
                                 'Notification_end_date' => $Notification->Notification_end_date,
                                 'Notification_image_path' => $Notification->Notification_image_path,
+                                'Notification_video_path' => $Notification->Notification_video_path,
+                                'Notification_voice_path' => $Notification->Notification_voice_path,
                                 'Notification_active' => $Notification->Notification_active,
                                 'Notification_approved' => $Notification->Notification_approved,
+                                'is_media'=>$is_media,
                                 'Group'=>null);
                     }
 
@@ -576,7 +667,8 @@ class NotificationController extends ApiController
                 $notification->Notification_end_date = $request->end_date;
                 $notification->Notification_active = $request->active;
                 $notification->Notification_approved = $request->approve;
-                if ($request->hasFile('NotificationPath'))
+                $notification->broadcast_type = $request->broadtype;
+                if ($request->hasFile('NotificationPath') && $request->type=="image")
                 {
                 $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();
                             $image_extn = strtolower($image_ext);
@@ -584,16 +676,31 @@ class NotificationController extends ApiController
                             $filePath = $request->file('NotificationPath')->storeAs('Notification', $imageName,'public');
                 $notification->Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
                 }
+                if ($request->hasFile('VideoPath') && $request->type=="video")
+                {
+                $image_ext = $request->file('VideoPath')->getClientOriginalExtension();
+                            $image_extn = strtolower($image_ext);
+                            $imageName = time() .'_'. $request->VideoPath->getClientOriginalName();
+                            $filePath = $request->file('VideoPath')->storeAs('Notification', $imageName,'public');
+                $notification->Notification_video_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
+                }
+                if ($request->hasFile('AudioPath') && $request->type=="audio")
+                {
+                $image_ext = $request->file('AudioPath')->getClientOriginalExtension();
+                            $image_extn = strtolower($image_ext);
+                            $imageName = time() .'_'. $request->AudioPath->getClientOriginalName();
+                            $filePath = $request->file('AudioPath')->storeAs('Notification', $imageName,'public');
+                $notification->Notification_voice_path = config('app.url').'storage/app/public/Notification/'.$imageName;  
+                }
                 $notification->save();
                 $notifications = Notification::orderby('Notification_id','DESC')->first();
                 Session::put('notificationId',$notifications->Notification_id);
-
+               
                 if($request->broadtype=='Y'){
                     return redirect(route('list.NotificationBroadcast'));
                 }elseif ($request->broadtype=='N') {
                     return redirect(route('show.NotificationGroupBroadcast'));
                 }
-                
            }
             else
             {
@@ -608,26 +715,45 @@ class NotificationController extends ApiController
 
                      $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_image_path'=> $Notification_image_path]);
                      Session::put('notificationId',$request->Notification_id);
-                    if($request->broadtype=='Y'){
-                        return redirect(route('list.NotificationBroadcast'));
-                    }elseif ($request->broadtype=='N') {
-                        return redirect(route('show.NotificationGroupBroadcast'));
-                    }
+                }
+
+                if ($request->hasFile('VideoPath'))
+                {
+                    $image_ext = $request->file('VideoPath')->getClientOriginalExtension();
+                            $image_extn = strtolower($image_ext);
+                            $imageName = time() .'_'. $request->VideoPath->getClientOriginalName();
+                            $filePath = $request->file('VideoPath')->storeAs('Notification', $imageName,'public');
+
+                            $Notification_video_path = config('app.url').'storage/app/public/Notification/'.$imageName; 
+
+                             $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_video_path'=>$Notification_video_path]);
+                     Session::put('notificationId',$request->Notification_id);
+
+                }
+                if ($request->hasFile('AudioPath'))
+                {
+                    $image_ext = $request->file('AudioPath')->getClientOriginalExtension();
+                            $image_extn = strtolower($image_ext);
+                            $imageName = time() .'_'. $request->AudioPath->getClientOriginalName();
+                            $filePath = $request->file('AudioPath')->storeAs('Notification', $imageName,'public');
+                            $Notification_video_path = config('app.url').'storage/app/public/Notification/'.$imageName; 
+
+                             $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_voice_path'=>$Notification_video_path]);
+                     Session::put('notificationId',$request->Notification_id);
+
                 }
                 else
                 {
                     $Notification = Notification::where("Notification_id", Session::get('notificationId'))->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_image_path'=> $request->ImageNotification]);
                     Session::put('notificationId',Session::get('notificationId'));
-                    if($request->broadtype=='Y'){
-                        return redirect(route('list.NotificationBroadcast'));
-                    }elseif ($request->broadtype=='N') {
-                        return redirect(route('show.NotificationGroupBroadcast'));
-                    }  
+                }
+                if($request->broadtype=='Y'){
+                    return redirect(route('list.NotificationBroadcast'));
+                }elseif ($request->broadtype=='N') {
+                    return redirect(route('show.NotificationGroupBroadcast'));
                 }
             }
-           
-            
-            
+                       
         }
 
         public function SaveBroadCast(Request $request)
@@ -649,63 +775,6 @@ class NotificationController extends ApiController
             if($request->missing('State_id')){
             return \Redirect::back()->withInput()->withWarning('Must Select State ');
         }
-
-            // else if($request->has('State_id') && $request->has('State_Division_id') && $request->missing('Greater_Zones_id') )
-            // {
-            //     foreach ($request->State_id as $keys=>$State) {   
-            //     foreach ($request->State_Division_id as $keysd=>$statedivision) {
-            //         if($statedivision==null)
-            //         {
-            //              NotificationBroadcast::create([
-            //                 'Notification_id' => $request->NotificationId,
-            //                 'State_id' => $State,
-            //             ]);
-            //         }
-            //         else{
-            //             NotificationBroadcast::create([
-            //                 'Notification_id' => $request->NotificationId,
-            //                 'State_Division_id' => $statedivision,
-            //             ]);
-            //         }
-
-                       
-                
-            //     }
-            //     }
-            // }
-
-            // else if($request->has('State_id') && $request->has('State_Division_id') && $request->has('Greater_Zones_id') && $request->missing('Zone_id'))
-            // {
-            //         foreach ($request->State_Division_id as $keysd=>$statedivision) {
-            //         foreach ($request->Greater_Zones_id as $keyGZ=>$GreaterZonesid) {
-
-            //         $greaterzone  = GreaterZones::where('State_Division_id',$request->State_Division_id[$keysd])->where('Greater_Zones_id',$request->Greater_Zones_id[$keyGZ])->first();
-
-            //             if($greaterzone)
-            //             {
-            //                 NotificationBroadcast::create([
-            //                     'Notification_id' => $request->NotificationId,
-            //                     'Greater_Zones_id' => $GreaterZonesid,
-            //                 ]); 
-            //             }
-            //             else
-            //             {
-            //                 $notification = NotificationBroadcast::where('Notification_id',$request->NotificationId)->where('State_Division_id', $statedivision)->first();
-            //                 if($notification==null)
-            //                 {
-            //                      NotificationBroadcast::create([
-            //                         'Notification_id' => $request->NotificationId,
-            //                         'State_Division_id' => $statedivision,
-            //                     ]);
-            //                 }
-            //             }
-
-                           
-                    
-            //         }
-            //         }
-
-            // }
 
             else if($request->has('State_id') && $request->has('Zone_id') && $request->missing('District_id'))
             {
@@ -836,35 +905,55 @@ class NotificationController extends ApiController
             }
 
             if ($request->hasFile('NotificationPath'))
-            {
-      
-                $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();
-                $image_extn = strtolower($image_ext);
-                $imageName = time() .'_'. $request->NotificationPath->getClientOriginalName();
-                $filePath = $request->file('NotificationPath')->storeAs('Notification', $imageName,'public');
-                $Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName; 
+                {
+          
+                    $image_ext = $request->file('NotificationPath')->getClientOriginalExtension();
+                    $image_extn = strtolower($image_ext);
+                    $imageName = time() .'_'. $request->NotificationPath->getClientOriginalName();
+                    $filePath = $request->file('NotificationPath')->storeAs('Notification', $imageName,'public');
+                    $Notification_image_path = config('app.url').'storage/app/public/Notification/'.$imageName; 
 
-                 $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_image_path'=> $Notification_image_path]);
-                 Session::put('notificationId',$request->Notification_id);
-                 $broadCastcount = NotificationBroadcast::where('Notification_id',$request->Notification_id)->count();
-                 if($broadCastcount>0){
-                    return redirect(route('list.notificationbroadcastedit')); 
-                 }else{
-                    return redirect(route('edit.NotificationGroupBroadcast')); 
-                 }
-                
-            }
+                     $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_image_path'=> $Notification_image_path]);
+                     Session::put('notificationId',$request->Notification_id);
+                }
+
+                if ($request->hasFile('VideoPath'))
+                {
+                    $image_ext = $request->file('VideoPath')->getClientOriginalExtension();
+                            $image_extn = strtolower($image_ext);
+                            $imageName = time() .'_'. $request->VideoPath->getClientOriginalName();
+                            $filePath = $request->file('VideoPath')->storeAs('Notification', $imageName,'public');
+
+                            $Notification_video_path = config('app.url').'storage/app/public/Notification/'.$imageName; 
+
+                             $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_video_path'=>$Notification_video_path]);
+                     Session::put('notificationId',$request->Notification_id);
+
+                }
+                if ($request->hasFile('AudioPath'))
+                {
+                    $image_ext = $request->file('AudioPath')->getClientOriginalExtension();
+                            $image_extn = strtolower($image_ext);
+                            $imageName = time() .'_'. $request->AudioPath->getClientOriginalName();
+                            $filePath = $request->file('AudioPath')->storeAs('Notification', $imageName,'public');
+                            $Notification_video_path = config('app.url').'storage/app/public/Notification/'.$imageName; 
+
+                             $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_voice_path'=>$Notification_video_path]);
+                     Session::put('notificationId',$request->Notification_id);
+
+                }
             else
             {
-                $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message,'Notification_image_path'=> $request->ImageNotification]);
+                $Notification = Notification::where("Notification_id", $request->Notification_id)->update(['Language_id'=> $request->LanguageId,'Notification_start_date'=> $request->start_date,'Notification_end_date'=> $request->end_date,'Notification_active'=> $request->active,'Notification_approved'=> $request->approve,'Notification_mesage'=> $request->message]);
                 Session::put('notificationId',$request->Notification_id);
-                $broadCastcount = NotificationBroadcast::where('Notification_id',$request->Notification_id)->count();
+            }
+             $broadCastcount = NotificationBroadcast::where('Notification_id',$request->Notification_id)->count();
                  if($broadCastcount>0){
                     return redirect(route('list.notificationbroadcastedit')); 
                  }else{
                     return redirect(route('edit.NotificationGroupBroadcast')); 
                  }
-            }
+
           
             
               

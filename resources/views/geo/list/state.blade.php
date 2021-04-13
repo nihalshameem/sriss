@@ -9,14 +9,16 @@
 		<tr>
 			<th>Sl No</th>
 			<th>Name</th>
-			<th colspan="2">Action</th>
-			<th></th>
+			<th>Staus</th>
+			<th>Edit</th>
+			<th>Delete</th>
+			
 		</tr>
 	</thead>
 	<tbody>
 		@foreach ($State as $i => $State)
 		<tr>
-			<td>1</td>
+			<td>{{$i+1}}</td>
 			<td>{{$State->State_desc}}</td>
 			<td><span class="right badge @if($State->State_active == 'Y') badge-success @else badge-danger @endif">{{ $State->State_active  }}</span></td>
 		</td>

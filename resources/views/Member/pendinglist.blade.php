@@ -29,7 +29,7 @@
        
         <div class="col-sm-3">
          <label>Start Date</label>
-         <input type="date" class="form-control" id="start_date" required="">
+         <input type="date" class="form-control" id="start_date">
        </div>
        <div class="col-sm-3">
          <label>End Date</label>

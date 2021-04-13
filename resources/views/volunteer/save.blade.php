@@ -74,7 +74,7 @@
                   <th>State</th>
                   <th>Zone</th>
                   <th>District</th>
-                  <th>Union</th>
+                  <th>Taluk</th>
               </tr>
           </thead>
           <tbody>
@@ -160,10 +160,10 @@
    
 </div>
 <div class="col-md-3 form-group">
-  <label for="exampleInputPassword1">Area</label><br>
+  <label for="exampleInputPassword1">Taluk</label><br>
   <select class="form-control" id="union"  name="Union_id" onchange="LoadPanchayat(this)">
     
-     <option value="">Select Area</option>
+     <option value="">Select Taluk</option>
      
  </select>
  
@@ -172,8 +172,8 @@
 <div class="row">
   <div class="col-md-4">
      <div class="form-group">
-        <label for="exampleInputPassword1">DRS Joining Date</label>
-        <input type="date" class="form-control" name="joining_date" value="{{ old('joining_date') }}" required>
+        <label for="exampleInputPassword1">Date of Joining</label>
+        <input type="date" max="<?php echo date('Y-m-d');?>" class="form-control" name="joining_date" value="{{ old('joining_date') }}" required>
         
     </div>
 </div>

@@ -17,6 +17,7 @@ use App\Models\MemberGroup;
 use App\Models\GroupMembers;
 use App\Models\MemberCategory;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\Log;
 use Validator;
 use JWTAuth;
 use Response;
@@ -1389,31 +1390,20 @@ class MembersController extends ApiController
     }
     public function MemberPendingFilter(Request $request)
     {
+        $member = Member::where('Is_Approved',$request->status)->orderby('id','desc');
         if($request->updatedDate!=null)
         {
-              $member = Member::whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
-                        ->where('Is_Approved',$request->status)
-                        ->get();
-        }
-        else
-        {
-            if($request->createdDate!=null)
-            {
-                  $member =Member::whereDate('created_at','>=',$request->createdDate)
-                                        ->whereDate('updated_at','<=',date('Y-m-d'))
-                                        ->where('Is_Approved',$request->status)
-                        ->orderby('id','desc')->get();
-            }
-            else
-            {
-                 
-                $member = Member::where('Is_Approved',$request->status)
-                                ->orderby('id','desc')->get();
-            }
-
+            $member= $member->whereDate('created_at','<=',$request->updatedDate);
             
         }
+        else if($request->createdDate!=null)
+        {
+            $member= $member->whereDate('created_at','>=',$request->createdDate);   
+        }
+        
+        $member = $member->get();
+        Log::info($member);
+        
 
         $member = View::make('Member.filter.member_approval_filter', compact('member'))->render();
         return Response::json(['member' => $member]);

@@ -42,6 +42,13 @@
 </div>
 
 <div class="icheck-primary d-inline">
+    <input type="radio" id="checkboxPrimary13" value="Y"  name="active" {{ ($language->Language_active == "Y") ? 'checked' : '' }}>
+    <label for="checkboxPrimary13">
+      Yes
+  </label>
+</div>
+
+<div class="icheck-primary d-inline">
     <input type="radio" id="checkboxPrimary12" value="N"  name="active" {{ ($language->Language_active == "N") ? 'checked' : '' }}>
     <label for="checkboxPrimary12">
       No

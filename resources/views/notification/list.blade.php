@@ -60,7 +60,7 @@
              <th>Message</th>
              <th>Start Date</th>
              <th>End Date</th>
-             <th>Image</th>
+             <th>Media</th>
              <th>Broadcast</th>
              <th>Status</th>
              <th>Edit</th>
@@ -76,25 +76,22 @@
          <td>{{ $Notification->Notification_start_date }}</td> 
          <td>{{ $Notification->Notification_end_date }}</td> 
          @if($Notification->Notification_image_path!=null)
-         <td>Yes</td> 
+         <td>Image</td> 
+         @elseif($Notification->Notification_video_path!=null)
+            <td>Video</td> 
          @else
-         <td>No</td> 
+         <td>Audio</td> 
          @endif 
          <?php
-         $BroadcastGeo  = App\Models\NotificationBroadcast::where('Notification_id',$Notification->Notification_id)
-                        ->count();
-        $BroadcastGroup  = App\Models\NotificationGroupBroadcast::where('Notification_id',$Notification->Notification_id)
-                        ->count();
-                       
+         
 $type="Empty";
-if($BroadcastGeo!=0){
+if($Notification->broadcast_type=='Y'){
   $type="Geo";
-}else if($BroadcastGroup!=0){
+}else if($Notification->broadcast_type=='N'){
   $type="Group";
 }
          ?>
          <td>{{$type}}</td>
-
          @if($Notification->Notification_active=='Y' && $Notification->Notification_approved=='Y')
          <td><span class="right badge badge-success">Yes</span></td>
          @else

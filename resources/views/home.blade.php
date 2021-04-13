@@ -18,12 +18,12 @@
                 <thead>
                 <tr>
                     <th style="width:150px;">#</th>
-                  <th style="width:150px;text-align:center">Members</th>
-                  <th style="width:150px;text-align:center">Notifications</th>
-                  <th style="width:150px;text-align:center">Online Contributions</th>
-                  <th style="width:150px;text-align:center">Offline Contributions</th>
-                  <th style="width:150px;text-align:center">Feedback</th>
-                  <th style="width:150px;text-align:center">Volunteer Report</th>
+                  <th style="width:150px;text-align:center"><a href="/Reports/MembersListView"  style="color: black">Members</a></th>
+                  <th style="width:150px;text-align:center"><a href="/Notifications" style="color: black">Notifications</a></th>
+                  <th style="width:150px;text-align:center"><a href="{{ route('OnlineContributions') }}" style="color:black">Online Contributions</a></th>
+                  <th style="width:150px;text-align:center"><a href="{{ route('OfflineContributions') }}" style="color:black">Offline Contributions</a></th>
+                  <th style="width:150px;text-align:center"><a href="{{ route('listfeedback') }}" style="color:black">Feedback</a></th>
+                  <th style="width:150px;text-align:center"><a href="{{ route('volunteer.reportsview') }}" style="color:black">Volunteer Report</a></th>
                 </tr>
                 </thead>
                 <tbody>

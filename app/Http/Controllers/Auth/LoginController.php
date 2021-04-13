@@ -52,7 +52,7 @@ class LoginController extends Controller
 
         $credentials = ['email' => $request->email, 'password' => $request->password];
         if ( ! $token = JWTAuth::attempt($credentials)) {
-            return \Redirect::back()->withInput()->withWarning( 'User does not exist');
+            return \Redirect::back()->withInput()->withWarning( 'User credentials are incorrect');
         }
         $credentials = ['email' => $request->email, 'password' => $request->password];
         $token = JWTAuth::attempt($credentials);

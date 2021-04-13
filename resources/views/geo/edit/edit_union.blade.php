@@ -13,7 +13,7 @@
             <div class="col-sm-3">
             </div>
             <div class="col-sm-5">
-                <h3 class="title-head">Edit Union</h3>
+                <h3 class="title-head">Edit Taluk</h3>
             </div>
             <div class="col-sm-3">
             </div>
