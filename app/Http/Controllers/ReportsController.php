@@ -44,7 +44,7 @@ class ReportsController extends Controller
 
     public function MemberDeactivationReports()
     {
-        $Member = Member::Where('active_flag','N')->get();
+        $Member = Member::Where('Member_Active_Flag','N')->get();
         return view('reports.member_deactivation_report',compact('Member'));
     }
 
@@ -57,7 +57,7 @@ class ReportsController extends Controller
     public function MemberReportsFilter(Request $request)
     {
 
-        $Member= Member::where('active_flag','Y');
+        $Member= Member::where('Member_Active_Flag','Y');
         if($request->createdDate!=null)
         {
            $Member= $Member->whereDate('created_at','>=',$request->createdDate); 
@@ -84,7 +84,7 @@ class ReportsController extends Controller
     public function MemberDeactivationReportsFilter(Request $request)
     {
 
-        $Member= Member::where('active_flag','N')->whereDate('created_at','>=',$request->createdDate)
+        $Member= Member::where('Member_Active_Flag','N')->whereDate('created_at','>=',$request->createdDate)
                                                     ->whereDate('updated_at','<=',$request->updatedDate)
                                                     ->get();
         Session::put("membeDeactivationreports",$Member);
@@ -181,8 +181,8 @@ class ReportsController extends Controller
     public function MemberReferalReports()
     {
         
-        $member = Member::where('ReferedBy','!=',null)->select('Member_Id','First_Name','Last_Name','Mobile_No','ReferedBy',\DB::raw('count(ReferedBy) as memberCount'))
-        ->groupBy('ReferedBy')
+        $member = Member::where('Referrar_Phone_No','!=',null)->select('Member_Id','First_Name','Last_Name','Mobile_No','Referrar_Phone_No as  ReferedBy',\DB::raw('count(Referrar_Phone_No) as memberCount'))
+        ->groupBy('Referrar_Phone_No')
         ->orderby('memberCount','desc')
         ->get();
         $members = Member::get();
@@ -192,7 +192,7 @@ class ReportsController extends Controller
 
     public function ReferalMembersList($mobile_number)
     {
-        $member = Member::where('ReferedBy',$mobile_number)->get();
+        $member = Member::where('Referrar_Phone_No',$mobile_number)->get();
         $members = Member::where('Mobile_No',$mobile_number)->first();
         return view('reports.referred_members_list',compact('member','members'));
     }
@@ -227,7 +227,7 @@ class ReportsController extends Controller
 
     public function MemberDeactivationReportsView()
     {
-        $Member = Member::Where('active_flag','N')->orderby('id','desc')->get();
+        $Member = Member::Where('Member_Active_Flag','N')->orderby('id','desc')->get();
         return view('reportsview.member_deactivation_report',compact('Member'));
     }
 
@@ -241,7 +241,7 @@ class ReportsController extends Controller
     {
         
 
-        $Member= Member::where('active_flag','Y');
+        $Member= Member::where('Member_Active_Flag','Y');
         if($request->createdDate!=null)
         {
            $Member= $Member->whereDate('created_at','>=',$request->createdDate); 
@@ -269,9 +269,9 @@ class ReportsController extends Controller
     public function MemberDeactivationReportsFilterView(Request $request)
     {
 
-        $Member= Member::where('active_flag','N')
+        $Member= Member::where('Member_Active_Flag','N')
                         ->whereDate('created_at','>=',$request->createdDate)
-                        ->whereDate('updated_at','<=',$request->updatedDate)
+                        ->whereDate('created_at','<=',$request->updatedDate)
                         ->orderby('id','desc')
                         ->get();
 
@@ -286,8 +286,6 @@ class ReportsController extends Controller
                                                 ->whereDate('updated_at','<=',$request->updatedDate)
                                                     ->get();
 
-        Session::put("offlinereports",$OfflineContribution);
-        Session::put("offlinefilter_date",$request->createdDate);
         $OfflineContribution = View::make('reportsview.reportsfilter.offline_collection_filter', compact('OfflineContribution'))->render();
         return Response::json(['OfflineContribution' => $OfflineContribution]);
     }
@@ -297,9 +295,6 @@ class ReportsController extends Controller
         $OnlineContribution= OnlineContribution::whereDate('created_at','>=',$request->createdDate)
                                                     ->whereDate('updated_at','<=',$request->updatedDate)
                                                     ->get();
-
-        Session::put("onlinereports",$OnlineContribution);
-        Session::put("onlinereports_date",$request->createdDate);
 
         $OnlineContribution = View::make('reportsview.reportsfilter.online_collection_filter', compact('OnlineContribution'))->render();
         return Response::json(['OnlineContribution' => $OnlineContribution]);
@@ -370,8 +365,8 @@ class ReportsController extends Controller
      public function MemberReferalReportsView()
     {
         
-        $member = Member::where('ReferedBy','!=',null)->select('Member_Id','First_Name','Last_Name','Mobile_No','ReferedBy',\DB::raw('count(ReferedBy) as memberCount'))
-        ->groupBy('ReferedBy')
+        $member = Member::where('Referrar_Phone_No','!=',null)->select('Member_Id','First_Name','Last_Name','Mobile_No','Referrar_Phone_No as ReferedBy',\DB::raw('count(Referrar_Phone_No) as memberCount'))
+        ->groupBy('Referrar_Phone_No')
         ->orderby('memberCount','desc')
         ->get();
         $members = Member::get();
@@ -382,7 +377,7 @@ class ReportsController extends Controller
 
 public function ReferalMembersListReportsView($mobile_number)
     {
-        $member = Member::where('ReferedBy',$mobile_number)->get();
+        $member = Member::where('Referrar_Phone_No',$mobile_number)->get();
         $members = Member::where('Mobile_No',$mobile_number)->first();
         return view('reportsview.referred_members_list',compact('member','members'));
     }

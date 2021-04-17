@@ -30,8 +30,8 @@ class VolunteerController extends ApiController
     public function ListVolunteer()
     {
         $NotInVolunteer = Volunteer::pluck('Member_id');
-        $Member = Member::where('active_flag','Y')->get();
-        $Volunteer = Member::where('active_flag','Y')->where('Member_Category_Id','!=','1')->where('Member_Category_Id','!=',null)->get();
+        $Member = Member::where('Member_Active_Flag','Y')->get();
+        $Volunteer = Member::where('Member_Active_Flag','Y')->where('Member_Category_Id','!=','1')->where('Member_Category_Id','!=',null)->get();
         $Members = array();
         return view('volunteer.list',compact('Volunteer','Member','Members'));
     }
@@ -133,8 +133,7 @@ class VolunteerController extends ApiController
                                         ->update(['State_Id'=> $request->State_id,
                                             'Zones_Id'=>$request->Zone_id,
                                             'District_Id'=>$request->District_id,
-                                            'Union_Id'=>$request->Union_id,
-                                            'Member_Designation'=>$request->member_designation,
+                                            'Profession'=>$request->member_designation,
                                             ]);
         return redirect(route('Volunteer'));
 

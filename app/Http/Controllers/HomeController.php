@@ -28,7 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $members_count = Member::where('active_flag','Y')->count();
+        $members_count = Member::where('Member_Active_Flag','Y')->count();
         $Notification_count = Notification::where('Notification_active','Y')->count();
         $online_amount = OnlineContribution::where('payment_status','Payment Successfull')->sum('Online_Contribution_amount');
         $offline_amount = OfflineContribution::where('Offline_Contribution_payment_status','Completed')->sum('Offline_Contribution_amount');
@@ -46,7 +46,7 @@ class HomeController extends Controller
         $Todaymember = Member::whereDay('created_at', $toDay)
                             ->whereYear('created_at', $thisYear)
                             ->whereMonth('created_at', $thisMonth)
-                            ->where('active_flag','Y')
+                            ->where('Member_Active_Flag','Y')
                             ->count();
         $Todaynotification = Notification::where('Notification_active','Y')
                             ->whereDay('created_at', $toDay)
@@ -76,7 +76,7 @@ class HomeController extends Controller
         $Previousmember = Member::whereDay('created_at', $yesterday)
                             ->whereMonth('created_at', $thisMonth)
                             ->whereYear('created_at', $thisYear)
-                            ->where('active_flag','Y')
+                            ->where('Member_Active_Flag','Y')
                             ->count();
         $Previousnotification = Notification::where('Notification_active','Y')
                             ->whereDay('created_at', $yesterday)
@@ -106,7 +106,7 @@ class HomeController extends Controller
         $Thisweekmember = Member::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
                                 ->whereYear('created_at', $thisYear)
                                 ->whereMonth('created_at', $thisMonth)
-                                ->where('active_flag','Y')
+                                ->where('Member_Active_Flag','Y')
                                 ->count();
         $Thisweeknotification = Notification::where('Notification_active','Y')
                             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
@@ -131,7 +131,7 @@ class HomeController extends Controller
 
         $ThisMonthmember = Member::whereYear('created_at', $thisYear)
                                 ->whereMonth('created_at', $thisMonth)
-                                ->where('active_flag','Y')
+                                ->where('Member_Active_Flag','Y')
                                 ->count();
         $ThisMonthnotification = Notification::where('Notification_active','Y')
                             ->whereMonth('created_at', $thisMonth)
@@ -157,7 +157,7 @@ class HomeController extends Controller
                                 
         $PreviousMonthmember = Member::whereYear('created_at', $thisYear)
                                 ->whereMonth('created_at', $thisMonth-1)
-                                ->where('active_flag','Y')
+                                ->where('Member_Active_Flag','Y')
                                 ->count();  
         $Previousmonthnotification = Notification::where('Notification_active','Y')
                             ->whereMonth('created_at', $thisMonth-1)
@@ -180,7 +180,7 @@ class HomeController extends Controller
 
 
         $ThisYearmember = Member::whereYear('created_at', $thisYear)
-                                ->where('active_flag','Y')
+                                ->where('Member_Active_Flag','Y')
                                 ->count();
         $ThisYearnotification = Notification::where('Notification_active','Y')
                             ->whereYear('created_at', $thisYear)

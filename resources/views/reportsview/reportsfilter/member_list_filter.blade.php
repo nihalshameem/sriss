@@ -22,7 +22,7 @@
       <td>{{ $member->Member_Id }}</td>  
       <td>{{ $member->Pincode }}</td>
       <td>{{ $member->created_at->toDateString() }} </td> 
-      <?php $value = str_replace( ',', '<br />', $member->Address1 ) ?>
+      <?php $value = str_replace( ',', '<br />', $member->Address_Line_1) ?>
       <td>{!! html_entity_decode($value) !!}</td>
       <td>@if($member->active_flag=='Y')<span class="right badge badge-success">Yes</span>@else<span class="right badge badge-danger">No</span>@endif</td>
       

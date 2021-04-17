@@ -85,7 +85,6 @@ class MembersController extends ApiController
                 $member->Whatsapp_No = $request->whatsapp_number;
                 $member->State_Id = $Member->State_Id;
                 $member->Zones_Id = $Member->Zones_Id;
-                $member->Union_Id = $Member->Union_Id;
                 if($member->save())
                 {
                     $user = User::find($user->id);
@@ -131,7 +130,7 @@ class MembersController extends ApiController
             $user->save();
         
             $user = User::where('mobile_number', $request['mobile_number'])->first();
-            $member = Member::where('Mobile_No',$request['mobile_number'])->value('Profile_Picture');
+            $member = Member::where('Mobile_No',$request['mobile_number'])->value('Member_image');
 
                         return Response([
                             'status' => 'success',
@@ -157,9 +156,9 @@ class MembersController extends ApiController
                 if($user)
                 {
                     $memberactive = Member::where('Mobile_No',$request['mobile_number'])->first();
-                    if($memberactive->active_flag=='Y' )
+                    if($memberactive->Member_Active_Flag=='Y' )
                     {
-                        if($memberactive->Is_Approved=='Y')
+                        if($memberactive->Member_Approved_Flag=='Y')
                         {
                             $user = User::where('mobile_number',$request['mobile_number'])->first();
                             $api_token = $user['api_token'];
@@ -178,7 +177,7 @@ class MembersController extends ApiController
                                     $user->api_token = $token;
                                     $user->save();
                                     $user = User::where('mobile_number', $request['mobile_number'])->first();
-                                    $member = Member::where('Mobile_No', $request['mobile_number'])->value('Profile_Picture');
+                                    $member = Member::where('Mobile_No', $request['mobile_number'])->value('Member_image');
                                     return Response([
                                         'status' => 'success',
                                         'code' => 200,
@@ -321,8 +320,8 @@ class MembersController extends ApiController
         {
             if($user=$this->is_valid_token($request['token']))
             {
-                $Address1 = Member::where('Mobile_No',$request->mobile_number)->value('Address1');
-                $Address2 = Member::where('Mobile_No',$request->mobile_number)->value('Address2');
+                $Address1 = Member::where('Mobile_No',$request->mobile_number)->value('Address_Line_1');
+                $Address2 = Member::where('Mobile_No',$request->mobile_number)->value('Address_Line_2');
                 $First_Name = Member::where('Mobile_No',$request->mobile_number)->value('First_Name');
                 $Last_Name = Member::where('Mobile_No',$request->mobile_number)->value('Last_Name');
 
@@ -387,7 +386,7 @@ class MembersController extends ApiController
                     $image_extn = strtolower($image_ext);
                     $imageName = time() .'_'. $request->profile->getClientOriginalName();
                     $filePath = $request->file('profile')->storeAs('Profile', $imageName,'public');
-                    $members->Profile_Picture = config('app.url').'storage/app/public/Profile/'.$imageName;  
+                    $members->Member_image = config('app.url').'storage/app/public/Profile/'.$imageName;  
                 }
                     if($members->save())
                     {
@@ -395,7 +394,7 @@ class MembersController extends ApiController
                         'status' => 'success',
                         'code' => $this->getStatusCode(),
                         'message' => 'Profile Picture Updated',
-                        'data'=>$members->Profile_Picture,
+                        'data'=>$members->Member_image,
                         ]);
                     }
                     else
@@ -627,30 +626,11 @@ class MembersController extends ApiController
                     
                     $members = Member::where("member_id", "=",$request['member_id'])->first();
 
-
-                    if($request['first_name']){
-                    $members->First_Name = $request['first_name'];
+                    if($request['First_Name']){
+                    $members->First_Name = $request['First_Name'];
                     }
-                    if($request['last_name']){
-                    $members->Last_Name = $request['last_name'];
-                    }
-                    if($request['address1']){
-                    $members->Address1 = $request['address1'];
-                    }
-                    if($request['address2']){
-                    $members->Address2 = $request['address2'];
-                    }
-                    if($request['mobile_number']){
-                    $members->Mobile_No = $request['mobile_number'];
-                    }
-                    if($request['whatsapp_number']){
-                    $members->Whatsapp_No = $request['whatsapp_number'];
-                    }
-                    if($request['email_id']){
-                    $members->Email_Id = $request['email_id'];
-                    }
-                    if($request['pan_number']){
-                    $members->Pan_No = $request['pan_number'];
+                    if($request['Last_Name']){
+                    $members->Last_Name = $request['Last_Name'];
                     }
                     if($request['DOB']){
                     $members->DOB = $request['DOB'];
@@ -658,12 +638,95 @@ class MembersController extends ApiController
                     if($request['Age']){
                     $members->Age = $request['Age'];
                     }
-                    if($request['wedding_date']){
-                    $members->Wedding_Date = $request['wedding_date'];
+                    if($request['DOB']){
+                    $members->DOB = $request['DOB'];
                     }
-                    if($request['pincode']){
-                    $members->Pincode = $request['pincode'];
+                    if($request['Sex']){
+                    $members->Sex = $request['Sex'];
                     }
+                    if($request['Address_Line_1']){
+                    $members->Address_Line_1 = $request['Address_Line_1'];
+                    }
+                    if($request['Address_Line_2']){
+                    $members->Address_Line_2 = $request['Address_Line_2'];
+                    }
+                    if($request['Pincode']){
+                    $members->Pincode = $request['Pincode'];
+                    }
+                    if($request['Mobile_No']){
+                    $members->Mobile_No = $request['Mobile_No'];
+                    }
+                    if($request['Whatsapp_No']){
+                    $members->Whatsapp_No = $request['Whatsapp_No'];
+                    }
+                    if($request['Email_Id']){
+                    $members->Email_Id = $request['Email_Id'];
+                    }
+                    if($request['Voter_Id_card_no']){
+                    $members->Voter_Id_card_no = $request['Voter_Id_card_no'];
+                    }
+                    if($request['Marital_Status']){
+                    $members->Marital_Status = $request['Marital_Status'];
+                    }
+                    if($request['Wedding_Date']){
+                    $members->Wedding_Date = $request['Wedding_Date'];
+                    }
+                    if($request['Spouse_Name']){
+                    $members->Spouse_Name = $request['Spouse_Name'];
+                    }
+                    if($request['Spouse_DOB']){
+                    $members->Spouse_DOB = $request['Spouse_DOB'];
+                    }
+                    if($request['Spouse_Age']){
+                    $members->Spouse_Age = $request['Spouse_Age'];
+                    }
+                    if($request['Assembly_Constituency_Desc']){
+                    $members->Assembly_Constituency_Desc = $request['Assembly_Constituency_Desc'];
+                    }
+                    if($request['Parliament_Constituency_Desc']){
+                    $members->Parliament_Constituency_Desc = $request['Parliament_Constituency_Desc'];
+                    }
+                    if($request['Ward_No']){
+                    $members->Ward_No = $request['Ward_No'];
+                    }
+                    if($request['Ward_Desc']){
+                    $members->Ward_Desc = $request['Ward_Desc'];
+                    }
+                    if($request['Booth_No']){
+                    $members->Booth_No = $request['Booth_No'];
+                    }
+                    if($request['Booth_Desc ']){
+                    $members->Booth_Desc  = $request['Booth_Desc'];
+                    }
+                    if($request['Polling_Area']){
+                    $members->Polling_Area = $request['Polling_Area'];
+                    }
+                    if($request['Gothram']){
+                    $members->Gothram = $request['Gothram'];
+                    }
+                    if($request['Member_Nationality_Desc ']){
+                    $members->Member_Nationality_Desc = $request['Member_Nationality_Desc'];
+                    }
+                    if($request['Member_Religion_Desc']){
+                    $members->Member_Religion_Desc = $request['Member_Religion_Desc'];
+                    }
+                    if($request['Member_Caste_Desc']){
+                    $members->Member_Caste_Desc = $request['Member_Caste_Desc'];
+                    }
+                    if($request['Member_Religious_Leader_Name ']){
+                    $members->Member_Religious_Leader_Name  = $request['Member_Religious_Leader_Name '];
+                    }
+                    if($request['Member_Caste_Leader_Name']){
+                    $members->Member_Caste_Leader_Name = $request['Member_Caste_Leader_Name'];
+                    }
+                    if($request['Birth_Star']){
+                    $members->Birth_Star = $request['Birth_Star'];
+                    }
+                    if($request['Pan_No']){
+                    $members->Pan_No = $request['Pan_No'];
+                    }
+                    
+                    
                     if($request['Text_Field_1']){
                     $members->Text_Field_1 = $request['Text_Field_1'];
                     }
@@ -676,6 +739,24 @@ class MembersController extends ApiController
                     if($request['Text_Field_4']){
                     $members->Text_Field_4 = $request['Text_Field_4'];
                     }
+                    if($request['Text_Field_5']){
+                    $members->Text_Field_5 = $request['Text_Field_5'];
+                    }
+                    if($request['Text_Field_6']){
+                    $members->Text_Field_6 = $request['Text_Field_6'];
+                    }
+                    if($request['Text_Field_7']){
+                    $members->Text_Field_7 = $request['Text_Field_7'];
+                    }
+                    if($request['Text_Field_8']){
+                    $members->Text_Field_8 = $request['Text_Field_8'];
+                    }
+                    if($request['Text_Field_9']){
+                    $members->Text_Field_9 = $request['Text_Field_9'];
+                    }
+                    if($request['Text_Field_10']){
+                    $members->Text_Field_10 = $request['Text_Field_10'];
+                    }
                     if($request['Date_Field_1']){
                     $members->Date_Field_1 = $request['Date_Field_1'];
                     }
@@ -685,15 +766,30 @@ class MembersController extends ApiController
                     if($request['Date_Field_3']){
                     $members->Date_Field_3 = $request['Date_Field_3'];
                     }
+                    if($request['Date_Field_5']){
+                    $members->Date_Field_5 = $request['Date_Field_5'];
+                    }
+                    if($request['Date_Field_4']){
+                    $members->Date_Field_4 = $request['Date_Field_4'];
+                    }
                     if($request['Yes_No_Field_1']){
                     $members->Yes_No_Field_1 = $request['Yes_No_Field_1'];
                     }
                     if($request['Yes_No_Field_2']){
                     $members->Yes_No_Field_2 = $request['Yes_No_Field_2'];
                     }
-                    if($request['district']){
-                    $district = District::where('District_desc',$request['district'])->first();
-                    $members->District_Id = $district->District_id;
+                    if($request['Yes_No_Field_3']){
+                    $members->Yes_No_Field_3 = $request['Yes_No_Field_3'];
+                    }
+                    if($request['Yes_No_Field_4']){
+                    $members->Yes_No_Field_4 = $request['Yes_No_Field_4'];
+                    }
+                    if($request['Yes_No_Field_5']){
+                    $members->Yes_No_Field_5 = $request['Yes_No_Field_5'];
+                    }
+                    if($request['District_Id']){
+                        $district = District::where('District_desc',$request['District_Id'])->first();
+                        $members->District_Id = $district->District_id;
                     }
                     if($request['is_volunteer'])
                     {
@@ -874,11 +970,11 @@ class MembersController extends ApiController
             if($user=$this->is_valid_token($request['token']))
             {
                 $Member = Member::where('Member_Id', $request->member_id)->first();
-                $referredBy = Member::where('Mobile_No', $Member->ReferedBy)->select('First_Name as Name','Mobile_No','Member_Id','Profile_Picture')->first();
-                $referredByCount = Member::where('Mobile_No', $Member->ReferedBy)->select('First_Name as Name','Mobile_No','Member_Id','Profile_Picture')->count();
-                $referrals = Member::where('ReferedBy', $Member->Mobile_No)->select('First_Name as Name','Mobile_No','Member_Id','Profile_Picture')->get();
+                $referredBy = Member::where('Mobile_No', $Member->Referrar_Phone_No)->select('First_Name as Name','Mobile_No','Member_Id','Member_image')->first();
+                $referredByCount = Member::where('Mobile_No', $Member->Referrar_Phone_No)->select('First_Name as Name','Mobile_No','Member_Id','Member_image')->count();
+                $referrals = Member::where('Referrar_Phone_No', $Member->Mobile_No)->select('First_Name as Name','Mobile_No','Member_Id','Member_image')->get();
 
-                $referralsCount = Member::where('ReferedBy', $Member->Mobile_No)->select('First_Name as Name','Mobile_No','Member_Id','Profile_Picture')->count();
+                $referralsCount = Member::where('Referrar_Phone_No', $Member->Mobile_No)->select('First_Name as Name','Mobile_No','Member_Id','Member_image')->count();
 
                 if($referralsCount>0 && $referredByCount>0)
                 {
@@ -953,7 +1049,7 @@ class MembersController extends ApiController
         {
             if($user=$this->is_valid_token($request['token']))
             {
-                $Member = Member::where('Is_Approved', $request->status)->select('Member_Id','First_Name as Name','Mobile_No','Is_Approved')->get();
+                $Member = Member::where('Member_Approved_Flag', $request->status)->select('Member_Id','First_Name as Name','Mobile_No','Member_Approved_Flag as Is_Approved')->get();
 
                 if($Member->count()>0)
                 {
@@ -1010,7 +1106,7 @@ class MembersController extends ApiController
             {
                 $myString = $request->approval_id;
                 $myArray = explode(',', $myString);
-                $MemberUpdate = Member::whereIn('Member_Id',$myArray)->update(['Is_Approved'=>$request->status,'Approval_Id'=>$request->member_id]);
+                $MemberUpdate = Member::whereIn('Member_Id',$myArray)->update(['Member_Approved_Flag'=>$request->status,'Approval_Id'=>$request->member_id]);
 
                 $Members = Member::whereIn('Member_Id',$myArray)->get();
 
@@ -1124,9 +1220,9 @@ class MembersController extends ApiController
             {
                 $Member = Member::where('Member_Id', $request->member_id)->first();
 
-                $referralsCount = Member::where('ReferedBy', $Member->Mobile_No)->count();
+                $referralsCount = Member::where('Referrar_Phone_No', $Member->Mobile_No)->count();
 
-                $MemberApprovalCount = Member::where('Is_Approved', 'N')->select('Member_Id','First_Name as Name','Mobile_No','Is_Approved')->count();
+                $MemberApprovalCount = Member::where('Member_Approved_Flag', 'N')->select('Member_Id','First_Name as Name','Mobile_No','Member_Approved_Flag as Is_Approved')->count();
 
                 if($referralsCount>0 && $MemberApprovalCount>0)
                 {
@@ -1237,8 +1333,8 @@ class MembersController extends ApiController
                 '<td>'.$member->Member_Id.'</td>'.
                 '<td>'.$member->Pincode.'</td>'.
                 '<td>'.$member->created_at->toDateString().'</td>'.
-                '<td>'.$member->Address1.'</td>'.
-                '<td>'.$member->active_flag.'</td>'.
+                '<td>'.$member->Address_Line_1.'</td>'.
+                '<td>'.$member->Member_Active_Flag.'</td>'.
                 '</tr>';
                  
                 }  
@@ -1254,7 +1350,7 @@ class MembersController extends ApiController
     public function MemberDeactivateList()
     {    
         $Member = Member::orderby('id','desc')->get();
-        $demembers=Member::Where('active_flag','N')->orderby('id','desc')->get();
+        $demembers=Member::Where('Member_Active_Flag','N')->orderby('id','desc')->get();
         return view('Member.member_deactivation',compact('Member','demembers'));
     }
 
@@ -1273,7 +1369,7 @@ class MembersController extends ApiController
             {
                 
                 foreach ($members as $key => $member) {
-                if($member->active_flag=='Y')
+                if($member->Member_Active_Flag=='Y')
                 {
                     $output.='<tr>'.
                      
@@ -1282,7 +1378,7 @@ class MembersController extends ApiController
                     '<td>'.$member->Mobile_No.'</td>'.
                     '<td>'.$member->Member_Id.'</td>'.
                     '<td>'.$member->Pincode.'</td>'.
-                    '<td>'.$member->Address1.'</td>'.
+                    '<td>'.$member->Address_Line_1.'</td>'.
                     '<td><a href="/MemberDeactivation/'.$member->Member_Id.'" ><span class="badge bg-danger">Deactivate</span></a></td>'.
                     '</tr>';
                  
@@ -1296,7 +1392,7 @@ class MembersController extends ApiController
                     '<td>'.$member->Mobile_No.'</td>'.
                     '<td>'.$member->Member_Id.'</td>'.
                     '<td>'.$member->Pincode.'</td>'.
-                    '<td>'.$member->Address1.'</td>'.
+                    '<td>'.$member->Address_Line_1.'</td>'.
                     '<td><a href="/MemberActivation/'.$member->Member_Id.'" ><span class="badge bg-success">Activate</span></a></td>'.
                     '</tr>';
                 } 
@@ -1311,7 +1407,7 @@ class MembersController extends ApiController
     public function MemberDeactivation($memberId)
     {
         $member = Member::Where("Member_Id", '=', $memberId)
-                        ->update(['active_flag'=> 'N']);
+                        ->update(['Member_Active_Flag'=> 'N']);
         if($member)
         {
 
@@ -1329,7 +1425,7 @@ class MembersController extends ApiController
     public function MemberActivation($memberId)
     {
         $member = Member::Where("Member_Id", '=', $memberId)
-                        ->update(['active_flag'=> 'Y']);
+                        ->update(['Member_Active_Flag'=> 'Y']);
         if($member)
         {
 
@@ -1385,12 +1481,12 @@ class MembersController extends ApiController
 
     public function ListMemberPending()
     {
-       $member = Member::where('Is_Approved','N')->orderby('id','desc')->get();
+       $member = Member::where('Member_Approved_Flag','N')->orderby('id','desc')->get();
        return view('Member.pendinglist',compact('member'));
     }
     public function MemberPendingFilter(Request $request)
     {
-        $member = Member::where('Is_Approved',$request->status)->orderby('id','desc');
+        $member = Member::where('Member_Approved_Flag',$request->status)->orderby('id','desc');
         if($request->updatedDate!=null)
         {
             $member= $member->whereDate('created_at','<=',$request->updatedDate);
@@ -1408,18 +1504,18 @@ class MembersController extends ApiController
         $member = View::make('Member.filter.member_approval_filter', compact('member'))->render();
         return Response::json(['member' => $member]);
     }
-
+ 
 
     public function UpdateMemberApprovalPending(Request $request)
     {
         if($request->member_id!=null){
             if($request->submit == "Approve")
             {
-             $MemberUpdate = Member::whereIn('Member_Id',$request->member_id)->update(['Is_Approved'=>'Y']);
+                $MemberUpdate = Member::whereIn('Member_Id',$request->member_id)->update(['Member_Approved_Flag'=>'Y']);
             }
             else if($request->submit == "Reject")
             {
-                $MemberUpdate = Member::whereIn('Member_Id',$request->member_id)->update(['Is_Approved'=>'R']);
+                $MemberUpdate = Member::whereIn('Member_Id',$request->member_id)->update(['Member_Approved_Flag'=>'R']);
             }
         
         return redirect(route('MemberPending.list'));
