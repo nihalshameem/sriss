@@ -778,14 +778,14 @@ class MembersController extends ApiController
                     if($request['Yes_No_Field_2']){
                     $members->Yes_No_Field_2 = $request['Yes_No_Field_2'];
                     }
-                    if($request['Yes_No_Field_3']){
-                    $members->Yes_No_Field_3 = $request['Yes_No_Field_3'];
+                    if($request['Yes_No_field_3']){
+                    $members->Yes_No_field_3 = $request['Yes_No_field_3'];
                     }
-                    if($request['Yes_No_Field_4']){
-                    $members->Yes_No_Field_4 = $request['Yes_No_Field_4'];
+                    if($request['Yes_No_field_4']){
+                    $members->Yes_No_field_4 = $request['Yes_No_field_4'];
                     }
-                    if($request['Yes_No_Field_5']){
-                    $members->Yes_No_Field_5 = $request['Yes_No_Field_5'];
+                    if($request['Yes_No_field_5']){
+                    $members->Yes_No_field_5 = $request['Yes_No_field_5'];
                     }
                     if($request['District_Id']){
                         $district = District::where('District_desc',$request['District_Id'])->first();
