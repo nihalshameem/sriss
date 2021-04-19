@@ -695,7 +695,7 @@ class MembersController extends ApiController
                     if($request['Booth_No']){
                     $members->Booth_No = $request['Booth_No'];
                     }
-                    if($request['Booth_Desc ']){
+                    if($request['Booth_Desc']){
                     $members->Booth_Desc  = $request['Booth_Desc'];
                     }
                     if($request['Polling_Area']){
@@ -704,7 +704,7 @@ class MembersController extends ApiController
                     if($request['Gothram']){
                     $members->Gothram = $request['Gothram'];
                     }
-                    if($request['Member_Nationality_Desc ']){
+                    if($request['Member_Nationality_Desc']){
                     $members->Member_Nationality_Desc = $request['Member_Nationality_Desc'];
                     }
                     if($request['Member_Religion_Desc']){
@@ -713,8 +713,8 @@ class MembersController extends ApiController
                     if($request['Member_Caste_Desc']){
                     $members->Member_Caste_Desc = $request['Member_Caste_Desc'];
                     }
-                    if($request['Member_Religious_Leader_Name ']){
-                    $members->Member_Religious_Leader_Name  = $request['Member_Religious_Leader_Name '];
+                    if($request['Member_Religious_Leader_Name']){
+                    $members->Member_Religious_Leader_Name  = $request['Member_Religious_Leader_Name'];
                     }
                     if($request['Member_Caste_Leader_Name']){
                     $members->Member_Caste_Leader_Name = $request['Member_Caste_Leader_Name'];
@@ -724,6 +724,39 @@ class MembersController extends ApiController
                     }
                     if($request['Pan_No']){
                     $members->Pan_No = $request['Pan_No'];
+                    }
+                     if($request['Profession']){
+                    $members->Profession = $request['Profession'];
+                    }
+                    if($request['Referrar_Phone_No'])
+                    {
+                        $MemberUpdate = Member::where('Member_Id',$request->member_id)->first();
+                        $referredBycheck = Member::where('Mobile_No',$request->Referrar_Phone_No)->count();
+                        
+                        if($request->Referrar_Phone_No==$MemberUpdate->Mobile_No)
+                        {
+                            return $this->respond([
+                                'status' => 'failure',
+                                'code' => 400,
+                                'message' => 'You cannot refer yourself',
+                                ]);
+                        }
+                        else
+                        {
+                            if($referredBycheck>0)
+                            {
+                                $members->Referrar_Phone_No = $request->Referrar_Phone_No;
+                            }
+                            else
+                            {
+                                return $this->respond([
+                                'status' => 'Failed',
+                                'status_code' => 400,
+                                'message' => 'Enter Valid Member Mobile Number',
+                                ]);
+                            }
+                        
+                        }
                     }
                     
                     
@@ -1166,7 +1199,7 @@ class MembersController extends ApiController
                 {
                     if($referredBycheck>0)
                     {
-                        $MemberUpdate->ReferedBy = $request->referred_by;
+                        $MemberUpdate->Referrar_Phone_No = $request->referred_by;
                     }
                     else
                     {
