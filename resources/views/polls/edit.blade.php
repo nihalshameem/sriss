@@ -103,7 +103,7 @@
 
             <div class="form-group">
               <label for="exampleInputPassword1">Number Of Responses</label>
-              <input type="number" class="col-md-11  form-control" onfocus="this.oldvalue = this.value;"     onkeyup ="responses(this);this.oldvalue = this.value;"  id="response">
+              <input type="number" class="col-md-11  form-control" onfocus="this.oldvalue = this.value;"     onkeyup ="responses(this);this.oldvalue = this.value;"  id="response" readonly="">
 
             </div>
 
@@ -179,5 +179,9 @@
      
     }
   }
+</script>
+
+<script type="text/javascript">
+
 </script>
 @endsection

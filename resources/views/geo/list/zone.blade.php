@@ -18,7 +18,7 @@
 	<thead>
 		<tr>
 			<th>Sl No</th>
-			<th>G.Zone</th>
+			<th>Zone</th>
 			<th>Name</th>
 			<th>Status</th>
 			<th colspan="2">Action</th>

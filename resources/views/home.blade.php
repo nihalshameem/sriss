@@ -17,7 +17,7 @@
               <table id="example2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th style="width:150px;">#</th>
+                    <th style="width:150px;">Period</th>
                   <th style="width:150px;text-align:center"><a href="/Reports/MembersListView"  style="color: black">Members</a></th>
                   <th style="width:150px;text-align:center"><a href="/Notifications" style="color: black">Notifications</a></th>
                   <th style="width:150px;text-align:center"><a href="{{ route('OnlineContributions') }}" style="color:black">Online Contributions</a></th>
