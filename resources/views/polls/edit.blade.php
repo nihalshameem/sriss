@@ -103,7 +103,7 @@
 
             <div class="form-group">
               <label for="exampleInputPassword1">Number Of Responses</label>
-              <input type="number" class="col-md-11  form-control" onfocus="this.oldvalue = this.value;"     onkeyup ="responses(this);this.oldvalue = this.value;"  id="response" readonly="">
+              <input type="number" class="col-md-11  form-control" onfocus="this.oldvalue = this.value;"     onkeyup ="responses(this);this.oldvalue = this.value;"  id="response" >
 
             </div>
 
@@ -137,7 +137,7 @@
               {
                 j=i+1;
                 $('<div id="row'+value+'">'+'<div class="form-group">'+'<label class="form-lable">Option'+j+'</label>'+
-                  '<input class="form-control" name="Answer[]" type="text">'+
+                  '<input class="form-control" name="Answer[]" type="text">'+'<input type="hidden" class="form-control" name="Answer_id[]"  value="" >'+
                   '</div></div>').appendTo('#link-list');
               }
         }
