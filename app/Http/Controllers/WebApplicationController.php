@@ -295,7 +295,7 @@ class WebApplicationController extends ApiController
             $vision = Compliance::where('Compliance_id','1')->where('Compliance_active','N')->first();
             $terms = Compliance::where('Compliance_id','2')->where('Compliance_active','N')->first();
             $privacy = Compliance::where('Compliance_id','3')->where('Compliance_active','N')->first();
-            $language = Language::where('Language_active','D')->get();
+            $language = Language::where('Language_active','D')->where('Language_active','Y')->get();
 
              return response()->json([
                     'status' => 'success',

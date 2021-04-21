@@ -26,19 +26,19 @@
       <div class="row">
         <div class="col-1">
         </div>
-            <?php $lang1=\App\models\Language::where('Language_flag','L1')
+            <?php $lang1=\App\Models\Language::where('Language_flag','L1')
                                     ->where(function($q) {
                                    $q->where('Language_active', 'Y')
                                      ->orWhere('Language_active', 'D');
                                })
                               ->first();
-            $lang2=\App\models\Language::where('Language_flag','L2')
+            $lang2=\App\Models\Language::where('Language_flag','L2')
                               ->where(function($q) {
                                    $q->where('Language_active', 'Y')
                                      ->orWhere('Language_active', 'D');
                                })
                               ->first();
-            $lang3=\App\models\Language::where('Language_flag','L3')
+            $lang3=\App\Models\Language::where('Language_flag','L3')
                                 ->where(function($q) {
                                    $q->where('Language_active', 'Y')
                                      ->orWhere('Language_active', 'D');

@@ -153,7 +153,6 @@ class MembersController extends ApiController
         else
         {
                 $user=Auth::attempt(['mobile_number'=>$request['mobile_number'],'password' => $request['password']]);
-                dd($user);
                 if($user)
                 {
                     $memberactive = Member::where('Mobile_No',$request['mobile_number'])->first();
