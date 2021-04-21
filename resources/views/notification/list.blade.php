@@ -79,8 +79,10 @@
          <td>Image</td> 
          @elseif($Notification->Notification_video_path!=null)
             <td>Video</td> 
+         @elseif($Notification->Notification_video_path!=null)
+            <td>Audio</td> 
          @else
-         <td>Audio</td> 
+         <td>Empty</td> 
          @endif 
          <?php
          

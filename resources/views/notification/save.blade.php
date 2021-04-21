@@ -66,7 +66,7 @@
           </div>
            <div class="form-group">
             <label for="exampleInputPassword1">Media</label>
-              <select name="type" class="form-control" id="type" onchange="changeMedia(this.value)" required>
+              <select name="type" class="form-control" id="type" onchange="changeMedia(this.value)">
                 <option value="">Select Media</option>
                 <option value="image">Image</option>
                 <option value="video">Video</option>

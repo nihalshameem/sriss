@@ -46,8 +46,8 @@
                 </div>
                 
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Union Name</label><br>
-                  <textarea style="width: 100%" name="union" id="union" placeholder="Enter Talik Name..." rows="4" required=""></textarea>
+                  <label for="exampleInputPassword1">Taluk Name</label><br>
+                  <textarea style="width: 100%" name="union" id="union" placeholder="Enter Taluk Name..." rows="4" required=""></textarea>
                   <p style="color: red">*Taluk Name must be separate with comma only.</p>
                 </div>
                 @if( Session::has( 'warning3' ))

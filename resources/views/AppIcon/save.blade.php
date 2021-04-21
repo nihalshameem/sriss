@@ -64,20 +64,16 @@
 <div class="row">
 
    <div class="col-md-6 form-group">
-    <label >English Text</label>
+    <label >Default Language Text</label>
     <input type="text" class="form-control" value="{{ $AppIconEdit->L1_text}}" name="l1_text">
 </div>
 <div class="col-md-6 form-group">
-    <label >Tamil Text</label>
-    
+    <label >First Language Text</label>
     <input type="text" class="form-control"  value="{{ $AppIconEdit->L2_text}}" name="l2_text">
-    
 </div>
 <div class="col-md-6 form-group">
-    <label >Hindi Text</label>
-    
+    <label >Second Language Text</label>
     <input type="text" class="form-control"  value="{{ $AppIconEdit->L3_text}}" name="l3_text">
-    
 </div>
 </div>
 <div class="form-group">
