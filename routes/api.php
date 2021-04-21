@@ -110,5 +110,7 @@ Route::group(['prefix' => '/v2'], function () {
 		Route::post('/advertisement', [App\Http\Controllers\AdvertisementController::class,'Advertisements']);
 
 		Route::post('/Setlanguage', [App\Http\Controllers\WebApplicationController::class,'Setlanguage']);
+
+		Route::get('/getConfiguration', [App\Http\Controllers\WebApplicationController::class,'getConfiguration']);
 		
 });

@@ -7,6 +7,22 @@
    <br>
     <section class="content">
         <div class="col-md-12">
+          <div class="col-12">
+
+            <div class="row mb-2">
+              <div class="col-sm-2">
+                <a href="/home" class="btn btn-back" style="float:left;border-radius: 3px;background-color: aqua;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-4">
+                <h3 class="title-head">Dashboard</h3>
+            </div>
+            <div class="col-sm-3">
+            </div>
+            
+        </div>
+    </div>
             <div class="row">
         
         

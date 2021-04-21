@@ -126,6 +126,36 @@ class WebApplicationController extends ApiController
         
     }
 
+    public function getConfiguration(Request $request)
+    {
+        
+       // $otptext = Compliance::where('Compliance_id','5')->value('Compliance_text');
+        //$approval_text = Compliance::where('Compliance_id','6')->value('Compliance_text');
+        //$contact_person_no = Compliance::where('Compliance_id','7')->value('Compliance_text');
+        $whatsapp_no = Compliance::where('Compliance_id','5')->value('Compliance_text');
+        //$missed_call_no = Compliance::where('Compliance_id','9')->value('Compliance_text');
+                
+        if($otptext && $contact_person_no && $whatsapp_no)
+        {
+            return $this->respond([
+                                    'status' => 'success',
+                                    'message' => 'success',
+                                    'code' => $this->getStatusCode(),
+                                    'data'=>[
+                                    'whatsapp_no'=>$whatsapp_no,
+                                    ],   
+                                    ]);
+        }
+        else
+        {
+            return $this->respond([
+                                    'status' => 'failure',
+                                    'code' => 400,
+                                    ]);  
+        }           
+    
+    }
+
     /*Member Profile */
 
     public function ListProfiles()

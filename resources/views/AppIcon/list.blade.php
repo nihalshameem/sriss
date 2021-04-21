@@ -26,15 +26,42 @@
       <div class="row">
         <div class="col-1">
         </div>
+            <?php $lang1=\App\models\Language::where('Language_flag','L1')
+                                    ->where(function($q) {
+                                   $q->where('Language_active', 'Y')
+                                     ->orWhere('Language_active', 'D');
+                               })
+                              ->first();
+            $lang2=\App\models\Language::where('Language_flag','L2')
+                              ->where(function($q) {
+                                   $q->where('Language_active', 'Y')
+                                     ->orWhere('Language_active', 'D');
+                               })
+                              ->first();
+            $lang3=\App\models\Language::where('Language_flag','L3')
+                                ->where(function($q) {
+                                   $q->where('Language_active', 'Y')
+                                     ->orWhere('Language_active', 'D');
+                               })
+                              ->first(); ?>
+
+                                
         <div class="col-10">
           <div class="table-responsive">
             <table id="example1" class="table" >
               <thead>
                 <tr>
                   <th>Sl No</th>
+                  @if($lang1)
                   <th>Default Language</th>
+                  @endif
+                  @if($lang2)
                   <th>2nd Language</th>
+                  @endif
+                  @if($lang3)
                   <th>3rd Language</th>
+                  @endif
+                  <th>Icon</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -43,9 +70,16 @@
                 @foreach ($AppIcon as $i => $appIcon)
                 <tr>
                   <td>{{ $i+1 }}</td>
+                  
+                  @if($lang1)
                   <td>{{ $appIcon->L1_text }}</td>
+                  @endif
+                  @if($lang2)
                   <td>{{ $appIcon->L2_text }}</td>
+                  @endif
+                  @if($lang3)
                   <td>{{ $appIcon->L3_text }}</td>
+                  @endif
                   <td><img src="{{ $appIcon->AppIcon_image_path }}" width="120px" height="60px"></td>
                   <td><span class="badge bg-success">{{ $appIcon->AppIcon_visible }}</span></td>
                   
