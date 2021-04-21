@@ -125,7 +125,7 @@
               <input type="hidden" name="Notification_id" value="{{ $Notifications->Notification_id}}">
               <div class="input-group">
               <div class="custom-file">
-                <input type="file" class="custom-file-input" name="AudioPath" id="AudioPath" accept=" audio/*" onchange="return AudioValidation()">
+                <input type="file" class="custom-file-input" name="AudioPath" id="AudioPath" accept="audio/*, video/mpeg" onchange="return AudioValidation()">
                 <label class="custom-file-label"  for="exampleInputFile2">Choose Audio / Voice</label>
               </div>
               <div class="input-group-append">
@@ -246,7 +246,7 @@
             document.getElementById('AudioPath');
             var filePath = fileInput.value;
             var fname = filePath;
-            var re = /(\.mp3|\.aac|\.wav)$/i;
+            var re = /(\.mp3|\.aac|\.wav|\.mpeg)$/i;
             if (!re.exec(fname)) {
                 alert('Allow Only mp3,aac and wav file types');
                 fileInput.value = '';

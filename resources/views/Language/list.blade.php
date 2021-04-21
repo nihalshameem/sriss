@@ -34,7 +34,6 @@
                   <th>Sl No</th>
                   <th>Languages</th>
                   <th>Status</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -43,10 +42,6 @@
                   <td>{{ $i+1 }}</td>
                   <td>{{ $Language->Language_name }}</td>
                   <td><span class="badge bg-success">{{ $Language->Language_active }}</span></td>
-                  
-                  <td>
-                   <a href="{{ route('edit.language', ['languageId' => $Language->Language_id]) }}"><span class="badge bg-danger"><i class="fa fa-edit fa-lg" style="text-align:center;"></i>&nbsp;&nbsp;Edit</span></a>
-                 </td>
                </tr>
                @endforeach
 

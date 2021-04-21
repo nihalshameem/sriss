@@ -69,8 +69,6 @@ Route::post('/UpdateNewsLetter', [App\Http\Controllers\NewsLetterController::cla
 
 Route::get('/language', [App\Http\Controllers\WebApplicationController::class, 'ListLanguage'])->name('list.languageLock');
 
-Route::get('/language/Edit/{languageId}', [App\Http\Controllers\WebApplicationController::class, 'EditLanguage'])->name('edit.language');
-
 Route::post('/languageUpdate', [App\Http\Controllers\WebApplicationController::class, 'UpdateLanguage'])->name('update.language');
 
 

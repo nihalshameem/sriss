@@ -44,11 +44,22 @@
                   </select>
                   
                 </div>
+                
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Number Of Taluk</label>
-                  <input type="Number" class="form-control" onfocus="this.oldvalue = this.value;"     onkeyup ="responses(this);this.oldvalue = this.value;"  id="response" required>
-
+                  <label for="exampleInputPassword1">Union Name</label><br>
+                  <textarea style="width: 100%" name="union" id="union" placeholder="Enter Talik Name..." rows="4" required=""></textarea>
+                  <p style="color: red">*Taluk Name must be separate with comma only.</p>
                 </div>
+                @if( Session::has( 'warning3' ))
+                   <div class="alert alert-success" style="margin-top:15px;">
+                        {{ Session::get('warning3') }}
+                    </div>
+                  @endif
+                @if( Session::has( 'warning2' ))
+                  <div class="alert alert-danger" style="margin-top:15px;">
+                      {{ Session::get('warning2') }}
+                  </div>
+                  @endif
                 <div id="link-list">
                 </div>
                 <div class="form-group">

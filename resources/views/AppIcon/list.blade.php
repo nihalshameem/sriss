@@ -26,24 +26,25 @@
       <div class="row">
         <div class="col-1">
         </div>
-            <?php $lang1=\App\Models\Language::where('Language_flag','L1')
-                                    ->where(function($q) {
-                                   $q->where('Language_active', 'Y')
-                                     ->orWhere('Language_active', 'D');
-                               })
+            <?php $lang1=\App\Models\Language::Where('Language_active', 'D')
                               ->first();
-            $lang2=\App\Models\Language::where('Language_flag','L2')
-                              ->where(function($q) {
-                                   $q->where('Language_active', 'Y')
-                                     ->orWhere('Language_active', 'D');
-                               })
-                              ->first();
-            $lang3=\App\Models\Language::where('Language_flag','L3')
-                                ->where(function($q) {
-                                   $q->where('Language_active', 'Y')
-                                     ->orWhere('Language_active', 'D');
-                               })
-                              ->first(); ?>
+            $langs=\App\Models\Language::where('Language_active', 'Y')
+                                     ->orderBy('Language_id', 'desc')->count();
+            if($langs>=2){
+              $lang2=\App\Models\Language::where('Language_active', 'Y')
+                                     ->orderBy('Language_id', 'desc')->first();
+                               
+              $lang3=\App\Models\Language::where('Language_active', 'Y')
+                                     ->first(); 
+            }else if($langs==0){
+              $lang2=false;
+              $lang3=false;
+            }else{
+              $lang2=\App\Models\Language::where('Language_active', 'Y')
+                                     ->orderBy('Language_id', 'desc')->first();
+              $lang3=false;
+            }
+            ?>
 
                                 
         <div class="col-10">
@@ -55,11 +56,11 @@
                   @if($lang1)
                   <th>Default Language</th>
                   @endif
-                  @if($lang2)
+                  @if($lang2 && $lang3)
+                  <th>1st Language</th>
                   <th>2nd Language</th>
-                  @endif
-                  @if($lang3)
-                  <th>3rd Language</th>
+                  @elseif($lang2 || $lang3)
+                  <th>1st Language</th>
                   @endif
                   <th>Icon</th>
                   <th>Status</th>
@@ -70,16 +71,19 @@
                 @foreach ($AppIcon as $i => $appIcon)
                 <tr>
                   <td>{{ $i+1 }}</td>
-                  
                   @if($lang1)
                   <td>{{ $appIcon->L1_text }}</td>
                   @endif
-                  @if($lang2)
+                  @if($lang2 && $lang3)
                   <td>{{ $appIcon->L2_text }}</td>
-                  @endif
-                  @if($lang3)
+                  <td>{{ $appIcon->L3_text }}</td>
+                  @elseif(!$lang2)
+                  @elseif($lang2->Language_flag=='L2')
+                  <td>{{ $appIcon->L2_text }}</td>
+                  @elseif($lang2->Language_flag=='L3')
                   <td>{{ $appIcon->L3_text }}</td>
                   @endif
+                 
                   <td><img src="{{ $appIcon->AppIcon_image_path }}" width="120px" height="60px"></td>
                   <td><span class="badge bg-success">{{ $appIcon->AppIcon_visible }}</span></td>
                   

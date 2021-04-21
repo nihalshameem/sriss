@@ -288,25 +288,42 @@ class GeoController extends ApiController
 	    return view('geo.create.union',compact('Districts'));
 	}
 
-	public function	CreateUnion(Request $request)
-	{
-		
-		$name_count = count($request['name']);
-		for($i = 0;$i < $name_count; $i++)
-	        {
-	        	if($request->name[$i]!=null)
-				{
-		          
-		            $Union = new Union();
-            		$Union->District_id = $request->DistrictId;
-            		$Union->pincode = $request->pincode[$i];
-            		$Union->Union_desc = $request->name[$i];
-            		$Union->Union_active = $request->Status;
-            		$Union->save();
-		        }
+	 public function CreateUnion(Request $request){
+    	
+        $warn="";
+        $added="";
+      
+        foreach (explode(',',$request->union) as $row){
+	    	$count = Union::where('Union_desc', $row)
+		    				->where('District_id',$request->DistrictId)
+		    				->count();
+			if($count>0){
+	            $warn.= $row.",";
+			}else if($count==0){
+				if($row!=""){
+		        $union = new Union();
+		        $union->District_id = $request->DistrictId;
+		        $union->Union_desc = $row;
+		        $union->Union_active = $request->Status;
+		        $union->save();
+	            $added.= $row.",";
 	        }
-		return redirect(route('listGeo'))->withInput(['tab'=>'custom-tabs-three-union']);
-	}
+		    }
+    }
+        if($warn==""){
+            return redirect()->back()->with('warning3',$added.' Successfully Updated');
+        }else{
+        	$district_name = District::where('District_id',$request->DistrictId)
+		    				->first();
+        	if($added==""){
+            	return redirect()->back()->with('warning2',$warn.' already Exists in '.$district_name->District_desc);
+        	}else{
+            	return redirect()->back()->with('warning2',$warn.' already Exists in '.$district_name->District_desc)->with('warning3',$added.' Successfully Updated');
+        	}
+        	
+        }
+        
+    }
 
 	public function	EditUnion($Unionid)
 	{
