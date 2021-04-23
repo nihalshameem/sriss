@@ -36,6 +36,24 @@
             </div>
         </div>
         <div class="form-group">
+            <label >D_Lable</label>
+            <div class="form-group" >
+                <input type="text" class="form-control"  value="{{ $EditProfiles->d_label}}" name="d_label" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label >L2_Lable</label>
+            <div class="form-group" >
+                <input type="text" class="form-control"  value="{{ $EditProfiles->l2_label}}" name="l2_label" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label >L3_Lable</label>
+            <div class="form-group" >
+                <input type="text" class="form-control"  value="{{ $EditProfiles->l3_label}}" name="l3_label" >
+            </div>
+        </div>
+        <div class="form-group">
             <label >Status</label>
             <select class="form-control" name="active" required>
                 <option>Status</option>

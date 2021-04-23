@@ -10,7 +10,7 @@ class MemberProfile extends Model
     use HasFactory;
 
     protected $fillable = [
-        'field_name','active'
+        'field_name','d_label','l2_lable','l3_lable','active'
     ];
 
     protected $table = 'sss_member_profile_tbl';

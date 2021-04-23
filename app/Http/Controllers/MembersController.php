@@ -577,13 +577,18 @@ class MembersController extends ApiController
 
     public function getProfileData()
     {
-       
+       $mobile_number = "9952346948";
         $profiles =  MemberProfile::pluck('active','field_name')->toArray();
+        $lang_id = Member::where('Mobile_No', $mobile_number)->first();
+        $lang_id = strtolower($lang_id->Language_id);
+        if($lang_id=='l1'){
+            $lang_id = "d";
+        }
         $labels =  MemberProfile::get();
         foreach($labels as $label)
         {
 
-            $profiles = array_merge($profiles, array($label->field_name.'_label'=>$label->label)); 
+            $profiles = array_merge($profiles, array($label->field_name.'_label'=>$label->{$lang_id."_label"})); 
         }
         if($profiles)
         {

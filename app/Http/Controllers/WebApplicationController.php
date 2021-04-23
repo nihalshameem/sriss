@@ -174,11 +174,23 @@ class WebApplicationController extends ApiController
 
     public function UpdateProfiles(Request $request)
     {
+        
         $MemberProfile = MemberProfile::where('id',$request->profileId)->first();
         $MemberProfile->field_name = $request->field_name;
+        $MemberProfile->d_label = $request->d_label;
+        $MemberProfile->l2_label = $request->l2_label;
+        $MemberProfile->l3_label = $request->l3_label;
         $MemberProfile->active = $request->active;
         $MemberProfile->save();
         return redirect(route('list.ProfileDetails'));
+    }
+    
+    public function UpdateProfileStatus(Request $request)
+    {
+        $MemberProfile = MemberProfile::where('id',$request->id)->first();
+        $MemberProfile->active = $request->value;
+        $MemberProfile->save();
+        echo json_encode("Changed");
     }
 
     /* Member Category */

@@ -106,6 +106,8 @@ Route::get('/EditProfiles/{profileId}', [App\Http\Controllers\WebApplicationCont
 
 Route::post('/UpdateProfiles', [App\Http\Controllers\WebApplicationController::class, 'UpdateProfiles'])->name('update.ProfileDetails');
 
+Route::get('/UpdateProfilesStatus', [App\Http\Controllers\WebApplicationController::class, 'UpdateProfileStatus']);
+
 /*Member Deactivation */
 
 Route::get('/MemberEdit', [App\Http\Controllers\MembersController::class, 'MemberDeactivateList'])->name('MemberEdit');
@@ -213,7 +215,6 @@ Route::get('/Pollsearch', [App\Http\Controllers\PollsController::class,'Search']
 Route::get('/TruncatePolls', [App\Http\Controllers\PollsController::class,'TruncatePolls'])->name('truncate.polls');
 
 Route::get('/deleteanswer', [App\Http\Controllers\PollsController::class, 'DeleteAnswer'])->name('delete.answer');
-
 
 /* Contributions */
 
