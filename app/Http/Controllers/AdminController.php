@@ -141,7 +141,6 @@ class AdminController extends Controller
     {
         $Permission = new Permission();
         $Permission->name = $request->permission;
-        $Permission->slug = $request->permission;
         $Permission->save();
         return redirect(route('list.admin'));
     }
