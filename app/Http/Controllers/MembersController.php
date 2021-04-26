@@ -577,9 +577,9 @@ class MembersController extends ApiController
 
     public function getProfileData(Request $request)
     {
-        $mobile_number = $request->mobile_number;
+        $member_id = $request->member_id;
         $profiles =  MemberProfile::pluck('active','field_name')->toArray();
-        $lang_id = Member::where('Mobile_No', $mobile_number)->first();
+        $lang_id = Member::where('Member_id', $member_id)->first();
         $lang_id = strtolower($lang_id->Language_id);
         if($lang_id=='l1'){
             $lang_id = "d";
