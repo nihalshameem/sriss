@@ -190,7 +190,7 @@ class WebApplicationController extends ApiController
         $MemberProfile = MemberProfile::where('id',$request->id)->first();
         $MemberProfile->active = $request->value;
         $MemberProfile->save();
-        echo json_encode("Changed");
+        echo "success";
     }
 
     /* Member Category */

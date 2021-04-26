@@ -255,7 +255,11 @@
         url : '{{URL::to('UpdateProfilesStatus')}}',
         data : {'id':id, 'value':status},
         success:function(data){
-          window.location.reload();
+          if(data==="success"){
+            alert("Success");
+          }else{
+            alert("Failed");
+          }
         } 
       });
 
