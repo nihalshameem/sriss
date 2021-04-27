@@ -478,6 +478,8 @@ Route::get('/MemberList/Filter', [App\Http\Controllers\ReportsController::class,
 
 Route::get('/OnlineCollection/Filter', [App\Http\Controllers\ReportsController::class,'OnlineCollectionReportsFilter'])->name('reports.OnlineCollection.Filter');
 
+Route::get('/Subscription/Filter', [App\Http\Controllers\ReportsController::class,'SubscriptionReportsFilter'])->name('reports.SubscriptionReport.Filter');
+
 Route::get('/Karyakarthas',[App\Http\Controllers\ReportsController::class, 'KaryakarthaReports'])->name('karyakartha.reports');
 
 Route::get('/Karyakartha/filter',[App\Http\Controllers\ReportsController::class, 'karyakarthaReportFilter']);
@@ -512,6 +514,8 @@ Route::get('/OfflineCollection/Filter', [App\Http\Controllers\ReportsController:
 Route::get('/MemberList/Filter', [App\Http\Controllers\ReportsController::class,'MemberReportsFilterView'])->name('reports.MemberList.Filterview');
 
 Route::get('/OnlineCollection/Filter', [App\Http\Controllers\ReportsController::class,'OnlineCollectionReportsFilterView'])->name('reports.OnlineCollection.Filterview');
+
+Route::get('/Subscription/Filter', [App\Http\Controllers\ReportsController::class,'SubscriptionReportsFilterView'])->name('reports.SubscriptionReport.FilterView');
 
 Route::get('/Karyakarthas',[App\Http\Controllers\ReportsController::class, 'KaryakarthaReportsView'])->name('karyakartha.reportsview');
 
@@ -613,4 +617,8 @@ Route::get('/MemberPending/List', [App\Http\Controllers\MembersController::class
 Route::get('/MemberPending/Filter', [App\Http\Controllers\MembersController::class,'MemberPendingFilter'])->name('MemberPending.Filter');
 
 Route::post('/UpdateMemberApproval', [App\Http\Controllers\MembersController::class,'UpdateMemberApprovalPending'])->name('MemberApproval.Update');
+
+Route::get('/ReportsView/Subscription', [App\Http\Controllers\SubscriptionController::class,'SubscriptionReportView'])->name('Subscription.reportsview');
+
+Route::get('/Reports/Subscription', [App\Http\Controllers\SubscriptionController::class,'SubscriptionReport'])->name('Subscription.reports');
 

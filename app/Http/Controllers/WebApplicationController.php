@@ -133,9 +133,10 @@ class WebApplicationController extends ApiController
         //$approval_text = Compliance::where('Compliance_id','6')->value('Compliance_text');
         //$contact_person_no = Compliance::where('Compliance_id','7')->value('Compliance_text');
         $whatsapp_no = Compliance::where('Compliance_id','5')->value('Compliance_text');
+        $subscription_amt = Compliance::where('Compliance_id','6')->value('Compliance_text');
         //$missed_call_no = Compliance::where('Compliance_id','9')->value('Compliance_text');
                 
-        if($otptext && $contact_person_no && $whatsapp_no)
+        if($whatsapp_no)
         {
             return $this->respond([
                                     'status' => 'success',
@@ -143,6 +144,7 @@ class WebApplicationController extends ApiController
                                     'code' => $this->getStatusCode(),
                                     'data'=>[
                                     'whatsapp_no'=>$whatsapp_no,
+                                    'subscription_amt' => $subscription_amt,
                                     ],   
                                     ]);
         }
@@ -307,7 +309,7 @@ class WebApplicationController extends ApiController
             $vision = Compliance::where('Compliance_id','1')->where('Compliance_active','N')->first();
             $terms = Compliance::where('Compliance_id','2')->where('Compliance_active','N')->first();
             $privacy = Compliance::where('Compliance_id','3')->where('Compliance_active','N')->first();
-            $language = Language::where('Language_active','D')->where('Language_active','Y')->get();
+            $language = Language::where('Language_active','D')->orWhere('Language_active','Y')->get();
 
              return response()->json([
                     'status' => 'success',

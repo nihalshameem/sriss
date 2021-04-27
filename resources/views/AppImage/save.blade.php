@@ -52,6 +52,7 @@
                 <span class="input-group-text" id="">Upload</span>
             </div>
         </div>
+        <label id="dimension" style="color: #d23"></label>
     </div>
     
     <div class="row">
@@ -104,6 +105,11 @@
       var options = filteredArray.forEach( function(item, index){
         document.getElementById('App_image_path').src = item.App_image_path;
         $('#AppText').val(item.App_image_text);
+        if(item.Image_dimen!=null){
+          $("#dimension").html("Image resolution should be "+item.Image_dimen);
+        }else{
+          $("#dimension").html(item.Image_dimen);
+        }
     });
   }
 </script>

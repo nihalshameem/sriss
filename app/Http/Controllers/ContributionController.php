@@ -9,6 +9,7 @@ use App\Models\OnlineContribution;
 use App\Models\OfflineContribution;
 use App\Models\User;
 use App\Models\Member;
+use App\Models\Subscription;
 use Validator;
 use Razorpay\Api\Api;
 use Carbon\Carbon;
@@ -26,6 +27,7 @@ class ContributionController extends ApiController
             'member_id' => 'required',
             'token' => 'required',
             'payment_status'=>'required',
+            'payment_flag' => 'required',
             );
 
         $validator = Validator::make($request->all(), $rules);
@@ -37,9 +39,9 @@ class ContributionController extends ApiController
         {
             if($user=$this->is_valid_token($request['token']))
             {
-                
-                    if($request->order_id!=null)
-                    {
+                $payment_flag=$request->payment_flag;
+                if($payment_flag=='C'){
+                    if($request->order_id!=null){
                         
                             $date = Carbon::now()->format('d');
                             $month = Carbon::now()->format('m');
@@ -62,24 +64,61 @@ class ContributionController extends ApiController
                             $imageName = $contributionId->First_Name.'_'.time(). '.pdf';
                             $pdf = PDF::loadView('myPDF',$data);
                             $pdf->save('Receipts/'.$imageName);
+
                             
-                            $OnlineContribution = OnlineContribution::where("Online_Contribution_id", $request->id)->update(['Online_Contribution_date'=> $request->date,'order_id'=> $request->order_id,'payment_id'=> $request->payment_id,'digital_signature'=> $request->digital_signature,'email_id'=> $request->email_id,'mobile_number'=> $request->mobile_number,'payment_status'=> $request->payment_status,'Receipt_Code'=> $code,'My_receipts_path'=> config('app.url').'public/Receipts/'.$imageName]);
-                        
+                            
+                            $OnlineContribution = OnlineContribution::where("Online_Contribution_id", $request->id)->update(['Online_Contribution_date'=> $request->date,'order_id'=> $request->order_id, 'payment_id'=> $request->payment_id,'digital_signature'=> $request->digital_signature,'email_id'=> $request->email_id,'mobile_number'=> $request->mobile_number,'payment_status'=> $request->payment_status,'Receipt_Code'=> $code,'My_receipts_path'=> config('app.url').'public/Receipts/'.$imageName]);
                     }
-                    else
-                    {
+                    else{
+                            $date = Carbon::now()->format('d');
+                            $month = Carbon::now()->format('m');
+                            $year = Carbon::now()->year;
+
+                            $code = 'ON/NEFT/'.$date.'/'.$month.'/'.$year;
+                            $date = date("Y-m-d");
+                            $date = date('Y-m-d', strtotime($date. ' + 1 year'));
+                            
+                            $OnlineContribution = OnlineContribution::where("Online_Contribution_id", $request->id)->update(['Online_Contribution_date'=> $request->date,'email_id'=> $request->email_id,'mobile_number'=> $request->mobile_number, 'payment_status'=> $request->payment_status,'Receipt_Code'=> $code]);
+                    }
+                }elseif ($payment_flag=='S') {
+                    if($request->order_id!=null){
+                        
+                            $date = Carbon::now()->format('d');
+                            $month = Carbon::now()->format('m');
+                            $year = Carbon::now()->year;
+
+                            $code = 'ON/NEFT/'.$date.'/'.$month.'/'.$year;
+                             $subscriptionId = Member::where('Member_id',$request->member_id)->first();
+                             $Subscription = Subscription::where("Subscription_id", $request->id)->first();
+
+                             $data = [
+                                    'name' => $subscriptionId->First_Name,
+                                    'date' => date('m/d/Y'),
+                                    'amount' => $Subscription->Subscription_amount,
+                                    'type' =>'NEFT',
+                                    'no' => $request->id,
+                                    'receiptNo' =>$code,
+                                    'Instnumber' => '',
+                                ];
+
+                            $imageName = $subscriptionId->First_Name.'_'.time(). '.pdf';
+                            $pdf = PDF::loadView('myPDF',$data);
+                            $pdf->save('Subscription/'.$imageName);
+                            $date = date("Y-m-d");
+                            $date = date('Y-m-d', strtotime($date. ' + 1 year'));
+                            
+                            $Subscription = Subscription::where("Subscription_id", $request->id)->update(['Subscription_start_date' => date('Y-m-d'),'Subscription_end_date' => $date, 'order_id'=> $request->order_id,'payment_id'=> $request->payment_id,'digital_signature'=> $request->digital_signature,'email_id'=> $request->email_id,'mobile_number'=> $request->mobile_number,'payment_status'=> $request->payment_status,'Receipt_Code'=> $code,'My_receipts_path'=> config('app.url').'public/Subscription/'.$imageName]);
+                    }
+                    else{
                             $date = Carbon::now()->format('d');
                             $month = Carbon::now()->format('m');
                             $year = Carbon::now()->year;
 
                             $code = 'ON/NEFT/'.$date.'/'.$month.'/'.$year;
                             
-                            $OnlineContribution = OnlineContribution::where("Online_Contribution_id", $request->id)->update(['Online_Contribution_date'=> $request->date,'email_id'=> $request->email_id,'mobile_number'=> $request->mobile_number,'payment_status'=> $request->payment_status,'Receipt_Code'=> $code]);
-                       
-                        
+                            $Subscription = Subscription::where("Subscription_id", $request->id)->update(['Subscription_date'=> $request->date,'email_id'=> $request->email_id,'mobile_number'=> $request->mobile_number,'payment_status'=> $request->payment_status,'Receipt_Code'=> $code]);
                     }
-
-
+                }
 
                     if($request->payment_status=='Payment Successfull')
                     {
@@ -227,6 +266,7 @@ class ContributionController extends ApiController
             'token' => 'required',
             'amount' => 'required',
             'member_id' => 'required',
+            'payment_flag' => 'required'
             );
 
         $validator = Validator::make($request->all(), $rules);
@@ -236,29 +276,53 @@ class ContributionController extends ApiController
         }
         else
         {
-            if($user=$this->is_valid_token($request['token']))
-            {
+            if($user=$this->is_valid_token($request['token'])){
                 $api = new Api(config('app.key_id'),config('app.key_secret'));
                 $order  = $api->order->create(array('receipt' => '123', 'amount' => $request->amount*100, 'currency' => 'INR')); // Creates order
                 $orderId = $order['id']; // Get the created Order ID
                 if($orderId)
                 {
-                    $OnlineContribution =  new OnlineContribution();
-                    $OnlineContribution->Online_Contribution_amount = $request->amount;
-                    $OnlineContribution->Member_id = $request->member_id;
-                    $OnlineContribution->order_id = $orderId;
-                    $OnlineContribution->save();
+                    $payment_flag=$request->payment_flag;
+                    if($payment_flag=='C'){
+                        $OnlineContribution =  new OnlineContribution();
+                        $OnlineContribution->Online_Contribution_amount = $request->amount;
+                        $OnlineContribution->Member_id = $request->member_id;
+                        $OnlineContribution->order_id = $orderId;
+                        $OnlineContribution->save();
 
-                    return $this->respond([
-                        'status' => 'success',
-                        'code' => $this->getStatusCode(),
-                        'data' => [
-                            "orderId" => $orderId,
-                            "razorpaykey" => config('app.key_id'),
-                            "id" => $OnlineContribution->id
-                        ],
-                        'message' => 'Success',
-                    ]);
+                        return $this->respond([
+                            'status' => 'success',
+                            'code' => $this->getStatusCode(),
+                            'data' => [
+                                "orderId" => $orderId,
+                                "razorpaykey" => config('app.key_id'),
+                                "id" => $OnlineContribution->id
+                            ],
+                            'message' => 'Success',
+                        ]);
+
+                    }elseif ($payment_flag=='S') {
+                        $Subscription =  new Subscription();
+                        $Subscription->Subscription_amount = $request->amount;
+                        $Subscription->Member_id = $request->member_id;
+                        $Subscription->order_id = $orderId;
+                        $Subscription->save();
+
+                        return $this->respond([
+                            'status' => 'success',
+                            'code' => $this->getStatusCode(),
+                            'data' => [
+                                "orderId" => $orderId,
+                                "razorpaykey" => config('app.key_id'),
+                                "id" => $Subscription->id
+                            ],
+                            'message' => 'Success',
+                        ]);
+                    }else{
+
+                    }
+
+                    
                 }
                 else
                 {

@@ -11,6 +11,7 @@ use App\Models\OnlineContribution;
 use App\Models\OfflineContribution;
 use App\Models\District;
 use App\Models\User;
+use App\Models\Subscription;
 use View;
 
 class ReportsController extends Controller
@@ -195,6 +196,32 @@ class ReportsController extends Controller
         $member = Member::where('Referrar_Phone_No',$mobile_number)->get();
         $members = Member::where('Mobile_No',$mobile_number)->first();
         return view('reports.referred_members_list',compact('member','members'));
+    }
+
+    public function SubscriptionReportsFilterView(Request $request)
+    {
+        $Subscriptions= Subscription::whereDate('created_at','>=',$request->createdDate)
+                                                    ->whereDate('updated_at','<=',$request->updatedDate)
+                                                    ->get();
+
+        Session::put("subscriptionreports",$Subscriptions);
+        Session::put("subscriptionreports_date",$request->createdDate);
+
+        $Subscriptions = View::make('reportsview.reportsfilter.subscription_filter', compact('Subscriptions'))->render();
+        return Response::json(['Subscriptions' => $Subscriptions]);
+    }
+
+    public function SubscriptionReportsFilter(Request $request)
+    {
+        $Subscriptions= Subscription::whereDate('created_at','>=',$request->createdDate)
+                                                    ->whereDate('updated_at','<=',$request->updatedDate)
+                                                    ->get();
+
+        Session::put("subscriptionreports",$Subscriptions);
+        Session::put("subscriptionreports_date",$request->createdDate);
+
+        $Subscriptions = View::make('reportsview.reportsfilter.subscription_filter', compact('Subscriptions'))->render();
+        return Response::json(['Subscriptions' => $Subscriptions]);
     }
 
     
