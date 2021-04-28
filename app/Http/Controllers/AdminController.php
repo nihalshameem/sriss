@@ -160,7 +160,6 @@ class AdminController extends Controller
         
         $Permission = Permission::find($request->Id);
         $Permission->name = $request->name;
-        $Permission->slug = $request->name;
         $Permission->save();
         return redirect(route('list.admin'))->withInput(['tab'=>'custom-tabs-three-profile']);
     }
