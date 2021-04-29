@@ -170,7 +170,7 @@
             <span class="info-box-icon"><i class="fas fa-user-circle"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Member Referral</span>
+              <span class="info-box-text">Subscription Report</span>
               <span class="info-box-number"></span>
             </div>
             <!-- /.info-box-content -->
