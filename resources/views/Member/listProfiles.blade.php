@@ -249,23 +249,16 @@
  <script type="text/javascript">
    function changeStatus(id, value){
     var status = $(value).val();
-      if (confirm("Are your sure you want to change the status?")) {
       $.ajax({
         type : 'GET',
         url : '{{URL::to('UpdateProfilesStatus')}}',
         data : {'id':id, 'value':status},
         success:function(data){
           if(data==="success"){
-            alert("Success");
           }else{
-            alert("Failed");
           }
         } 
       });
-
-    } else {
-     
-    }
    }
  </script>
  @endsection
