@@ -622,3 +622,58 @@ Route::get('/ReportsView/Subscription', [App\Http\Controllers\SubscriptionContro
 
 Route::get('/Reports/Subscription', [App\Http\Controllers\SubscriptionController::class,'SubscriptionReport'])->name('Subscription.reports');
 
+
+
+Route::group(['prefix' => 'political/category'], function () {
+
+    Route::get('/list', [App\Http\Controllers\PoliticalCategoryController::class, 'listCategory'])->name('list.political.category');
+
+    Route::get('/Parliament/Add', [App\Http\Controllers\PoliticalCategoryController::class, 'AddParliament'])->name('add.Parliament');
+
+    Route::post('/Parliament/Save', [App\Http\Controllers\PoliticalCategoryController::class, 'SaveParliament'])->name('Save.Parliament');
+
+    Route::get('/Parliament/Edit/{ParliamentId}', [App\Http\Controllers\PoliticalCategoryController::class, 'EditParliament'])->name('Edit.Parliament');
+
+    Route::post('/Parliament/Update', [App\Http\Controllers\PoliticalCategoryController::class, 'UpdateParliament'])->name('Update.Parliament');
+
+    Route::get('/Parliament/Delete', [App\Http\Controllers\PoliticalCategoryController::class, 'DeleteParliament'])->name('Delete.Parliament');
+  
+      /*  Assembly routes ******/
+
+     Route::get('/Assembly/Add', [App\Http\Controllers\PoliticalCategoryController::class, 'AddAssembly'])->name('add.Assembly');
+
+    Route::post('/Assembly/Save', [App\Http\Controllers\PoliticalCategoryController::class, 'SaveAssembly'])->name('Save.Assembly');
+
+    Route::get('/Assembly/Edit/{AssemblyId}', [App\Http\Controllers\PoliticalCategoryController::class, 'EditAssembly'])->name('Edit.Assembly');
+
+    Route::post('/Assembly/Update', [App\Http\Controllers\PoliticalCategoryController::class, 'UpdateAssembly'])->name('Update.Assembly');
+
+    Route::get('/Assembly/Delete', [App\Http\Controllers\PoliticalCategoryController::class, 'DeleteAssembly'])->name('Delete.Assembly');
+
+    /*  Ward routes ******/
+
+     Route::get('/Ward/Add', [App\Http\Controllers\PoliticalCategoryController::class, 'AddWard'])->name('add.Ward');
+
+    Route::post('/Ward/Save', [App\Http\Controllers\PoliticalCategoryController::class, 'SaveWard'])->name('Save.Ward');
+
+    Route::get('/Ward/Edit/{WardId}', [App\Http\Controllers\PoliticalCategoryController::class, 'EditWard'])->name('Edit.Ward');
+
+    Route::post('/Ward/Update', [App\Http\Controllers\PoliticalCategoryController::class, 'UpdateWard'])->name('Update.Ward');
+
+    Route::get('/Ward/Delete', [App\Http\Controllers\PoliticalCategoryController::class, 'DeleteWard'])->name('Delete.Ward');
+
+
+    /*  Booth Agent routes ******/
+
+     Route::get('/BoothAgent/Add', [App\Http\Controllers\PoliticalCategoryController::class, 'AddBoothAgent'])->name('add.BoothAgent');
+
+    Route::post('/BoothAgent/Save', [App\Http\Controllers\PoliticalCategoryController::class, 'SaveBoothAgent'])->name('Save.BoothAgent');
+
+    Route::get('/BoothAgent/Edit/{BoothAgentId}', [App\Http\Controllers\PoliticalCategoryController::class, 'EditBoothAgent'])->name('Edit.BoothAgent');
+
+    Route::post('/BoothAgent/Update', [App\Http\Controllers\PoliticalCategoryController::class, 'UpdateBoothAgent'])->name('Update.BoothAgent');
+
+    Route::get('/BoothAgent/Delete', [App\Http\Controllers\PoliticalCategoryController::class, 'DeleteBoothAgent'])->name('Delete.BoothAgent');
+
+
+});

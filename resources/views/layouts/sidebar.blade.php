@@ -387,7 +387,19 @@
                   <p> {{$permission->name}}</p>
               </a>
             </li>
-          @endif     
+          @endif 
+          @if($role->havePermission('Political Category',$role->role_id)) 
+            <?php
+
+                          $permission = App\Models\Permission::where('slug','Political Category')->first();
+                      ?> 
+            <li class="nav-item">
+                <a href="{{ route('list.political.category') }}" class="nav-link {{ (request()->segment(2) == 'list.political.category') ? 'active' : '' }}" style="color:#3e3e3e">
+                  <i class="nav-icon fa fa-list-alt fa-lg"></i>
+                  <p> {{$permission->name}}</p>
+              </a>
+            </li>
+          @endif    
           
              
             </ul>
