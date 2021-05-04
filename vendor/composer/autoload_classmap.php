@@ -27,6 +27,7 @@ return array(
     'App\\Http\\Controllers\\MembersController' => $baseDir . '/app/Http/Controllers/MembersController.php',
     'App\\Http\\Controllers\\NewsLetterController' => $baseDir . '/app/Http/Controllers/NewsLetterController.php',
     'App\\Http\\Controllers\\NotificationController' => $baseDir . '/app/Http/Controllers/NotificationController.php',
+    'App\\Http\\Controllers\\PoliticalCategoryController' => $baseDir . '/app/Http/Controllers/PoliticalCategoryController.php',
     'App\\Http\\Controllers\\PollsController' => $baseDir . '/app/Http/Controllers/PollsController.php',
     'App\\Http\\Controllers\\PrivateJobsController' => $baseDir . '/app/Http/Controllers/PrivateJobsController.php',
     'App\\Http\\Controllers\\ReportsController' => $baseDir . '/app/Http/Controllers/ReportsController.php',

@@ -15,6 +15,9 @@ use App\Models\State;
 use App\Models\District;
 use App\Models\ParliamentConsituency;
 use App\Models\AssemblyConsituency;
+use App\Models\PartyLeader;
+use App\Models\ReligiousLeader;
+use App\Models\CasteLeader;
 use App\Models\Compliance;
 use App\Models\Language;
 use App\Models\MemberGroup;
@@ -715,7 +718,7 @@ class MembersController extends ApiController
                     }
 
                     
-                    }
+                    
                     if($request['Booth_No']){
                         $Booth = Booth::where('Booth_Desc',$request['Booth_No'])->first();
                         
@@ -738,6 +741,7 @@ class MembersController extends ApiController
                     if($request['Member_Caste_Desc']){
                     $members->Member_Caste_Desc = $request['Member_Caste_Desc'];
                     }
+
                     if($request['Member_Religious_Leader_Name']){
                     $members->Member_Religious_Leader_Name  = $request['Member_Religious_Leader_Name'];
                     }

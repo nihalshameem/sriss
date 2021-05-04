@@ -687,6 +687,52 @@ Route::group(['prefix' => 'political/category'], function () {
 
     Route::get('/Booth/Delete', [App\Http\Controllers\PoliticalCategoryController::class, 'DeleteBooth'])->name('Delete.Booth');
 
+});
 
+Route::group(['prefix' => 'religious'], function () {
+
+  Route::get('/', [App\Http\Controllers\ReligiousController::class, 'listReligiousLeader'])->name('list.Religious');
+
+  Route::get('/Add', [App\Http\Controllers\ReligiousController::class, 'AddReligiousLeader'])->name('add.Religious');
+
+    Route::post('/Save', [App\Http\Controllers\ReligiousController::class, 'SaveReligiousLeader'])->name('Save.Religious');
+
+    Route::get('/Edit/{ReligiousId}', [App\Http\Controllers\ReligiousController::class, 'EditReligiousLeader'])->name('Edit.Religious');
+
+    Route::post('/Update', [App\Http\Controllers\ReligiousController::class, 'UpdateReligiousLeader'])->name('Update.Religious');
+
+    Route::get('/Delete', [App\Http\Controllers\ReligiousController::class, 'DeleteReligiousLeader'])->name('Delete.Religious');
+
+});
+
+Route::group(['prefix' => 'caste'], function () {
+
+  Route::get('/', [App\Http\Controllers\CasteController::class, 'listCasteLeader'])->name('list.Caste');
+
+  Route::get('/Add', [App\Http\Controllers\CasteController::class, 'AddCasteLeader'])->name('add.Caste');
+
+    Route::post('/Save', [App\Http\Controllers\CasteController::class, 'SaveCasteLeader'])->name('Save.Caste');
+
+    Route::get('/Edit/{CasteId}', [App\Http\Controllers\CasteController::class, 'EditCasteLeader'])->name('Edit.Caste');
+
+    Route::post('/Update', [App\Http\Controllers\CasteController::class, 'UpdateCasteLeader'])->name('Update.Caste');
+
+    Route::get('/Delete', [App\Http\Controllers\CasteController::class, 'DeleteCasteLeader'])->name('Delete.Caste');
+
+});
+
+Route::group(['prefix' => 'party'], function () {
+
+  Route::get('/', [App\Http\Controllers\PartyLeaderController::class, 'listPartyLeader'])->name('list.Party');
+
+  Route::get('/Add', [App\Http\Controllers\PartyLeaderController::class, 'AddPartyLeader'])->name('add.Party');
+
+    Route::post('/Save', [App\Http\Controllers\PartyLeaderController::class, 'SavePartyLeader'])->name('Save.Party');
+
+    Route::get('/Edit/{PartyId}', [App\Http\Controllers\PartyLeaderController::class, 'EditPartyLeader'])->name('Edit.Party');
+
+    Route::post('/Update', [App\Http\Controllers\PartyLeaderController::class, 'UpdatePartyLeader'])->name('Update.Party');
+
+    Route::get('/Delete', [App\Http\Controllers\PartyLeaderController::class, 'DeletePartyLeader'])->name('Delete.Party');
 
 });

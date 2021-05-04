@@ -401,6 +401,50 @@
             </li>
           @endif    
           
+           
+           
+@if($role->havePermission('Religious Leader',$role->role_id)) 
+            <?php
+
+                          $permission = App\Models\Permission::where('slug','Religious Leader')->first();
+                      ?> 
+            <li class="nav-item">
+                <a href="{{ route('list.Religious') }}" class="nav-link {{ (request()->segment(2) == 'list.Religious') ? 'active' : '' }}" style="color:#3e3e3e">
+                  <i class="nav-icon fa fa-list-alt fa-lg"></i>
+                  <p> {{$permission->name}}</p>
+              </a>
+            </li>
+          @endif    
+          
+           
+@if($role->havePermission('Caste Leader',$role->role_id)) 
+            <?php
+
+                          $permission = App\Models\Permission::where('slug','Caste Leader')->first();
+                      ?> 
+            <li class="nav-item">
+                <a href="{{ route('list.Caste') }}" class="nav-link {{ (request()->segment(2) == 'list.Caste') ? 'active' : '' }}" style="color:#3e3e3e">
+                  <i class="nav-icon fa fa-list-alt fa-lg"></i>
+                  <p> {{$permission->name}}</p>
+              </a>
+            </li>
+          @endif    
+          
+             
+           
+@if($role->havePermission('Party Leader',$role->role_id)) 
+            <?php
+
+                          $permission = App\Models\Permission::where('slug','Party Leader')->first();
+                      ?> 
+            <li class="nav-item">
+                <a href="{{ route('list.Party') }}" class="nav-link {{ (request()->segment(2) == 'list.Party') ? 'active' : '' }}" style="color:#3e3e3e">
+                  <i class="nav-icon fa fa-list-alt fa-lg"></i>
+                  <p> {{$permission->name}}</p>
+              </a>
+            </li>
+          @endif    
+          
              
             </ul>
           </li>

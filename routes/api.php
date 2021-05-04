@@ -75,6 +75,13 @@ Route::group(['prefix' => '/v2'], function () {
 
 		Route::get('/getBooth', [App\Http\Controllers\PoliticalCategoryController::class,'getBooth']);
 
+		Route::get('/getCasteLeader', [App\Http\Controllers\CasteController::class,'getCasteLeader']);
+
+		Route::get('/getReligiousLeader', [App\Http\Controllers\ReligiousController::class,'getReligiousLeader']);
+
+		Route::get('/getPartyLeader', [App\Http\Controllers\PartyLeaderController::class,'getPartyLeader']);
+
+
 		Route::post('/profileupdate', [App\Http\Controllers\MembersController::class,'profileupdate']);
 
 		Route::post('/memberprofile', [App\Http\Controllers\MembersController::class,'getProfileStored']);

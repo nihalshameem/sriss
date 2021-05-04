@@ -724,6 +724,7 @@ class ComposerStaticInit5e8d7bd20336e256e9f68cb73b81b1fa
         'App\\Http\\Controllers\\MembersController' => __DIR__ . '/../..' . '/app/Http/Controllers/MembersController.php',
         'App\\Http\\Controllers\\NewsLetterController' => __DIR__ . '/../..' . '/app/Http/Controllers/NewsLetterController.php',
         'App\\Http\\Controllers\\NotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificationController.php',
+        'App\\Http\\Controllers\\PoliticalCategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/PoliticalCategoryController.php',
         'App\\Http\\Controllers\\PollsController' => __DIR__ . '/../..' . '/app/Http/Controllers/PollsController.php',
         'App\\Http\\Controllers\\PrivateJobsController' => __DIR__ . '/../..' . '/app/Http/Controllers/PrivateJobsController.php',
         'App\\Http\\Controllers\\ReportsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportsController.php',
