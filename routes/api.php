@@ -130,4 +130,6 @@ Route::group(['prefix' => '/v2'], function () {
 
 		Route::get('/getConfiguration', [App\Http\Controllers\WebApplicationController::class,'getConfiguration']);
 		
+		Route::get('/getDashboard', [App\Http\Controllers\WebApplicationController::class,'getDashboard']);
+		
 });

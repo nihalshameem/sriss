@@ -33,8 +33,13 @@ class NewsLetterController extends ApiController
 
     public function SaveNewsLetter(Request $request)
     {
+        $request->validate([
+            'description' => 'required',
+            'Newsletter_date' => 'required',
+
+        ]);
     	$NewsLetter = new NewsLetter();
-    	$NewsLetter->Newsletter_desc = $request->Newsletter_desc;
+    	$NewsLetter->Newsletter_desc = $request->description;
     	$NewsLetter->Newsletter_date = $request->Newsletter_date;
         if ($request->hasFile('Newsletter'))
         {
@@ -59,7 +64,14 @@ class NewsLetterController extends ApiController
     }
 
      public function UpdateNewsLetter(Request $request)
+
     {
+     
+        $request->validate([
+            'description' => 'required',
+            'Newsletter_date' => 'required',
+
+        ]);
          if ($request->hasFile('Newsletter'))
             {
       
@@ -69,13 +81,13 @@ class NewsLetterController extends ApiController
                 $filePath = $request->file('Newsletter')->storeAs('NewsLetter', $imageName,'public');
                 $Newsletter =config('app.url').'storage/app/public/NewsLetter/'.$imageName; 
 
-                 $NewsLetter = NewsLetter::where("Newsletter_id", $request->Newsletter_id)->update(['Newsletter_desc'=> $request->Newsletter_desc,'Newsletter_date'=> $request->Newsletter_date,'Newsletter'=> $Newsletter]);
+                 $NewsLetter = NewsLetter::where("Newsletter_id", $request->Newsletter_id)->update(['Newsletter_desc'=> $request->description,'Newsletter_date'=> $request->Newsletter_date,'Newsletter'=> $Newsletter]);
 
                 return redirect(route('list.newsletter')); 
             }
             else
             {
-                $NewsLetter = NewsLetter::where("Newsletter_id", $request->Newsletter_id)->update(['Newsletter_desc'=> $request->Newsletter_desc,'Newsletter_date'=> $request->Newsletter_date,'Newsletter'=> $request->ImageNotification]);
+                $NewsLetter = NewsLetter::where("Newsletter_id", $request->Newsletter_id)->update(['Newsletter_desc'=> $request->description,'Newsletter_date'=> $request->Newsletter_date,'Newsletter'=> $request->ImageNotification]);
                 return redirect(route('list.newsletter'));  
             }
     }

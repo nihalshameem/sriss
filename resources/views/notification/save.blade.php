@@ -61,7 +61,7 @@
 
           <div class="form-group">
             <label for="exampleInputPassword1">Message</label>
-            <textarea class="form-control" name="message" placeholder="Enter Message" required>{{{ $Notifications->Notification_mesage  ?? '' }}}</textarea>
+            <textarea class="form-control" name="message" placeholder="Enter Message" >{{{ $Notifications->Notification_mesage  ?? '' }}}</textarea>
             
           </div>
            <div class="form-group">

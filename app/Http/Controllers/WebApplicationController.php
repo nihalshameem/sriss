@@ -15,6 +15,10 @@ use App\Models\Member;
 use App\Models\Compliance;
 use App\Models\MemberProfile;
 use App\Models\User;
+use App\Models\Notification;
+use App\Models\OnlineContribution;
+use App\Models\OfflineContribution;
+use App\Models\Feedback;
 use Session;
 use View;
 use Response;
@@ -129,12 +133,12 @@ class WebApplicationController extends ApiController
     public function getConfiguration(Request $request)
     {
         
-       // $otptext = Compliance::where('Compliance_id','5')->value('Compliance_text');
-        //$approval_text = Compliance::where('Compliance_id','6')->value('Compliance_text');
-        //$contact_person_no = Compliance::where('Compliance_id','7')->value('Compliance_text');
+        $otptext = Compliance::where('Compliance_id','7')->value('Compliance_text');
+        $approval_text = Compliance::where('Compliance_id','8')->value('Compliance_text');
+        $contact_person_no = Compliance::where('Compliance_id','9')->value('Compliance_text');
         $whatsapp_no = Compliance::where('Compliance_id','5')->value('Compliance_text');
         $subscription_amt = Compliance::where('Compliance_id','6')->value('Compliance_text');
-        //$missed_call_no = Compliance::where('Compliance_id','9')->value('Compliance_text');
+        $missed_call_no = Compliance::where('Compliance_id','10')->value('Compliance_text');
                 
         if($whatsapp_no)
         {
@@ -145,6 +149,10 @@ class WebApplicationController extends ApiController
                                     'data'=>[
                                     'whatsapp_no'=>$whatsapp_no,
                                     'subscription_amt' => $subscription_amt,
+                                    'otp_text'=>$otptext,
+                                    'approval_text'=>$approval_text,
+                                    'contact_person_no'=>$contact_person_no,
+                                    'missed_call_no'=>$missed_call_no,
                                     ],   
                                     ]);
         }
@@ -529,6 +537,36 @@ public function getAppIcon(Request $request)
             
            
     }
+
+    public function getDashboard(Request $request)
+    {
+        $members_count = Member::where('Member_Approved_Flag','Y')->count();
+        $Notification_count = Notification::where('Notification_active','Y')->count();
+        $online_amount = OnlineContribution::where('payment_status','Payment Successfull')->sum('Online_Contribution_amount');
+        $offline_amount = OfflineContribution::where('Offline_Contribution_payment_status','Completed')->sum('Offline_Contribution_amount');
+        $pending_count = Member::where('Member_Approved_Flag','N')->count();
+        $otpcount = User::count();
+        $profileKaryakarthas = User::where('Intrs_to_volunteer','Yes')->count();
+        $Feedback = Feedback::count();
+            return $this->respond([
+                                    'status' => 'success',
+                                    'message' => 'success',
+                                    'code' => $this->getStatusCode(),
+                                    'data'=>[
+                                    'member_count'=>$members_count,
+                                    'notification_count'=>$Notification_count,
+                                    'online_amount'=>$online_amount,
+                                    'offline_amount'=>$offline_amount,
+                                    'pending_count'=>$pending_count,
+                                    'otp_count'=>$otpcount,
+                                    'karyakarthas_count'=>$profileKaryakarthas,
+                                    'feedback_count'=>$Feedback,
+
+                                    ],   
+                                    ]);
+    
+    }
+
 
     public function is_valid_token($token)
     {

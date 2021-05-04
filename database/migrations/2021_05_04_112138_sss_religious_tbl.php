@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class SssReligiousTbl extends Migration
+class SssPartyLeaderTbl extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,11 @@ class SssReligiousTbl extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('sss_party_leader_tbl', function (Blueprint $table) {
+            $table->increments('Party_Id');
+            $table->string('Party_Desc')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

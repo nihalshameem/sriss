@@ -236,25 +236,43 @@ class GeoController extends ApiController
 	    return view('geo.create.district',compact('Zones'));
 	}
 
-	public function	CreateDistrict(Request $request)
-	{
 
-			$name_count = count($request['name']); 
-	        for($i = 0;$i < $name_count; $i++)
-	        {
-	        	if($request->name[$i]!=null)
-				{
-		            $District = new District();
-		            $District->Zone_id = $request->ZoneId;
-		            $District->District_desc = $request->name[$i];
-		            $District->District_active = $request->Status;
-		            $District->save();
-		        }
+	public function CreateDistrict(Request $request){
+    	
+        $warn="";
+        $added="";
+      
+        foreach (explode(',',$request->district) as $row){
+	    	$count = District::where('District_desc', $row)
+		    				->where('Zone_id',$request->ZoneId)
+		    				->count();
+			if($count>0){
+	            $warn.= $row.",";
+			}else if($count==0){
+				if($row!=""){
+		        $district = new District();
+		        $district->Zone_id = $request->ZoneId;
+		        $district->District_desc = $row;
+		        $district->District_active = $request->Status;
+		        $district->save();
+	            $added.= $row.",";
 	        }
-	    
-
-		return redirect()->back()->withInput(['tab'=>'custom-tabs-three-settings']);
-	}
+		    }
+    }
+        if($warn==""){
+            return redirect()->back()->with('warning3',$added.' Successfully Updated');
+        }else{
+        	$zone_name = Zones::where('Zone_id',$request->ZoneId)
+		    				->first();
+        	if($added==""){
+            	return redirect()->back()->with('warning2',$warn.' already Exists in '.$zone_name->Zone_desc);
+        	}else{
+            	return redirect()->back()->with('warning2',$warn.' already Exists in '.$zone_name->Zone_desc)->with('warning3',$added.' Successfully Updated');
+        	}
+        	
+        }
+        
+    }
 
 	public function	EditDistrict($Districtid)
 	{

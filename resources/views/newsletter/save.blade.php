@@ -31,7 +31,8 @@
 
             <div class="form-group">
               <label for="exampleInputPassword1">Description</label>
-              <input type="text" class="form-control" name="Newsletter_desc" placeholder="Enter Description" value="{{ old('Newsletter_desc') }}" required>
+              <input type="text" class="form-control" name="description" placeholder="Enter Description" value="{{ old('description') }}" required>
+              @error('description') <span style="color:red;">{{ $message }}</span> @enderror 
               
             </div>
             <div class="form-group">

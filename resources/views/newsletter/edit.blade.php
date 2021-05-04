@@ -51,7 +51,9 @@
           <label for="exampleInputPassword1">Description</label>
           <input type="hidden" class="form-control" name="Newsletter_id" value="{{ $NewsLetter->Newsletter_id }}">
 
-          <input type="text" class="form-control" name="Newsletter_desc" placeholder="Enter Description" value="{{ $NewsLetter->Newsletter_desc }}" required>
+
+          <input type="text" class="form-control" name="description" placeholder="Enter Description" value="{{ $NewsLetter->description }}" required>
+          @error('description') <span style="color:red;">{{ $message }}</span> @enderror 
           
       </div>
       <div class="form-group">
