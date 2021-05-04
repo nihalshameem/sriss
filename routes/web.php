@@ -675,5 +675,18 @@ Route::group(['prefix' => 'political/category'], function () {
 
     Route::get('/BoothAgent/Delete', [App\Http\Controllers\PoliticalCategoryController::class, 'DeleteBoothAgent'])->name('Delete.BoothAgent');
 
+    /*  Booth routes ******/
+
+     Route::get('/Booth/Add', [App\Http\Controllers\PoliticalCategoryController::class, 'AddBooth'])->name('add.Booth');
+
+    Route::post('/Booth/Save', [App\Http\Controllers\PoliticalCategoryController::class, 'SaveBooth'])->name('Save.Booth');
+
+    Route::get('/Booth/Edit/{BoothId}', [App\Http\Controllers\PoliticalCategoryController::class, 'EditBooth'])->name('Edit.Booth');
+
+    Route::post('/Booth/Update', [App\Http\Controllers\PoliticalCategoryController::class, 'UpdateBooth'])->name('Update.Booth');
+
+    Route::get('/Booth/Delete', [App\Http\Controllers\PoliticalCategoryController::class, 'DeleteBooth'])->name('Delete.Booth');
+
+
 
 });

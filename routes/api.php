@@ -63,7 +63,17 @@ Route::group(['prefix' => '/v2'], function () {
 
 		Route::get('/getprofiles', [App\Http\Controllers\MembersController::class,'getProfileData']);
 
+		Route::get('/getState', [App\Http\Controllers\GeoController::class,'getState']);
+
 		Route::get('/getDistrict', [App\Http\Controllers\GeoController::class,'getDistrict']);
+
+		Route::get('/getAssembly', [App\Http\Controllers\PoliticalCategoryController::class,'getAssembly']);
+
+		Route::get('/getParliament', [App\Http\Controllers\PoliticalCategoryController::class,'getParliament']);
+
+		Route::get('/getWard', [App\Http\Controllers\PoliticalCategoryController::class,'getWard']);
+
+		Route::get('/getBooth', [App\Http\Controllers\PoliticalCategoryController::class,'getBooth']);
 
 		Route::post('/profileupdate', [App\Http\Controllers\MembersController::class,'profileupdate']);
 

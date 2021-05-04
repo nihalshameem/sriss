@@ -68,7 +68,7 @@
 									</div>
 									<div class="tab-pane{{old('tab') == 'custom-tabs-three-booth-agent' ? ' active' : null}}" id="custom-tabs-three-booth-agent" role="tabpanel" aria-labelledby="union-tabs">
 										
-
+										@include('PoliticalCategory.list.booth')
 									</div>
 								</div>
 

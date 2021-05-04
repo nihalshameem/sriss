@@ -558,6 +558,89 @@ class GeoController extends ApiController
 	}
 
 	/**************Web Services***************/
+	public function getCountry(Request $request)
+    {
+        $rules = array (
+            'member_id' => 'required',
+            'token'=>'required',
+            );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator-> fails())
+        {
+            return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+        }
+        else
+        {
+            if($user=$this->is_valid_token($request['token']))
+            {
+                $Country = Country::get();
+                if($Country)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'message' => 'Success',
+                        'data' => $Country
+                    ]);
+                }
+                else
+                {
+                    return $this->respond([
+                        'status' => 'Failed',
+                        'code' => 400,
+                        'message' => 'Failed',
+                        ]);
+                }
+            }
+            else
+            {   
+                return $this->respondTokenError("Token Mismatched");
+            }
+        }
+    }
+
+	public function getState(Request $request)
+    {
+        $rules = array (
+            'member_id' => 'required',
+            'token'=>'required',
+            );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator-> fails())
+        {
+            return $this->respondValidationError('Fields Validation Failed.', $validator->errors());
+        }
+        else
+        {
+            if($user=$this->is_valid_token($request['token']))
+            {
+                $State = State::get();
+                if($State)
+                {
+                    return $this->respond([
+                        'status' => 'success',
+                        'code' => $this->getStatusCode(),
+                        'message' => 'Success',
+                        'data' => $State
+                    ]);
+                }
+                else
+                {
+                    return $this->respond([
+                        'status' => 'Failed',
+                        'code' => 400,
+                        'message' => 'Failed',
+                        ]);
+                }
+            }
+            else
+            {   
+                return $this->respondTokenError("Token Mismatched");
+            }
+        }
+    }
 
 	public function getDistrict(Request $request)
     {

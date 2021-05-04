@@ -10,7 +10,11 @@ use App\Models\IdCard;
 use App\Models\Feedback;
 use App\Models\MemberProfile;
 use App\Models\Volunteer;
+use App\Models\Country;
+use App\Models\State;
 use App\Models\District;
+use App\Models\ParliamentConsituency;
+use App\Models\AssemblyConsituency;
 use App\Models\Compliance;
 use App\Models\Language;
 use App\Models\MemberGroup;
@@ -685,24 +689,40 @@ class MembersController extends ApiController
                     if($request['Spouse_Age']){
                     $members->Spouse_Age = $request['Spouse_Age'];
                     }
+
                     if($request['Assembly_Constituency_Desc']){
-                    $members->Assembly_Constituency_Desc = $request['Assembly_Constituency_Desc'];
+
+                        $AssemblyConsituency = AssemblyConsituency::where('Assembly_Constituency_Desc',$request['Assembly_Constituency_Desc'])->first();
+
+                        $members->Assembly_Constituency_Desc = $AssemblyConsituency->Assembly_Id;
+
                     }
+
                     if($request['Parliament_Constituency_Desc']){
-                    $members->Parliament_Constituency_Desc = $request['Parliament_Constituency_Desc'];
+
+                            $ParliamentConsituency = ParliamentConsituency::where('Parliament_Constituency_Desc',$request['Parliament_Constituency_Desc'])->first();
+                        
+                            $members->Parliament_Constituency_Desc = $ParliamentConsituency->Parliament_Id;
+
                     }
+
                     if($request['Ward_No']){
-                    $members->Ward_No = $request['Ward_No'];
+
+                        $Ward = Ward::where('Ward_Name',$request['Ward_No'])->first();
+                        
+                        $members->Ward_No = $Ward->Ward_Id;
+                        $members->Ward_Desc = $request['Ward_No'];
                     }
-                    if($request['Ward_Desc']){
-                    $members->Ward_Desc = $request['Ward_Desc'];
+
+                    
                     }
                     if($request['Booth_No']){
-                    $members->Booth_No = $request['Booth_No'];
+                        $Booth = Booth::where('Booth_Desc',$request['Booth_No'])->first();
+                        
+                        $members->Booth_No = $Booth->Booth_Id;
+                        $members->Booth_Desc  = $request['Booth_No'];
                     }
-                    if($request['Booth_Desc']){
-                    $members->Booth_Desc  = $request['Booth_Desc'];
-                    }
+                    
                     if($request['Polling_Area']){
                     $members->Polling_Area = $request['Polling_Area'];
                     }
@@ -828,6 +848,14 @@ class MembersController extends ApiController
                     if($request['District_Id']){
                         $district = District::where('District_desc',$request['District_Id'])->first();
                         $members->District_Id = $district->District_id;
+                    }
+                    if($request['State_Id']){
+                        $State = State::where('State_desc',$request['State_Id'])->first();
+                        $members->State_Id = $State->State_id;
+                    }
+                    if($request['Country_Id']){
+                        $Country = Country::where('Country_desc',$request['Country_Id'])->first();
+                        $members->Country_Id = $Country->Country_Id_id;
                     }
                     if($request['is_volunteer'])
                     {
