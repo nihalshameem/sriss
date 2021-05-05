@@ -27,10 +27,10 @@
         </div>
         <div class="col-10">
           
-          <button type="button" class="collapsible1">One</button>
+          <button type="button" class="collapsible1">GENERAL</button>
                 <div class="content1">
                   <?php
-                      $MemberProfile=\App\Models\MemberProfile::where('grouping','one')->get();
+                      $MemberProfile=\App\Models\MemberProfile::where('grouping','GENERAL')->get();
                   ?>
                   <div class="table-responsive">
             <table id="example1" class="table table-borderless" >
@@ -80,10 +80,10 @@
 <p></p>
 
 
-         <button type="button" class="collapsible1">Two</button>
+         <button type="button" class="collapsible1">POLITICAL CATEGORY</button>
                 <div class="content1">
                   <?php
-                      $MemberProfile=\App\Models\MemberProfile::where('grouping','two')->get();
+                      $MemberProfile=\App\Models\MemberProfile::where('grouping','POLITICAL CATEGORY')->get();
                   ?>
                   <div class="table-responsive">
             <table id="example1" class="table table-borderless" >
@@ -132,10 +132,10 @@
 </div>
 <p></p>
 
-         <button type="button" class="collapsible1">Three</button>
+         <button type="button" class="collapsible1">RELEGIOUS CATEGORY</button>
                 <div class="content1">
                   <?php
-                      $MemberProfile=\App\Models\MemberProfile::where('grouping','three')->get();
+                      $MemberProfile=\App\Models\MemberProfile::where('grouping','RELEGIOUS CATEGORY')->get();
                   ?>
                   <div class="table-responsive">
             <table id="example1" class="table table-borderless" >
@@ -184,10 +184,10 @@
 </div>
 <p></p>
 
-         <button type="button" class="collapsible1">Four</button>
+         <button type="button" class="collapsible1">CASTE CATEGORY</button>
                 <div class="content1">
                   <?php
-                      $MemberProfile=\App\Models\MemberProfile::where('grouping','four')->get();
+                      $MemberProfile=\App\Models\MemberProfile::where('grouping','CASTE CATEGORY')->get();
                   ?>
                   <div class="table-responsive">
             <table id="example1" class="table table-borderless" >
@@ -236,6 +236,58 @@
 </div>
 <p></p>
 
+
+<button type="button" class="collapsible1">OTHERS</button>
+                <div class="content1">
+                  <?php
+                      $MemberProfile=\App\Models\MemberProfile::where('grouping','OTHERS')->get();
+                  ?>
+                  <div class="table-responsive">
+            <table id="example1" class="table table-borderless" >
+              <thead>
+                <tr>
+                  <th>Sl No</th>
+                  <th>Name</th>
+                  <th>D_label</th>
+                  <th>L2_label</th>
+                  <th>L3_label</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($MemberProfile as $i => $memberProfile)
+                <tr>
+                  <td>{{ $i+1 }}</td>
+                  <td>{{ $memberProfile->field_name }}</td>
+                  <td>{{ $memberProfile->d_label }}</td>
+                  <td>{{ $memberProfile->l2_label }}</td>
+                  <td>{{ $memberProfile->l3_label }}</td>
+                  <td>
+                    <select class="form-control" style="height: auto;" onchange="changeStatus( {{$memberProfile->id}}, this)">
+                      @if($memberProfile->active=='Y')
+                      <option value="Y" selected="">Y</option>
+                      <option value="N">N</option>
+                      @elseif($memberProfile->active=='N')
+                      <option value="Y">Y</option>
+                      <option value="N" selected="" onclick="">N</option>
+                      @endif
+                    </select>
+                  </td>
+                  <td>
+                   <a href="{{ route('edit.ProfileDetails', ['profileId' => $memberProfile->id]) }}"><span class="badge bg-danger"><i class="fa fa-edit fa-lg" style="text-align:center;"></i>&nbsp;&nbsp;Edit</span></a>
+                 </td>
+               </tr>
+               @endforeach
+
+               
+
+             </tbody>
+           </table>
+
+         </div>
+</div>
+<p></p>
 
 
 
