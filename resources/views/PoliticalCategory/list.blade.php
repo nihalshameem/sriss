@@ -166,7 +166,7 @@
 <script type="text/javascript">
 	
 	function DeleteBooth(BoothId){
-		if (confirm("Are your sure you want to delete Booth Agent?")) {
+		if (confirm("Are your sure you want to delete Booth?")) {
 			$.ajax({
 				type : 'get',
 				url : '{{URL::to('political/category/Booth/Delete')}}',

@@ -106,6 +106,7 @@ class PoliticalCategoryController extends ApiController
 	{
 		$AssemblyConsituency = new Ward();
 		$AssemblyConsituency->Ward_Name = $request->Ward_Name;
+        $AssemblyConsituency->Ward_No = $request->Ward_No;
 		$AssemblyConsituency->State_Id = $request->State_Id;
 		$AssemblyConsituency->Dist_Id = $request->Dist_Id;
 		$AssemblyConsituency->Assembly_Const_Id = $request->Assembly_Const_Id;
@@ -126,7 +127,7 @@ class PoliticalCategoryController extends ApiController
 
     public function	UpdateWard(Request $request)
 	{
-		$Ward = Ward::where("Ward_Id", $request->id)->update(['Ward_Name'=> $request->Ward_Name,'State_Id'=> $request->State_Id,'Dist_Id'=> $request->Dist_Id,'Area_Id'=> $request->Area_Id,'Assembly_Const_Id'=> $request->Assembly_Const_Id,'Parliament_Const_Id'=> $request->Parliament_Const_Id]);
+		$Ward = Ward::where("Ward_Id", $request->id)->update(['Ward_Name'=> $request->Ward_Name,'Ward_No'=> $request->Ward_No,'State_Id'=> $request->State_Id,'Dist_Id'=> $request->Dist_Id,'Area_Id'=> $request->Area_Id,'Assembly_Const_Id'=> $request->Assembly_Const_Id,'Parliament_Const_Id'=> $request->Parliament_Const_Id]);
 		return redirect(route('list.political.category'));
 	}
 
@@ -186,6 +187,7 @@ class PoliticalCategoryController extends ApiController
 		$Booth = new Booth();
 		$Booth->Booth_Desc = $request->Booth_Desc;
 		$Booth->Ward_Id = $request->Ward_Id;
+        $Booth->Booth_No = $request->Booth_No;
 		$Booth->Polling_Station_No = $request->Polling_Station_No;
 		$Booth->Polling_Station_Location = $request->Polling_Station_Location;
 		$Booth->Polling_Station_Area = $request->Polling_Station_Area;
@@ -199,12 +201,16 @@ class PoliticalCategoryController extends ApiController
 	public function EditBooth($BoothId)
     {
     	$Booth = Booth::where('Booth_Id',$BoothId)->first();
-    	return view('PoliticalCategory.Booth.edit',compact('Booth'));
+        $ParliamentConsituency = ParliamentConsituency::get();
+        $AssemblyConsituency = AssemblyConsituency::get();
+        $BoothAgent = BoothAgent::get();
+        $Ward = Ward::get();
+    	return view('PoliticalCategory.Booth.edit',compact('Booth','ParliamentConsituency','AssemblyConsituency','BoothAgent','Ward'));
     }
 
     public function	UpdateBooth(Request $request)
 	{
-		$Booth = Booth::where("Booth_Id", $request->id)->update(['Booth_Agent_Desc'=> $request->Booth_Agent_Desc,'Booth_Agent_Name'=> $request->Booth_Agent_Name]);
+		$Booth = Booth::where("Booth_Id", $request->id)->update(['Booth_Desc'=> $request->Booth_Desc,'Booth_No'=>$request->Booth_No,'Ward_Id'=> $request->Ward_Id,'Polling_Station_No'=>$request->Polling_Station_No,'Polling_Station_Location'=>$request->Polling_Station_Location,'Polling_Station_Area'=>$request->Polling_Station_Area,'Booth_Agent_Id'=>$request->Booth_Agent_Id,'Assembly_Const_Id'=>$request->Assembly_Const_Id,'Parliament_Const_Id'=>$request->Parliament_Const_Id]);
 		return redirect(route('list.political.category'));
 	}
 

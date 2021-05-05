@@ -34,6 +34,11 @@
                 <input type="text" class="form-control" name="Ward_Name" placeholder="Enter Ward Name" value="{{$Ward->Ward_Name}}" required>
                 
             </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Ward Number</label>
+                <input type="text" class="form-control" name="Ward_No" placeholder="Enter Ward Number" value="{{$Ward->Ward_No}}" required>
+                
+            </div>
             <div class="form-group">
                       <label for="exampleInputPassword1">State</label>
                       <select class="form-control" name="State_Id" required>

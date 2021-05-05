@@ -13,7 +13,7 @@
             <div class="col-sm-3">
             </div>
             <div class="col-sm-5">
-                <h3 class="title-head">Add Booth</h3>
+                <h3 class="title-head">Edit Booth</h3>
             </div>
             <div class="col-sm-3">
             </div>
@@ -24,32 +24,32 @@
         <div class="col-md-12">
           <div class="card card-primary">
 
-              <form role="form" method="post"   action="{{ route('Save.Booth') }}"  style="padding-top: 10px;padding-bottom:20px;padding-left: 10px">
+              <form role="form" method="post"   action="{{ route('Update.Booth') }}"  style="padding-top: 10px;padding-bottom:20px;padding-left: 10px">
                 @csrf
                 <div class="modal-body">
-
+                  <input type="hidden" class="form-control" name="id" placeholder="Enter Description" value="{{$Booth->Booth_Id}}" required>
               <div class="form-group">
                 <label for="exampleInputPassword1">Description</label>
-                <input type="text" class="form-control" name="Booth_Desc" placeholder="Enter Description" value="" required>
+                <input type="text" class="form-control" name="Booth_Desc" placeholder="Enter Description" value="{{$Booth->Booth_Desc}}" required>
                 
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Booth Number</label>
-                <input type="text" class="form-control" name="Booth_No" placeholder="Enter Booth Number" value="" required>
+                <input type="text" class="form-control" name="Booth_No" placeholder="Enter Booth Number" value="{{$Booth->Booth_No}}" required>
                 
             </div>
             <div class="row">
             <div class="col-md-4 form-group">
                <label for="exampleInputPassword1">Polling Station No</label>
-                <input type="text" class="form-control" name="Polling_Station_No" placeholder="Enter Polling Station No" value="" required>
+                <input type="text" class="form-control" name="Polling_Station_No" placeholder="Enter Polling Station No" value="{{$Booth->Polling_Station_No}}" required>
             </div>
             <div class="col-md-4 form-group">
                <label for="exampleInputPassword1">Polling Station Location</label>
-                <input type="text" class="form-control" name="Polling_Station_Location" placeholder="Enter Polling Station Location" value="" required>
+                <input type="text" class="form-control" name="Polling_Station_Location" placeholder="Enter Polling Station Location" value="{{$Booth->Polling_Station_Location}}" required>
             </div>
             <div class="col-md-4 form-group">
                <label for="exampleInputPassword1">Polling Station Area</label>
-                <input type="text" class="form-control" name="Polling_Station_Area" placeholder="Enter Polling Station Area" value="" required>
+                <input type="text" class="form-control" name="Polling_Station_Area" placeholder="Enter Polling Station Area" value="{{$Booth->Polling_Station_Area}}" required>
             </div>
           </div>
             <div class="row">
@@ -59,7 +59,7 @@
                           <option value="">Select Ward</option>
                           @if(isset($Ward))
                           @foreach($Ward as $Ward) 
-                          <option value="{{$Ward->Ward_Id}}">{{ $Ward->Ward_Name}}</option>
+                          <option value="{{$Ward->Ward_Id}}" @if($Ward->Ward_Id == $Booth->Ward_Id) selected @endif>{{ $Ward->Ward_Name}}</option>
                           @endforeach
                           @endif
                       </select>
@@ -71,7 +71,7 @@
                           <option value="">Select Booth Agent</option>
                           @if(isset($BoothAgent))
                           @foreach($BoothAgent as $BoothAgent) 
-                          <option value="{{$BoothAgent->Booth_Agent_Id}}">{{ $BoothAgent->Booth_Agent_Desc}}</option>
+                          <option value="{{$BoothAgent->Booth_Agent_Id}}" @if($BoothAgent->Booth_Agent_Id == $Booth->Booth_Agent_Id) selected @endif>{{ $BoothAgent->Booth_Agent_Desc}}</option>
                           @endforeach
                           @endif
                       </select>
@@ -88,7 +88,7 @@
                           <option value="">Select Assembly</option>
                           @if(isset($AssemblyConsituency))
                           @foreach($AssemblyConsituency as $AssemblyConsituency) 
-                          <option value="{{$AssemblyConsituency->Assembly_Id}}">{{ $AssemblyConsituency->Assembly_Constituency_Desc}}</option>
+                          <option value="{{$AssemblyConsituency->Assembly_Id}}" @if($AssemblyConsituency->Assembly_Id == $Booth->Assembly_Const_Id) selected @endif>{{ $AssemblyConsituency->Assembly_Constituency_Desc}}</option>
                           @endforeach
                           @endif
                       </select>
@@ -100,7 +100,7 @@
                           <option value="">Select Partliament</option>
                           @if(isset($ParliamentConsituency))
                           @foreach($ParliamentConsituency as $ParliamentConsituency) 
-                          <option value="{{$ParliamentConsituency->Parliament_Id}}">{{ $ParliamentConsituency->Parliament_Constituency_Desc}}</option>
+                          <option value="{{$ParliamentConsituency->Parliament_Id}}" @if($ParliamentConsituency->Parliament_Id == $Booth->Parliament_Const_Id) selected @endif>{{ $ParliamentConsituency->Parliament_Constituency_Desc}}</option>
                           @endforeach
                           @endif
                       </select>
