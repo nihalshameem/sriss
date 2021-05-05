@@ -709,21 +709,14 @@ class MembersController extends ApiController
 
                     }
 
-                    if($request['Ward_No']){
-
-                        $Ward = Ward::where('Ward_Name',$request['Ward_No'])->first();
-                        
-                        $members->Ward_No = $Ward->Ward_Id;
-                        $members->Ward_Desc = $request['Ward_No'];
+                    if($request['Ward_No'])
+                    {
+                        $members->Ward_No = $request['Ward_No'];
                     }
-
                     
-                    
-                    if($request['Booth_No']){
-                        $Booth = Booth::where('Booth_Desc',$request['Booth_No'])->first();
-                        
-                        $members->Booth_No = $Booth->Booth_Id;
-                        $members->Booth_Desc  = $request['Booth_No'];
+                    if($request['Booth_No'])
+                    {
+                        $members->Booth_No  = $request['Booth_No'];
                     }
                     
                     if($request['Polling_Area']){
@@ -747,6 +740,9 @@ class MembersController extends ApiController
                     }
                     if($request['Member_Caste_Leader_Name']){
                     $members->Member_Caste_Leader_Name = $request['Member_Caste_Leader_Name'];
+                    }
+                     if($request['Member_Party_Leader_Name']){
+                    $members->Member_Party_Leader_Name = $request['Member_Party_Leader_Name'];
                     }
                     if($request['Birth_Star']){
                     $members->Birth_Star = $request['Birth_Star'];
@@ -918,9 +914,20 @@ class MembersController extends ApiController
                 $details = array();
                 $member = Member::where('Member_Id',$request->member_id)
                                 ->first()
-                                ->toArray();
+                                ;
+
+                $member = $member->makeHidden(['Assembly_Constituency_Desc','Parliament_Constituency_Desc'])->toArray();
+
                 $members = Member::where('Member_Id',$request->member_id)->first();
+
                 $districtscount = District::where('District_Id',$members->District_Id)->select('District_desc As District')->count();
+
+                $statecount = State::where('State_id',$members->State_Id)->select('State_desc As State')->count();
+
+                $ParliamentConsituencycount = ParliamentConsituency::where('Parliament_Id',$members->Parliament_Constituency_Desc)->select('Parliament_Constituency_Desc')->count();
+
+                $AssemblyConsituencycount = AssemblyConsituency::where('Assembly_Id',$members->Assembly_Constituency_Desc)->select('Assembly_Constituency_Desc')->count();
+
                 if($districtscount>0)
                 {
                     $district = District::where('District_Id',$members->District_Id)->select('District_desc As District')->first()->toArray();
@@ -933,6 +940,48 @@ class MembersController extends ApiController
                     $district =  array("District" => null);
                     $arr1 = array_merge($member,$district); 
                     array_push($details,$arr1);
+                    $single= array_reduce($details, 'array_merge', array());
+                }
+                if($statecount>0)
+                {
+                    $State = State::where('State_id',$members->State_Id)->select('State_desc As State')->first()->toArray();
+                   $arr11 = array_merge($member,$State); 
+                   array_push($details,$arr11);
+                   $single= array_reduce($details, 'array_merge', array());
+                }
+                else
+                {
+                    $State =  array("State"=>null);
+                    $arr1 = array_merge($member,$State); 
+                    array_push($details,$arr1);
+                    $single= array_reduce($details, 'array_merge', array());
+                }
+                if($AssemblyConsituencycount>0)
+                {
+                    $AssemblyConsituency = AssemblyConsituency::where('Assembly_Id',$members->Assembly_Constituency_Desc)->select('Assembly_Constituency_Desc')->first()->toArray();
+                   $AssemblyConsituencyarr = array_merge($member,$AssemblyConsituency); 
+                   array_push($details,$AssemblyConsituencyarr);
+                   $single= array_reduce($details, 'array_merge', array());
+                }
+                else
+                {
+                    $AssemblyConsituency =  array("Assembly_Constituency_Desc"=>null);
+                    $AssemblyConsituencyarr = array_merge($member,$AssemblyConsituency); 
+                    array_push($details,$AssemblyConsituencyarr);
+                    $single= array_reduce($details, 'array_merge', array());
+                }
+                if($ParliamentConsituencycount>0)
+                {
+                    $ParliamentConsituency = ParliamentConsituency::where('Parliament_Id',$members->Parliament_Constituency_Desc)->select('Parliament_Constituency_Desc')->first()->toArray();
+                   $ParliamentConsituencyarr = array_merge($member,$ParliamentConsituency); 
+                   array_push($details,$ParliamentConsituencyarr);
+                   $single= array_reduce($details, 'array_merge', array());
+                }
+                else
+                {
+                    $ParliamentConstituencyDesc =  array("Parliament_Constituency_Desc"=>null);
+                    $ParliamentConstituencyDescarr = array_merge($member,$ParliamentConstituencyDesc); 
+                    array_push($details,$ParliamentConstituencyDescarr);
                     $single= array_reduce($details, 'array_merge', array());
                 }
                 

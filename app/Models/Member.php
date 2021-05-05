@@ -14,4 +14,11 @@ class Member extends Model
     ];
 
     protected $table = 'sss_member_tbl';
+
+    protected $columns = ['Assembly_Constituency_Desc','Parliament_Constituency_Desc']; // add all columns from you table
+
+    public function scopeExclude($query, $value = []) 
+{
+    return $query->select(array_diff($this->columns, (array) $value));
+}
 }
