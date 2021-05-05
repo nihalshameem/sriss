@@ -47,7 +47,7 @@
                   <div class="form-group">
                   <label for="exampleInputPassword1">District Name</label><br>
                   <textarea style="width: 100%" name="district" id="union" placeholder="Enter District Name..." rows="4" required=""></textarea>
-                  <p style="color: red">*Taluk Name must be separate with comma only.</p>
+                  <p style="color: red">*District Name must be separate with comma only.</p>
                 </div>
                 @if( Session::has( 'warning3' ))
                    <div class="alert alert-success" style="margin-top:15px;">
