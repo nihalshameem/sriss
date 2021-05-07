@@ -622,6 +622,10 @@ Route::get('/ReportsView/Subscription', [App\Http\Controllers\SubscriptionContro
 
 Route::get('/Reports/Subscription', [App\Http\Controllers\SubscriptionController::class,'SubscriptionReport'])->name('Subscription.reports');
 
+Route::get('/ReportsView/SubscriptionDefaulter', [App\Http\Controllers\SubscriptionController::class,'SubscriptionDefaulterReportView'])->name('SubscriptionDefaulter.reportsview');
+
+Route::get('/Reports/SubscriptionDefaulter', [App\Http\Controllers\SubscriptionController::class,'SubscriptionDefaulterReport'])->name('SubscriptionDefaulter.reports');
+
 
 
 Route::group(['prefix' => 'political/category'], function () {

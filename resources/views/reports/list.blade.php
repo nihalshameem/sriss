@@ -179,6 +179,23 @@
         <!-- /.info-box -->
       </div>
       @endif
+
+      @if($role->hasPermission('51',$role->role_id))
+      <div class="col-12 col-sm-6 col-md-3">
+        <a href="{{ route('SubscriptionDefaulter.reports') }}" style="color:black">
+          <div class="info-box mb-3">
+            <span class="info-box-icon"><i class="fas fa-user-circle"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Subscription Defaulter Report</span>
+              <span class="info-box-number"></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+        </a>
+        <!-- /.info-box -->
+      </div>
+      @endif
       <!-- /.col -->
       
       <!-- /.col -->

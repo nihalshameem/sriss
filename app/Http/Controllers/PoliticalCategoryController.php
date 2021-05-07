@@ -16,12 +16,13 @@ class PoliticalCategoryController extends ApiController
 {
     public function listCategory()
     {
+        $State = State::get();
     	$ParliamentConsituency = ParliamentConsituency::get();
     	$AssemblyConsituency = AssemblyConsituency::get();
     	$Ward = Ward::get();
 		$BoothAgent = BoothAgent::get();
     	$Booth = Booth::get();
-    	return view('PoliticalCategory.list',compact('ParliamentConsituency','AssemblyConsituency','Ward','BoothAgent','Booth'));
+    	return view('PoliticalCategory.list',compact('State', 'ParliamentConsituency','AssemblyConsituency','Ward','BoothAgent','Booth'));
     }
 
     /********* Parliament Constituent Operation *****************/

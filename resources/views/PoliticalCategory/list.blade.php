@@ -31,7 +31,10 @@
 							<div class="card-header p-0 border-bottom-0">
 								<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist" style="border-top:1px solid #ffffb7">
 									<li class="nav-item">
-										<a class="nav-link{{old('tab') == 'state-tabs-tab' ? ' active' : null}}" id="state-tab" data-toggle="pill" href="#state-tabs-tab" role="tab" aria-controls="state-tabs" aria-selected="true" style="color:#3a3a3a;font-weight:bold" >Parliament consituency</a>
+										<a class="nav-link{{old('tab') == 'state-tabs-tab' ? ' active' : null}}" id="state-tab" data-toggle="pill" href="#state-tabs-tab" role="tab" aria-controls="state-tabs" aria-selected="true" style="color:#3a3a3a;font-weight:bold" >State</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link{{old('tab') == 'parliment-tabs-tab' ? ' active' : null}}" id="parliment-tab" data-toggle="pill" href="#parliment-tabs-tab" role="tab" aria-controls="parliment-tabs" aria-selected="false" style="color:#3a3a3a;font-weight:bold" >Parliament consituency</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link {{old('tab') == 'custom-tabs-three-messages' ? ' active' : null}}" id="zones-tabs" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false" style="color:#3a3a3a;font-weight:bold">Assembly consituency</a>
@@ -40,10 +43,10 @@
 										<a class="nav-link {{old('tab') == 'custom-tabs-three-settings' ? ' active' : null}}" id="district-tabs" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="false" style="color:#3a3a3a;font-weight:bold">Ward</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link {{old('tab') == 'custom-tabs-three-union' ? ' active' : null}}" id="Union-tabs" data-toggle="pill" href="#custom-tabs-three-union" role="tab" aria-controls="custom-tabs-three-union" aria-selected="false" style="color:#3a3a3a;font-weight:bold"  >Booth Agent</a>
+										<a class="nav-link {{old('tab') == 'custom-tabs-three-booth-agent' ? ' active' : null}}" id="booth-agent-tabs" data-toggle="pill" href="#custom-tabs-three-booth-agent" role="tab" aria-controls="custom-tabs-three-booth-agent" aria-selected="false" style="color:#3a3a3a;font-weight:bold">Booth </a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link {{old('tab') == 'custom-tabs-three-booth-agent' ? ' active' : null}}" id="booth-agent-tabs" data-toggle="pill" href="#custom-tabs-three-booth-agent" role="tab" aria-controls="custom-tabs-three-booth-agent" aria-selected="false" style="color:#3a3a3a;font-weight:bold">Booth </a>
+										<a class="nav-link {{old('tab') == 'custom-tabs-three-union' ? ' active' : null}}" id="Union-tabs" data-toggle="pill" href="#custom-tabs-three-union" role="tab" aria-controls="custom-tabs-three-union" aria-selected="false" style="color:#3a3a3a;font-weight:bold"  >Booth Agent</a>
 									</li>
 								</ul>
 							</div>
@@ -51,6 +54,9 @@
 								<div class="tab-content" id="custom-tabs-three-tabContent">
 
 									<div class="tab-pane{{old('tab') == 'state-tabs-tab' ? ' active' : null}}" id="state-tabs-tab" role="tabpanel" aria-labelledby="state-tabs">
+										@include('geo.list.state')
+									</div>
+									<div class="tab-pane{{old('tab') == 'parliment-tabs-tab' ? ' active' : null}}" id="parliment-tabs-tab" role="tabpanel" aria-labelledby="parliment-tabs">
 										@include('PoliticalCategory.list.parliamentConsituency')
 									</div>
 
@@ -62,13 +68,12 @@
 										@include('PoliticalCategory.list.ward')
 
 									</div>
-									<div class="tab-pane{{old('tab') == 'custom-tabs-three-union' ? ' active' : null}}" id="custom-tabs-three-union" role="tabpanel" aria-labelledby="union-tabs">
-									@include('PoliticalCategory.list.boothagent')
-
-									</div>
 									<div class="tab-pane{{old('tab') == 'custom-tabs-three-booth-agent' ? ' active' : null}}" id="custom-tabs-three-booth-agent" role="tabpanel" aria-labelledby="union-tabs">
-										
 										@include('PoliticalCategory.list.booth')
+									</div>
+									<div class="tab-pane{{old('tab') == 'custom-tabs-three-union' ? ' active' : null}}" id="custom-tabs-three-union" role="tabpanel" aria-labelledby="union-tabs">
+										@include('PoliticalCategory.list.boothagent')
+
 									</div>
 								</div>
 
