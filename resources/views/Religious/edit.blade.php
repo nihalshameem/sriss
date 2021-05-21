@@ -28,11 +28,35 @@
                 @csrf
                 <div class="modal-body">
 <input type="hidden" name="id" value="{{$ReligiousLeader->Religious_Id}}">
+
               <div class="form-group">
-                <label for="exampleInputPassword1">Description</label>
-                <input type="text" class="form-control" name="Description" placeholder="Enter Description" value="{{$ReligiousLeader->Religious_Desc}}" required>
-                
+                <label for="exampleInputPassword1">Name</label>
+                <input type="text" class="form-control" name="name" placeholder="Enter Name" value="{{$ReligiousLeader->Religious_name}}" required>
             </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="Enter email" value="{{$ReligiousLeader->Religious_email}}" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Phone</label>
+                <input type="number" class="form-control" name="phone" placeholder="Enter Phone no" value="{{$ReligiousLeader->Religious_phone}}" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Date of Birth</label>
+                <input type="date" class="form-control" name="dob" placeholder="Enter Date of Birth" value="{{$ReligiousLeader->Religious_birth_date}}" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Date of Death</label>
+                <input type="date" class="form-control" name="dod" placeholder="Enter Date of Death" value="{{$ReligiousLeader->Religious_death_date}}" >
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Organization Name</label>
+                <input type="text" class="form-control" name="organization" placeholder="Enter Organization Name" value="{{$ReligiousLeader->Religious_organization}}" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Whatsapp No</label>
+                <input type="number" class="form-control" name="whatsapp" placeholder="Enter Whatsapp No" value="{{$ReligiousLeader->Religious_whatsapp_no}}" >
+            </div>  
      
       
       

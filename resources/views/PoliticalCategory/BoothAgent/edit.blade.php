@@ -28,6 +28,19 @@
                 @csrf
                 <div class="modal-body">
 <input type="hidden" class="form-control" name="id" placeholder="Enter Description" value="{{$BoothAgent->Booth_Agent_Id}}" required>
+
+              <div class="form-group">
+                       <label for="exampleInputPassword1">Booth</label>
+                      <select class="form-control" name="booth_id" required > 
+                          <option value="">Select Booth</option>
+                          @if(isset($booth))
+                          @foreach($booth as $booths) 
+                          <option value="{{$booths->Booth_Id}}" @if($BoothAgent->Booth_id==$booths->Booth_Id) selected="" @endif >{{ $booths->Booth_Desc}}</option>
+                          @endforeach
+                          @endif
+                      </select>
+                      
+                  </div>
                 
               <div class="form-group">
                 <label for="exampleInputPassword1">Description</label>

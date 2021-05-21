@@ -48,10 +48,10 @@ class ContributionController extends ApiController
                             $year = Carbon::now()->year;
 
                             $code = 'ON/NEFT/'.$date.'/'.$month.'/'.$year;
-                             $contributionId = Member::where('Member_id',$request->member_id)->first();
-                             $OnlineContribution = OnlineContribution::where("Online_Contribution_id", $request->id)->first();
+                            $contributionId = Member::where('Member_id',$request->member_id)->first();
+                            $OnlineContribution = OnlineContribution::where("Online_Contribution_id", $request->id)->first();
 
-                             $data = [
+                            $data = [
                                     'name' => $contributionId->First_Name,
                                     'date' => date('m/d/Y'),
                                     'amount' => $OnlineContribution->Online_Contribution_amount,

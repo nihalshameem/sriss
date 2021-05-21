@@ -31,8 +31,36 @@
               <div class="form-group">
                 <label for="exampleInputPassword1">Description</label>
                 <input type="text" class="form-control" name="Description" placeholder="Enter Description" value="{{$PartyLeader->Party_Desc}}" required>
-                
+              </div>
+
+              <div class="form-group">
+                <label for="exampleInputPassword1">Name</label>
+                <input type="text" class="form-control" name="name" placeholder="Enter Name" value="{{$PartyLeader->Party_name}}" required>
             </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="Enter email" value="{{$PartyLeader->Party_email}}" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Phone</label>
+                <input type="number" class="form-control" name="phone" placeholder="Enter Phone no" value="{{$PartyLeader->Party_phone}}" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Date of Birth</label>
+                <input type="date" class="form-control" name="dob" placeholder="Enter Date of Birth" value="{{$PartyLeader->Party_birth_date}}" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Date of Death</label>
+                <input type="date" class="form-control" name="dod" placeholder="Enter Date of Death" value="{{$PartyLeader->Party_death_date}}" >
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Organization Name</label>
+                <input type="text" class="form-control" name="organization" placeholder="Enter Organization Name" value="{{$PartyLeader->Party_organization}}" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Whatsapp No</label>
+                <input type="number" class="form-control" name="whatsapp" placeholder="Enter Whatsapp No" value="{{$PartyLeader->Party_whatsapp_no}}" >
+            </div>  
      
       
       

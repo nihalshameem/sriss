@@ -13,9 +13,7 @@
 			<th>Polling Station Location</th>
 			<th>Polling Station Area</th>
 			<th>Ward</th>
-			<th>Booth Agent</th>
 			<th>Assembly Const</th>
-			<th>Parliament Const</th>
 			<th>Edit</th>
 			<th>Delete</th>
 			
@@ -38,9 +36,7 @@
 				$ParliamentConsituency = App\Models\ParliamentConsituency::where('Parliament_Id',$Booth->Parliament_Const_Id)->first();
 			?>
 			<td>{{ $ward->Ward_Name }}</td>
-			<td>{{ $BoothAgent->Booth_Agent_Desc }}</td>
 			<td>{{ $AssemblyConsituency->Assembly_Constituency_Desc }}</td>
-			<td>{{ $ParliamentConsituency->Parliament_Constituency_Desc }}</td>
 						
 			<td><a href="{{ route('Edit.Booth', ['BoothId' => $Booth->Booth_Id]) }}" ><span class="badge bg-danger"><i class="fas fa-edit"></i></span></a>
 			</td>

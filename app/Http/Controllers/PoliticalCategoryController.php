@@ -58,18 +58,18 @@ class PoliticalCategoryController extends ApiController
 		echo json_encode($request->Parliament_Id);
 	}
 
-
 	/**********Assembly Constituent Operations *********/
 
 	public function AddAssembly()
     {
-    	
-    	return view('PoliticalCategory.assembly.add');
+    	$districts = District::where('District_active','Y')->get();
+    	return view('PoliticalCategory.assembly.add', compact('districts'));
     }
 
     public function	SaveAssembly(Request $request)
 	{
 		$AssemblyConsituency = new AssemblyConsituency();
+        $AssemblyConsituency->Dist_Id = $request->district;
 		$AssemblyConsituency->Assembly_Constituency_Desc = $request->Description;
 		$AssemblyConsituency->save();
 		return redirect(route('list.political.category'));
@@ -77,13 +77,14 @@ class PoliticalCategoryController extends ApiController
 
 	public function EditAssembly($AssemblyId)
     {
+        $districts = District::where('District_active','Y')->get();
     	$AssemblyConsituency = AssemblyConsituency::where('Assembly_Id',$AssemblyId)->first();
-    	return view('PoliticalCategory.assembly.edit',compact('AssemblyConsituency'));
+    	return view('PoliticalCategory.assembly.edit',compact('AssemblyConsituency', 'districts'));
     }
 
     public function	UpdateAssembly(Request $request)
 	{
-		$ParliamentConsituency = AssemblyConsituency::where("Assembly_Id", $request->id)->update(['Assembly_Constituency_Desc'=> $request->Description]);
+		$ParliamentConsituency = AssemblyConsituency::where("Assembly_Id", $request->id)->update(['Assembly_Constituency_Desc'=> $request->Description, 'Dist_Id' => $request->district]);
 		return redirect(route('list.political.category'));
 	}
 
@@ -92,14 +93,16 @@ class PoliticalCategoryController extends ApiController
 		$AssemblyId = AssemblyConsituency::where('Assembly_Id',$request->Assembly_Id)->delete();
 		echo json_encode($request->AssemblyId);
 	}
+
+    
+
 	/**********Ward  Operations *********/
 
 	public function AddWard()
     {
     	$ParliamentConsituency = ParliamentConsituency::get();
     	$AssemblyConsituency = AssemblyConsituency::get();
-    	 $District = District::orderBy('District_desc')->get();
-    	 $State = State::get();
+    	 
     	return view('PoliticalCategory.ward.add',compact('ParliamentConsituency','AssemblyConsituency','District','State'));
     }
 
@@ -108,27 +111,22 @@ class PoliticalCategoryController extends ApiController
 		$AssemblyConsituency = new Ward();
 		$AssemblyConsituency->Ward_Name = $request->Ward_Name;
         $AssemblyConsituency->Ward_No = $request->Ward_No;
-		$AssemblyConsituency->State_Id = $request->State_Id;
-		$AssemblyConsituency->Dist_Id = $request->Dist_Id;
 		$AssemblyConsituency->Assembly_Const_Id = $request->Assembly_Const_Id;
-		$AssemblyConsituency->Parliament_Const_Id = $request->Parliament_Const_Id;
 		$AssemblyConsituency->save();
 		return redirect(route('list.political.category'));
 	}
 
 	public function EditWard($WardId)
     {
-    	$ParliamentConsituency = ParliamentConsituency::get();
+
     	$AssemblyConsituency = AssemblyConsituency::get();
-    	 $District = District::orderBy('District_desc')->get();
-    	 $State = State::get();
-    	$Ward = Ward::where('Ward_Id',$WardId)->first();
-    	return view('PoliticalCategory.ward.edit',compact('Ward','ParliamentConsituency','AssemblyConsituency','District','State'));
+    	$Ward = Ward::where('Ward_Id', $WardId)->first();
+    	return view('PoliticalCategory.ward.edit', compact('Ward', 'AssemblyConsituency'));
     }
 
     public function	UpdateWard(Request $request)
 	{
-		$Ward = Ward::where("Ward_Id", $request->id)->update(['Ward_Name'=> $request->Ward_Name,'Ward_No'=> $request->Ward_No,'State_Id'=> $request->State_Id,'Dist_Id'=> $request->Dist_Id,'Area_Id'=> $request->Area_Id,'Assembly_Const_Id'=> $request->Assembly_Const_Id,'Parliament_Const_Id'=> $request->Parliament_Const_Id]);
+		$Ward = Ward::where("Ward_Id", $request->id)->update(['Ward_Name'=> $request->Ward_Name,'Ward_No'=> $request->Ward_No,'Assembly_Const_Id'=> $request->Assembly_Const_Id]);
 		return redirect(route('list.political.category'));
 	}
 
@@ -141,13 +139,15 @@ class PoliticalCategoryController extends ApiController
 	/**********Booth Agent  Operations *********/
 
 	public function AddBoothAgent()
-    {
-    	return view('PoliticalCategory.BoothAgent.add');
+    {   
+        $booth = Booth::get();
+    	return view('PoliticalCategory.BoothAgent.add', compact('booth'));
     }
 
     public function	SaveBoothAgent(Request $request)
 	{
 		$BoothAgent = new BoothAgent();
+        $BoothAgent->Booth_id = $request->booth_id;
 		$BoothAgent->Booth_Agent_Desc = $request->Booth_Agent_Desc;
 		$BoothAgent->Booth_Agent_Name = $request->Booth_Agent_Name;
 		$BoothAgent->save();
@@ -156,8 +156,9 @@ class PoliticalCategoryController extends ApiController
 
 	public function EditBoothAgent($BoothAgentId)
     {
+        $booth = Booth::get();
     	$BoothAgent = BoothAgent::where('Booth_Agent_Id',$BoothAgentId)->first();
-    	return view('PoliticalCategory.BoothAgent.edit',compact('BoothAgent'));
+    	return view('PoliticalCategory.BoothAgent.edit',compact('BoothAgent','booth'));
     }
 
     public function	UpdateBoothAgent(Request $request)
@@ -172,10 +173,17 @@ class PoliticalCategoryController extends ApiController
 		echo json_encode($request->Booth_Agent_Id);
 	}
 
+    public function LoadWard(Request $request)
+        {
+            $ward = Ward::where('Assembly_Const_Id', $request->Assembly_Const_Id)->get();
+            return response()->json($ward);
+        }
+
 	/**********Booth  Operations *********/
 
 	public function AddBooth()
     {
+        $booth = Booth::get();
     	$ParliamentConsituency = ParliamentConsituency::get();
     	$AssemblyConsituency = AssemblyConsituency::get();
 	   	$BoothAgent = BoothAgent::get();
@@ -192,9 +200,7 @@ class PoliticalCategoryController extends ApiController
 		$Booth->Polling_Station_No = $request->Polling_Station_No;
 		$Booth->Polling_Station_Location = $request->Polling_Station_Location;
 		$Booth->Polling_Station_Area = $request->Polling_Station_Area;
-		$Booth->Booth_Agent_Id = $request->Booth_Agent_Id;
 		$Booth->Assembly_Const_Id = $request->Assembly_Const_Id;
-		$Booth->Parliament_Const_Id = $request->Parliament_Const_Id;
 		$Booth->save();
 		return redirect(route('list.political.category'));
 	}

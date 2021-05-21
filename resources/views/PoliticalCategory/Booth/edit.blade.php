@@ -28,6 +28,24 @@
                 @csrf
                 <div class="modal-body">
                   <input type="hidden" class="form-control" name="id" placeholder="Enter Description" value="{{$Booth->Booth_Id}}" required>
+
+                  <div class="row">
+                     
+                  <div class="col-md-6 form-group">
+                      <label for="exampleInputPassword1">Ward</label>
+                      <select class="form-control" name="Ward_Id" id="Ward_Id" required>
+                          <option value="">Select Ward</option>
+                          @if(isset($Ward))
+                          @foreach($Ward as $Wards) 
+                          <option value="{{$Wards->Ward_Id}}" @if($Booth->Ward_Id==$Wards->Ward_Id) selected @endif>{{ $Wards->Ward_Name}}</option>
+                          @endforeach
+                          @endif
+                          
+                      </select>
+                      
+                  </div>
+                </div>
+
               <div class="form-group">
                 <label for="exampleInputPassword1">Description</label>
                 <input type="text" class="form-control" name="Booth_Desc" placeholder="Enter Description" value="{{$Booth->Booth_Desc}}" required>
@@ -52,63 +70,7 @@
                 <input type="text" class="form-control" name="Polling_Station_Area" placeholder="Enter Polling Station Area" value="{{$Booth->Polling_Station_Area}}" required>
             </div>
           </div>
-            <div class="row">
-              <div class="col-md-6 form-group">
-                      <label for="exampleInputPassword1">Ward</label>
-                      <select class="form-control" name="Ward_Id" required>
-                          <option value="">Select Ward</option>
-                          @if(isset($Ward))
-                          @foreach($Ward as $Ward) 
-                          <option value="{{$Ward->Ward_Id}}" @if($Ward->Ward_Id == $Booth->Ward_Id) selected @endif>{{ $Ward->Ward_Name}}</option>
-                          @endforeach
-                          @endif
-                      </select>
-                      
-                  </div>
-            <div class="col-md-6 form-group">
-                      <label for="exampleInputPassword1">Booth Agent </label>
-                      <select class="form-control" name="Booth_Agent_Id" required>
-                          <option value="">Select Booth Agent</option>
-                          @if(isset($BoothAgent))
-                          @foreach($BoothAgent as $BoothAgent) 
-                          <option value="{{$BoothAgent->Booth_Agent_Id}}" @if($BoothAgent->Booth_Agent_Id == $Booth->Booth_Agent_Id) selected @endif>{{ $BoothAgent->Booth_Agent_Desc}}</option>
-                          @endforeach
-                          @endif
-                      </select>
-                      
-                  </div>
-                 
-              </div>
-           
-                   <div class="row">
-                     
-                    <div class="col-md-6 form-group">
-                       <label for="exampleInputPassword1">Assembly</label>
-                      <select class="form-control" name="Assembly_Const_Id" required>
-                          <option value="">Select Assembly</option>
-                          @if(isset($AssemblyConsituency))
-                          @foreach($AssemblyConsituency as $AssemblyConsituency) 
-                          <option value="{{$AssemblyConsituency->Assembly_Id}}" @if($AssemblyConsituency->Assembly_Id == $Booth->Assembly_Const_Id) selected @endif>{{ $AssemblyConsituency->Assembly_Constituency_Desc}}</option>
-                          @endforeach
-                          @endif
-                      </select>
-                      
-                  </div>
-                  <div class="col-md-6 form-group">
-                      <label for="exampleInputPassword1">Parliament</label>
-                      <select class="form-control" name="Parliament_Const_Id" required>
-                          <option value="">Select Partliament</option>
-                          @if(isset($ParliamentConsituency))
-                          @foreach($ParliamentConsituency as $ParliamentConsituency) 
-                          <option value="{{$ParliamentConsituency->Parliament_Id}}" @if($ParliamentConsituency->Parliament_Id == $Booth->Parliament_Const_Id) selected @endif>{{ $ParliamentConsituency->Parliament_Constituency_Desc}}</option>
-                          @endforeach
-                          @endif
-                      </select>
-                      
-                  </div>
-                </div>
-     
-      
+                
       
   </div>
   <div style="max-width: 200px; margin: auto;">
@@ -124,5 +86,26 @@
 </div>
 <!-- /.container-fluid -->
 </section>
+<script>
+
+ function loadWard(select){
+  var result = select.value;
+  $.ajax({
+      type : 'get',
+      url : '{{URL::to('political/category/LoadWard')}}',
+      data : {'Assembly_Const_Id':result},
+      success:function(response){
+       $('#Ward_Id').empty();
+       $('#Ward_Id').append('<option value="">Select Ward</option>');
+       var options = response.forEach( function(iward, index){
+          $('#Ward_Id').append('<option value="'+iward.Ward_Id+'">'+iward.Ward_Name+'</option>');
+      });
+       
+   } 
+  });
+
+
+}
+</script>
 </div>
 @endsection

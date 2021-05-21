@@ -22,9 +22,15 @@ class PartyLeaderController extends ApiController
 
 	    public function	SavePartyLeader(Request $request)
 		{
-			$ParliamentConsituency = new PartyLeader();
-			$ParliamentConsituency->Party_Desc = $request->Description;
-			$ParliamentConsituency->save();
+			$PartyLeader = new PartyLeader();
+			$PartyLeader->Party_name = $request->name;
+            $PartyLeader->Party_email = $request->email;
+            $PartyLeader->Party_phone = $request->phone;
+            $PartyLeader->Party_birth_date = $request->dob;
+            $PartyLeader->Party_death_date = $request->dod;
+            $PartyLeader->Party_organization = $request->organization;
+            $PartyLeader->Party_whatsapp_no = $request->whatsapp;
+			$PartyLeader->save();
 			return redirect(route('list.Party'));
 		}
 
@@ -36,7 +42,14 @@ class PartyLeaderController extends ApiController
 
 	    public function	UpdatePartyLeader(Request $request)
 		{
-			$PartyLeader = PartyLeader::where("Party_Id", $request->id)->update(['Party_Desc'=> $request->Description]);
+			$PartyLeader = PartyLeader::where("Party_Id", $request->id)->update([
+                'Party_name'=> $request->name, 
+                'Party_email'=> $request->email, 
+                'Party_phone'=> $request->phone,
+                'Party_birth_date'=> $request->dob,
+                'Party_death_date'=> $request->dod,
+                'Party_organization'=> $request->organization, 
+                'Party_whatsapp_no'=> $request->whatsapp] );
 			return redirect(route('list.Party'));
 		}
 

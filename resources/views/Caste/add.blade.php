@@ -28,13 +28,34 @@
                 @csrf
                 <div class="modal-body">
 
-              <div class="form-group">
-                <label for="exampleInputPassword1">Description</label>
-                <input type="text" class="form-control" name="Description" placeholder="Enter Description" value="" required>
-                
+            <div class="form-group">
+                <label for="exampleInputPassword1">Name</label>
+                <input type="text" class="form-control" name="name" placeholder="Enter Name" value="" required>
             </div>
-     
-      
+            <div class="form-group">
+                <label for="exampleInputPassword1">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="Enter email" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Phone</label>
+                <input type="number" class="form-control" name="phone" placeholder="Enter Phone no" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Date of Birth</label>
+                <input type="date" class="form-control" name="dob" placeholder="Enter Date of Birth" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Date of Death</label>
+                <input type="date" class="form-control" name="dod" placeholder="Enter Date of Death" value="" >
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Organization Name</label>
+                <input type="text" class="form-control" name="organization" placeholder="Enter Organization Name" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Whatsapp No</label>
+                <input type="number" class="form-control" name="whatsapp" placeholder="Enter Whatsapp No" value="" >
+            </div>   
       
   </div>
   <div style="max-width: 200px; margin: auto;">

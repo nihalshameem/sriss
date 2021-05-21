@@ -23,7 +23,13 @@ class CasteController extends ApiController
 	    public function	SaveCasteLeader(Request $request)
 		{
 			$CasteLeader = new CasteLeader();
-			$CasteLeader->Caste_Desc = $request->Description;
+			$CasteLeader->Caste_name = $request->name;
+            $CasteLeader->Caste_email = $request->email;
+            $CasteLeader->Caste_phone = $request->phone;
+            $CasteLeader->Caste_birth_date = $request->dob;
+            $CasteLeader->Caste_death_date = $request->dod;
+            $CasteLeader->Caste_organization = $request->organization;
+            $CasteLeader->Caste_whatsapp_no = $request->whatsapp;
 			$CasteLeader->save();
 			return redirect(route('list.Caste'));
 		}
@@ -36,7 +42,14 @@ class CasteController extends ApiController
 
 	    public function	UpdateCasteLeader(Request $request)
 		{
-			$ReligiousLeader = CasteLeader::where("Caste_Id", $request->id)->update(['Caste_Desc'=> $request->Description]);
+			$ReligiousLeader = CasteLeader::where("Caste_Id", $request->id)->update([
+                            'Caste_name'=> $request->name, 
+                            'Caste_email'=> $request->email, 
+                            'Caste_phone'=> $request->phone,
+                            'Caste_birth_date'=> $request->dob,
+                            'Caste_death_date'=> $request->dod,
+                            'Caste_organization'=> $request->organization, 
+                            'Caste_whatsapp_no'=> $request->whatsapp] );
 			return redirect(route('list.Caste'));
 		}
 

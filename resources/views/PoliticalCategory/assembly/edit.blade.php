@@ -28,11 +28,23 @@
                 @csrf
                 <div class="modal-body">
                   <input type="hidden" name="id" value="{{$AssemblyConsituency->Assembly_Id}}">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">District</label>
+                    <select class="form-control" name="district" id="district">
+                      <option selected="" disabled="">Select District</option>
+                      @foreach($districts as $district)
+                        <option value="{{$district->District_id}}" @if($district->District_id == $AssemblyConsituency->Dist_Id) selected="" @endif>{{$district->District_desc}}</option>
+                      @endforeach
+                    </select>
+                    
+                </div>
+
               <div class="form-group">
                 <label for="exampleInputPassword1">Description</label>
                 <input type="text" class="form-control" name="Description" placeholder="Enter Description" value="{{$AssemblyConsituency->Assembly_Constituency_Desc}}" required>
                 
             </div>
+
      
       
       

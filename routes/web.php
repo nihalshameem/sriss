@@ -641,6 +641,10 @@ Route::group(['prefix' => 'political/category'], function () {
     Route::post('/Parliament/Update', [App\Http\Controllers\PoliticalCategoryController::class, 'UpdateParliament'])->name('Update.Parliament');
 
     Route::get('/Parliament/Delete', [App\Http\Controllers\PoliticalCategoryController::class, 'DeleteParliament'])->name('Delete.Parliament');
+
+  
+
+    Route::get('/LoadWard', [App\Http\Controllers\PoliticalCategoryController::class,'LoadWard'])->name('LoadWard');
   
       /*  Assembly routes ******/
 

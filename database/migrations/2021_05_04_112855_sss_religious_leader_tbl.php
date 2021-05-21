@@ -15,7 +15,13 @@ class SssReligiousLeaderTbl extends Migration
     {
          Schema::create('sss_religious_leader_tbl', function (Blueprint $table) {
             $table->increments('Religious_Id');
-            $table->string('Religious_Desc')->nullable();
+            $table->string('Religious_name')->nullable();
+            $table->string('Religious_email')->nullable();
+            $table->string('Religious_phone')->nullable();
+            $table->string('Religious_birth_date')->nullable();
+            $table->string('Religious_death_date')->nullable();
+            $table->string('Religious_organization')->nullable();
+            $table->string('Religious_whatsapp_no')->nullable();
             $table->timestamps();
         });
     }

@@ -38,7 +38,7 @@
 	<thead>
 		<tr>
 			<th>Sl No</th>
-			<th>Description</th>
+			<th>Name</th>
 			<th>Edit</th>
 			<th>Delete</th>
 			
@@ -49,7 +49,7 @@
 		<tr>
 			<td>{{ $i+1 }}</td>
 			
-			<td>{{ $ReligiousLeader->Religious_Desc }}</td>
+			<td>{{ $ReligiousLeader->Religious_name }}</td>
 						
 			<td><a href="{{ route('Edit.Religious', ['ReligiousId' => $ReligiousLeader->Religious_Id]) }}" ><span class="badge bg-danger"><i class="fas fa-edit"></i></span></a>
 			</td>

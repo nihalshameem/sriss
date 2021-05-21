@@ -15,7 +15,13 @@ class SssPartyLeaderTbl extends Migration
     {
         Schema::create('sss_party_leader_tbl', function (Blueprint $table) {
             $table->increments('Party_Id');
-            $table->string('Party_Desc')->nullable();
+            $table->string('Party_name')->nullable();
+            $table->string('Party_email')->nullable();
+            $table->string('Party_phone')->nullable();
+            $table->string('Party_birth_date')->nullable();
+            $table->string('Party_death_date')->nullable();
+            $table->string('Party_organization')->nullable();
+            $table->string('Party_whatsapp_no')->nullable();
             $table->timestamps();
         });
     }

@@ -66,10 +66,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-1">
-				<img src="http://dharmarakshanasamiti.org/dev/storage/app/public/AppIcon/1611824404_logo%20tpnt%20opti.jpg" style="width:120px">
+				<img src="http://samithi.sriss.in/assets/login/images/logo.png" style="width:120px">
 			</div>
 			<div class="col-xs-10" style="margin-left:10px">
-				<h1 style="color:#3b5998;text-align:center;font-weight: bolder">Dharma Rakshna Samithi Trust<p style="color:#3b5998;text-align:center;font-size:14px;font-weight: normal">No.64 Police Commisioner Office Road,Egmore,Chennai-600 008. </p></h1>
+				<h1 style="color:#3b5998;text-align:center;font-weight: bolder">Sri Software Solutions<p style="color:#3b5998;text-align:center;font-size:14px;font-weight: normal">No.64 Police Commisioner Office Road,Egmore,Chennai-600 008. </p></h1>
 			</div>
 		</div>
 		<hr style="font-weight:bolder">
