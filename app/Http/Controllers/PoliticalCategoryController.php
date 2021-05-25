@@ -29,7 +29,8 @@ class PoliticalCategoryController extends ApiController
 
     public function AddParliament()
     {
-    	return view('PoliticalCategory.parliament.add');
+        $states = State::where('State_active','Y')->get();
+    	return view('PoliticalCategory.parliament.add', compact('states'));
     }
 
     public function	SaveParliament(Request $request)
@@ -42,13 +43,14 @@ class PoliticalCategoryController extends ApiController
 
 	public function EditParliament($ParliamentId)
     {
+        $states = State::where('State_active','Y')->get();
     	$ParliamentConsituency = ParliamentConsituency::where('Parliament_Id',$ParliamentId)->first();
-    	return view('PoliticalCategory.parliament.edit',compact('ParliamentConsituency'));
+    	return view('PoliticalCategory.parliament.edit',compact('ParliamentConsituency', 'states'));
     }
 
     public function	UpdateParliament(Request $request)
 	{
-		$ParliamentConsituency = ParliamentConsituency::where("Parliament_Id", $request->id)->update(['Parliament_Constituency_Desc'=> $request->Description]);
+		$ParliamentConsituency = ParliamentConsituency::where("Parliament_Id", $request->id)->update(['State_id'=> $request->state, 'Parliament_Constituency_Desc'=> $request->Description]);
 		return redirect(route('list.political.category'));
 	}
 
@@ -103,7 +105,7 @@ class PoliticalCategoryController extends ApiController
     	$ParliamentConsituency = ParliamentConsituency::get();
     	$AssemblyConsituency = AssemblyConsituency::get();
     	 
-    	return view('PoliticalCategory.ward.add',compact('ParliamentConsituency','AssemblyConsituency','District','State'));
+    	return view('PoliticalCategory.ward.add',compact('ParliamentConsituency','AssemblyConsituency'));
     }
 
     public function	SaveWard(Request $request)

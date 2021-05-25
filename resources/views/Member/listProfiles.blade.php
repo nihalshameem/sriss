@@ -25,7 +25,7 @@
       <div class="row">
         <div class="col-1">
         </div>
-        <div class="col-10">
+        <div class="col-11">
           
           <button type="button" class="collapsible1">GENERAL</button>
                 <div class="content1">

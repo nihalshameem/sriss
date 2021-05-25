@@ -33,36 +33,27 @@
 							<table id="example1" class="table">
 								<thead>
 									<tr>
-										<th>Send Email</th>
-										<th>Date</th>
+										<th>Date</th>	
+										<th>Feedback</th>								
 										<th>Member Id</th>
 										<th>Name</th>
-										<th>Email</th>
 										<th>Phone No</th>
-										<th>Pincode</th>
-										<th>Address</th>
-										<th>Feedback</th>
 										
 									</tr>
 								</thead>
 								<tbody>
 									@foreach ($feedbacks as $i => $feedback)
 									<tr>
-										<td>
-											<a><span class="badge bg-danger"><i class="fas fa-paper-plane"></i>&nbsp;Send Mail</span></a>
-										</td>
 										<td>{{ $feedback->created_at->toDateString() }}</td>
+										<td>{{ $feedback->Feedback_desc }}</td> 
 										<td>{{ $feedback->Member_id }}</td>
-										
 										<?php
 										$user = App\Models\User::where('Member_Id',$feedback->Member_id )->first();
 
 										?>
 										@if($user)
 										<td>{{ $user->name }}</td> 
-										<td class="col-sm-2">{{ $user->email }}</td> 
 										@else
-										<td></td>
 										<td></td>
 										@endif
 										<?php
@@ -70,10 +61,8 @@
 
 										?>
 										<td>{{$member->Mobile_No}}</td>
-										<td>{{$member->Pincode}}</td>
-										<td>{{$member->Address1}}</td>
 
-										<td>{{ $feedback->Feedback_desc }}</td> 
+										
 										
 										  
 										

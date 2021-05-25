@@ -21,6 +21,7 @@ class SssCasteLeaderTbl extends Migration
             $table->string('Caste_birth_date')->nullable();
             $table->string('Caste_death_date')->nullable();
             $table->string('Caste_organization')->nullable();
+            $table->string('Caste_address')->nullable();
             $table->string('Caste_whatsapp_no')->nullable();
             $table->timestamps();
         });

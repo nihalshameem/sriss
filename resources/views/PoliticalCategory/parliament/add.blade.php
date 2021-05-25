@@ -28,6 +28,16 @@
                 @csrf
                 <div class="modal-body">
 
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">State</label>
+                    <select class="form-control" name="state" id="state">
+                      <option selected="" disabled="">Select State</option>
+                      @foreach($states as $state)
+                      <option value="{{$state->State_id}}">{{$state->State_desc}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
               <div class="form-group">
                 <label for="exampleInputPassword1">Description</label>
                 <input type="text" class="form-control" name="Description" placeholder="Enter Description" value="" required>

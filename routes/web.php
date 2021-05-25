@@ -98,7 +98,7 @@ Route::post('/appIcon', [App\Http\Controllers\WebApplicationController::class, '
 
 Route::get('/MemberDetails', [App\Http\Controllers\MembersController::class, 'MemberDetails'])->name('list.MemberDetails');
 
-Route::get('/MemberSearch', [App\Http\Controllers\MembersController::class, 'MemberSearch'])->name('save.MemberDetails');
+Route::get('/MemberSearch', [App\Http\Controllers\MembersController::class, 'membersearch'])->name('save.MemberDetails');
 
 Route::get('/Profiles', [App\Http\Controllers\WebApplicationController::class, 'ListProfiles'])->name('list.ProfileDetails');
 

@@ -69,6 +69,16 @@
      </thead>
      <tbody>
         @foreach ($Notifications as $i => $Notification)
+        <?php
+         
+          $type="Empty";
+          if($Notification->broadcast_type=='Y'){
+            $type="Geo";
+          }else if($Notification->broadcast_type=='N'){
+            $type="Group";
+          }
+         ?>
+         @if($type!="Empty")
         <tr>
          <td>{{ $i+1 }}</td>
          <td>{{ \Illuminate\Support\Str::limit(strip_tags($Notification->Notification_mesage), 50) }}</td>
@@ -79,20 +89,11 @@
          <td>Image</td> 
          @elseif($Notification->Notification_video_path!=null)
             <td>Video</td> 
-         @elseif($Notification->Notification_video_path!=null)
+         @elseif($Notification->Notification_audio_path!=null)
             <td>Audio</td> 
          @else
-         <td>Empty</td> 
+         <td>Text</td> 
          @endif 
-         <?php
-         
-$type="Empty";
-if($Notification->broadcast_type=='Y'){
-  $type="Geo";
-}else if($Notification->broadcast_type=='N'){
-  $type="Group";
-}
-         ?>
          <td>{{$type}}</td>
          @if($Notification->Notification_active=='Y' && $Notification->Notification_approved=='Y')
          <td><span class="right badge badge-success">Yes</span></td>
@@ -106,6 +107,8 @@ if($Notification->broadcast_type=='Y'){
         <td>
             <a style="cursor: pointer;" onclick="Delete('{{$Notification->Notification_id}}')"><span class="badge bg-danger"><i class="fas fa-trash"></i></span></a>
         </td>
+        @else
+        @endif
 
         
         

@@ -24,7 +24,13 @@
 			<td><a href="{{ route('Edit.Ward', ['WardId' => $Ward->Ward_Id]) }}" ><span class="badge bg-danger"><i class="fas fa-edit"></i></span></a>
 			</td>
 			<td>
+				<?php
+					$booth = App\Models\Booth::where('Ward_Id',$Ward->Ward_Id)->first();
+				?>
+				@if($booth)
+				@else
 				<a onclick="DeleteWard('{{$Ward->Ward_Id}}')" style="cursor:pointer"><span class="badge bg-danger"><i class="fas fa-trash"></i></span></a>
+				@endif
 			</td>
 		</tr>
 		

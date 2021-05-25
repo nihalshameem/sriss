@@ -24,7 +24,13 @@
 			<td><a href="{{ route('Edit.Assembly', ['AssemblyId' => $assemblyConsituency->Assembly_Id]) }}" ><span class="badge bg-danger"><i class="fas fa-edit"></i></span></a>
 			</td>
 			<td>
+				<?php 
+					$ward = App\Models\Ward::where('Assembly_Const_Id',$assemblyConsituency->Assembly_Id)->first();
+				?>
+				@if($ward)
+				@else
 				<a onclick="DeleteAssembly('{{$assemblyConsituency->Assembly_Id}}')" style="cursor:pointer"><span class="badge bg-danger"><i class="fas fa-trash"></i></span></a>
+				@endif
 			</td>
 		</tr>
 		

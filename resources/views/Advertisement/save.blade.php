@@ -47,13 +47,13 @@
                 <div class="col-md-6">
                  <div class="form-group">
                   <label for="exampleInputPassword1">Description</label>
-                  <textarea class="form-control" id="desc" rows="2" cols="50" name="description" placeholder="Enter Description" value="{{{ $Advertisements->description  ?? '' }}}" required=""></textarea>
+                  <textarea class="form-control" id="desc" rows="2" cols="50" name="description" placeholder="Enter Description" required=""></textarea>
                 </div>
               </div>
               <div class="col-md-6">
                <div class="form-group">
                 <label for="exampleInputPassword1">Company</label>
-                <input type="text" class="form-control" name="company"  value="{{{ $Advertisements->company  ?? '' }}}" required>
+                <input type="text" class="form-control" name="company" required>
                 
               </div>
             </div>
@@ -92,20 +92,20 @@
           
                <div class="form-group">
                 <label for="exampleInputPassword1">Link</label>
-                <input type="text" class="form-control" name="link" value="{{{ $Advertisements->link  ?? '' }}}">
+                <input type="text" class="form-control" name="link">
               </div>
               
               <div class="row">
                 <div class="col-md-6">
                  <div class="form-group">
                   <label for="exampleInputPassword1">Start Date</label>
-                  <input type="date" class="form-control" name="from_date"  value="{{{ $Advertisements->from_date ?? '' }}}"  required>
+                  <input type="date" class="form-control" name="from_date" required>
                 </div>
               </div>
               <div class="col-md-6">
                <div class="form-group">
                 <label for="exampleInputPassword1">End Date</label>
-                <input type="date" class="form-control" name="to_date"  value="{{{ $Advertisements->to_date  ?? '' }}}" required>
+                <input type="date" class="form-control" name="to_date"  required>
                 
               </div>
             </div>

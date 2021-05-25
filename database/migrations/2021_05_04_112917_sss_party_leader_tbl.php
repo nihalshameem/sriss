@@ -21,6 +21,7 @@ class SssPartyLeaderTbl extends Migration
             $table->string('Party_birth_date')->nullable();
             $table->string('Party_death_date')->nullable();
             $table->string('Party_organization')->nullable();
+            $table->string('Party_address')->nullable();
             $table->string('Party_whatsapp_no')->nullable();
             $table->timestamps();
         });

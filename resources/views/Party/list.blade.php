@@ -15,7 +15,7 @@
             <div class="col-sm-3">
             </div>
             <div class="col-sm-4">
-                <h3 class="title-head">Party</h3>
+                <h3 class="title-head">Party Leader</h3>
             </div>
             <div class="col-sm-3">
             </div>

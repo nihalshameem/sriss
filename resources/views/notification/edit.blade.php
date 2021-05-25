@@ -28,6 +28,7 @@
           <div class="add-button" >
             
             <form role="form" method="post" class="col-md-9" action="{{ url('updateNotification') }}" enctype="multipart/form-data" style="margin:0 auto;">
+              <input type="hidden" name="Notification_id" value="{{ $Notifications->Notification_id}}">
               @csrf
               @if( Session::has( 'success' ))
               <div class="alert alert-success alert-block" style="border-color: #8ac38b;color: #388E3C;background-color: #cde0c4;">
@@ -97,7 +98,7 @@
             <div class="col-md-8 form-group">
               <label for="exampleInputFile">Notification Video Path</label>
               <input type="hidden" name="VideoNotification" value="{{ $Notifications->Notification_video_path}}">
-              <input type="hidden" name="Notification_id" value="{{ $Notifications->Notification_id}}">
+              
               <div class="input-group">
               <div class="custom-file">
                 <input type="file" class="custom-file-input" name="VideoPath" id="VideoPath" accept=" video/*" onchange="return VideoValidation()">

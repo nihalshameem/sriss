@@ -21,6 +21,7 @@ class SssReligiousLeaderTbl extends Migration
             $table->string('Religious_birth_date')->nullable();
             $table->string('Religious_death_date')->nullable();
             $table->string('Religious_organization')->nullable();
+            $table->string('Religious_address')->nullable();
             $table->string('Religious_whatsapp_no')->nullable();
             $table->timestamps();
         });

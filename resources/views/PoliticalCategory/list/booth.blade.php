@@ -8,12 +8,11 @@
 	<thead>
 		<tr>
 			<th>Sl No</th>
+			<th>Ward</th>
 			<th>Description</th>
 			<th>Polling Station No</th>
 			<th>Polling Station Location</th>
 			<th>Polling Station Area</th>
-			<th>Ward</th>
-			<th>Assembly Const</th>
 			<th>Edit</th>
 			<th>Delete</th>
 			
@@ -22,26 +21,29 @@
 	<tbody>
 			@foreach ($Booth as $i => $Booth)
 		<tr>
+		    <?php
+		    
+				$ward = App\Models\Ward::where('Ward_Id',$Booth->Ward_Id)->first();
+				
+
+			?>
 			<td>{{ $i+1 }}</td>
+			<td>{{ $ward->Ward_Name }}</td>
 			<td>{{ $Booth->Booth_Desc }}</td>
 			<td>{{ $Booth->Polling_Station_No }}</td>
 			<td>{{ $Booth->Polling_Station_Location }}</td>
 			<td>{{ $Booth->Polling_Station_Area }}</td>
-			<?php
-				$ward = App\Models\Ward::where('Ward_Id',$Booth->Ward_Id)->first();
-				$BoothAgent = App\Models\BoothAgent::where('Booth_Agent_Id',$Booth->Booth_Agent_Id)->first();
-
-				$AssemblyConsituency = App\Models\AssemblyConsituency::where('Assembly_Id',$Booth->Assembly_Const_Id)->first();
-				
-				$ParliamentConsituency = App\Models\ParliamentConsituency::where('Parliament_Id',$Booth->Parliament_Const_Id)->first();
-			?>
-			<td>{{ $ward->Ward_Name }}</td>
-			<td>{{ $AssemblyConsituency->Assembly_Constituency_Desc }}</td>
 						
 			<td><a href="{{ route('Edit.Booth', ['BoothId' => $Booth->Booth_Id]) }}" ><span class="badge bg-danger"><i class="fas fa-edit"></i></span></a>
 			</td>
 			<td>
+				<?php
+					$BoothAgent = App\Models\BoothAgent::where('Booth_id',$Booth->Booth_Id)->first();
+				?>
+				@if($BoothAgent)
+				@else
 				<a onclick="DeleteBooth('{{$Booth->Booth_Id}}')" style="cursor:pointer"><span class="badge bg-danger"><i class="fas fa-trash"></i></span></a>
+				@endif
 			</td>
 		</tr>
 		

@@ -116,7 +116,7 @@ class NewsLetterController extends ApiController
 
         if($newsLetterCount!=0)
         {
-            $newsLetter = NewsLetter::get();
+            $newsLetter = NewsLetter::orderby('Newsletter_id','desc')->get();
             return $this->respond([
                             'status' => 'success',
                             'message' => 'success',

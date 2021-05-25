@@ -246,7 +246,7 @@ class MembersController extends ApiController
         $user->api_token = $token;
         $user->save();
         $user = User::where('mobile_number','LIKE','%'.$mobile_number.'%')->first();
-        $member = Member::where('Mobile_No', $mobile_number)->value('Profile_Picture');
+        $member = Member::where('Mobile_No', $mobile_number)->value('Member_image');
         return Response([
             'status' => 'success',
             'code' => $this->getStatusCode(),
@@ -1409,17 +1409,17 @@ class MembersController extends ApiController
         return view('Member.member_details',compact('Member','created_at','MemberCategory'));
     }
 
-    public function membersearch(Request $request)
+     public function membersearch(Request $request)
     {
-
         if($request->ajax())
-     
         {
-     
             $output="";
 
-           
+           if($request->memberCategory == null && $request->membersearch != null){
+
+
                 $members = Member::where('Mobile_No','LIKE','%'.$request->membersearch."%")->orWhere('Email_Id','LIKE','%'.$request->membersearch."%")->orWhere('Member_Id','LIKE','%'.$request->membersearch."%")->first();
+                //dd($members);
 
                 if($request->memberCategory!=null)
                 {
@@ -1436,14 +1436,17 @@ class MembersController extends ApiController
                 {
                     $members = Member::where('Mobile_No','LIKE','%'.$request->membersearch."%")->orWhere('Email_Id','LIKE','%'.$request->membersearch."%")->orWhere('Member_Id','LIKE','%'.$request->membersearch."%")->get();
                 }
-               
-                     
+               }else{
+
+                    $members = Member::where('Member_Category_Id', $request->memberCategory)->get();
+               }
+                
             if($members)
-         
             {
                 
-                   foreach ($members as $key => $member) {
-                 
+                foreach ($members as $key => $member) {
+                    
+                 $category = MemberCategory::where('MemberCategory_id',$member->Member_Category_Id)->first();
                 $output.='<tr>'.
                  
                 '<td>'.$member->First_Name.'</td>'.
@@ -1453,6 +1456,7 @@ class MembersController extends ApiController
                 '<td>'.$member->Pincode.'</td>'.
                 '<td>'.$member->created_at->toDateString().'</td>'.
                 '<td>'.$member->Address_Line_1.'</td>'.
+                '<td>'.$category->Category.'</td>'.
                 '<td>'.$member->Member_Active_Flag.'</td>'.
                 '</tr>';
                  

@@ -29,6 +29,7 @@ class CasteController extends ApiController
             $CasteLeader->Caste_birth_date = $request->dob;
             $CasteLeader->Caste_death_date = $request->dod;
             $CasteLeader->Caste_organization = $request->organization;
+            $CasteLeader->Caste_address = $request->address;
             $CasteLeader->Caste_whatsapp_no = $request->whatsapp;
 			$CasteLeader->save();
 			return redirect(route('list.Caste'));
@@ -49,6 +50,7 @@ class CasteController extends ApiController
                             'Caste_birth_date'=> $request->dob,
                             'Caste_death_date'=> $request->dod,
                             'Caste_organization'=> $request->organization, 
+                            'Caste_address'=> $request->address, 
                             'Caste_whatsapp_no'=> $request->whatsapp] );
 			return redirect(route('list.Caste'));
 		}

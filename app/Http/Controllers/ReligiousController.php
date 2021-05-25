@@ -28,6 +28,7 @@ class ReligiousController extends ApiController
             $ReligiousLeader->Religious_birth_date = $request->dob;
             $ReligiousLeader->Religious_death_date = $request->dod;
             $ReligiousLeader->Religious_organization = $request->organization;
+            $ReligiousLeader->Religious_address = $request->address;
             $ReligiousLeader->Religious_whatsapp_no = $request->whatsapp;
 			$ReligiousLeader->save();
 			return redirect(route('list.Religious'));
@@ -48,6 +49,7 @@ class ReligiousController extends ApiController
                 'Religious_birth_date'=> $request->dob,
                 'Religious_death_date'=> $request->dod,
                 'Religious_organization'=> $request->organization, 
+                'Religious_address'=> $request->address, 
                 'Religious_whatsapp_no'=> $request->whatsapp
             ]);
 			return redirect(route('list.Religious'));

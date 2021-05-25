@@ -292,7 +292,7 @@ td{
 
 </div>
 <div style="max-width: 200px; margin: auto;">
-  <a href="/Edit/{{Session::get('Advertisement_id')}}" class="btn btn-primary">Previous</a>
+  <a href="/AdEdit/{{Session::get('Advertisement_id')}}" class="btn btn-primary">Previous</a>
   <button type="submit" class="btn btn-primary">Submit</button>
 </div><br><br>
 </form>

@@ -1,7 +1,7 @@
 <aside class="main-sidebar elevation-4" style="background-color:#edf6fe; overflow: scroll;">
   <!-- Brand Logo -->
   <a href="#" class="brand-link">
-    <img src="./assets/login/images/logo.png" alt="Samithi Logo" class=""
+    <img src="{{ asset('/assets/login/images/logo.png') }}" alt="Samithi Logo" class=""
     style="width:220px;height:80px">
   </a>
 

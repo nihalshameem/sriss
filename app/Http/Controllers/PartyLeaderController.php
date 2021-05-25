@@ -29,6 +29,7 @@ class PartyLeaderController extends ApiController
             $PartyLeader->Party_birth_date = $request->dob;
             $PartyLeader->Party_death_date = $request->dod;
             $PartyLeader->Party_organization = $request->organization;
+            $PartyLeader->Party_address = $request->address;
             $PartyLeader->Party_whatsapp_no = $request->whatsapp;
 			$PartyLeader->save();
 			return redirect(route('list.Party'));
@@ -49,6 +50,7 @@ class PartyLeaderController extends ApiController
                 'Party_birth_date'=> $request->dob,
                 'Party_death_date'=> $request->dod,
                 'Party_organization'=> $request->organization, 
+                'Party_address'=> $request->address, 
                 'Party_whatsapp_no'=> $request->whatsapp] );
 			return redirect(route('list.Party'));
 		}

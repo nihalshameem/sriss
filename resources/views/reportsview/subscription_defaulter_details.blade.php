@@ -24,6 +24,24 @@
         
       </div>
     </div>
+    <div class="col-12">
+      <div class="row mb-2">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-3">
+         
+       </div>
+       <div class="col-sm-3">
+        
+       </div>
+       <div class="col-sm-2" style="padding-top:30px">
+         
+       </div>
+       <div class="col-sm-1" style="padding-top:30px">
+        <a onclick="exportTableToExcel('onlinereport','subscription Defaulter reports')" style="float:right;cursor: pointer"><i class="fa fa-download" aria-hidden="true" style="font-size:30px;color:#8f3319"></i></a>
+      </div>
+    </div>
+  </div> 
   <div class="col-12">
 
    

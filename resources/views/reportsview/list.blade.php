@@ -187,7 +187,7 @@
             <span class="info-box-icon"><i class="fas fa-user-circle"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Subscription Defaulter Report</span>
+              <span class="info-box-text">Sub Defaulter Report</span>
               <span class="info-box-number"></span>
             </div>
             <!-- /.info-box-content -->

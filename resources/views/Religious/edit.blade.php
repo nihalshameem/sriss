@@ -8,7 +8,7 @@
 
             <div class="row mb-2">
               <div class="col-sm-2">
-                <a href="/religious/list" class="btn btn-back" style="float:left;border-radius: 3px;background-color: aqua;margin-top: -10px;margin-left: -16px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
+                <a href="/religious" class="btn btn-back" style="float:left;border-radius: 3px;background-color: aqua;margin-top: -10px;margin-left: -16px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
             </div>
             <div class="col-sm-3">
             </div>
@@ -54,6 +54,10 @@
                 <input type="text" class="form-control" name="organization" placeholder="Enter Organization Name" value="{{$ReligiousLeader->Religious_organization}}" required>
             </div>
             <div class="form-group">
+                <label for="exampleInputPassword1">Address</label>
+                <textarea class="form-control" name="address" placeholder="Enter Address" required="" value="{{$ReligiousLeader->Religious_address}}"></textarea> 
+            </div>
+            <div class="form-group">
                 <label for="exampleInputPassword1">Whatsapp No</label>
                 <input type="number" class="form-control" name="whatsapp" placeholder="Enter Whatsapp No" value="{{$ReligiousLeader->Religious_whatsapp_no}}" >
             </div>  
@@ -62,7 +66,7 @@
       
   </div>
   <div style="max-width: 200px; margin: auto;">
-      <a href="/religious/list" class="btn btn-primary">Cancel</a>
+      <a href="/religious" class="btn btn-primary">Cancel</a>
       <button type="submit" class="btn btn-primary">Submit</button>
   </div>
 </form>

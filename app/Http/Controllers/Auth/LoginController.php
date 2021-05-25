@@ -59,8 +59,7 @@ class LoginController extends Controller
         $user = User::where('email',$request->email)->first();
         $role = UserRoles::where('user_id',$user->id)->first();
         Session::put('name',$user->name);
-        if($user->Is_Volunteer=='Y')
-        {
+        
             if($role->role_id=='9')
             {
                 return redirect()->intended('/Volunteer');
@@ -69,10 +68,7 @@ class LoginController extends Controller
             {
                 return redirect()->intended('/home');
             }
-        }
-        else
-        {
-            return \Redirect::back()->withInput()->withWarning( 'User is not a volunteer');
-        }
+        
+        
     }
 }
