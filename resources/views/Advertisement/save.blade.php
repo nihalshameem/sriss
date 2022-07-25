@@ -63,7 +63,7 @@
             <label for="exampleInputFile">Banner Image Path</label>
             <div class="input-group">
               <div class="custom-file">
-                <input type="file" class="custom-file-input" name="AdvertisementImg" id="exampleInputFile2" accept=" image/gif, image/jpeg ,image/png" onchange="upload_check2()">
+                <input type="file" class="custom-file-input" name="AdvertisementImg" id="exampleInputFile2" accept=" image/gif, image/jpeg ,image/png" onchange="upload_check2()" required="">
                 <label class="custom-file-label"  for="exampleInputFile2">Choose file</label>
               </div>
               <div class="input-group-append">

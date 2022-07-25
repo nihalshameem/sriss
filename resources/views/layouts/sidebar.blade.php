@@ -33,7 +33,7 @@
             </a>
           </li>
           @endif
-          @if($role->hasPermissions(['News Letter','Member (Activate / De activate)','Search Members','Notifications','Polls','Contributions','Feedback','Member Approval','Volunteer','Advertisement','Member Group','Add Group Members'],$role->role_id))
+          @if($role->hasPermissions(['News Letter','Member (Activate / De activate)','Search Members','Notifications','Polls','Contributions','Feedback','Member Approval','Volunteer','Member Group','Add Group Members'],$role->role_id))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link" style="color:#3e3e3e">
               <i class="nav-icon fas fa-tasks"></i>
@@ -154,18 +154,7 @@
             </li> 
 
             @endif
-            @if($role->havePermission('Advertisement',$role->role_id)) 
-            <?php
-
-            $permission = App\Models\Permission::where('slug','Advertisement')->first();
-            ?> 
-            <li class="nav-item">
-              <a href="{{ route('list.advertisements') }}" class="nav-link {{ (request()->segment(2) == 'list.advertisements') ? 'active' : '' }}" style="color:#3e3e3e">
-                <i class="nav-icon fa fa-list-alt fa-lg"></i>
-                <p> {{$permission->name}}</p>
-              </a>
-            </li>
-            @endif
+            
             @if($role->havePermission('Member Group',$role->role_id))
             <?php
 
@@ -196,7 +185,7 @@
         </li>
         @endif
 
-        @if($role->hasPermissions(['36','37'],$role->role_id))
+        @if($role->hasPermissions(['Reports View & Download','Reports'],$role->role_id))
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link" style="color:#3e3e3e">
             <i class="nav-icon fas fa-file-excel"></i>
@@ -337,7 +326,7 @@
     </li>
     @endif   
 
-    @if($role->hasPermissions(['App Image','About Us','Compliance','Language Permission','App Icon','Profile Configuration','AddUser','Member Category -SA'],$role->role_id))
+    @if($role->hasPermissions(['App Image','About Us','Advertisement','Compliance','Language Permission','App Icon','Profile Configuration','AddUser','Member Category -SA'],$role->role_id))
     <li class="nav-item has-treeview">
       <a href="#" class="nav-link" style="color:#3e3e3e">
         <i class="nav-icon fas fa-cogs"></i>
@@ -359,6 +348,18 @@
           </a>
         </li> 
         @endif
+        @if($role->havePermission('Advertisement',$role->role_id)) 
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Advertisement')->first();
+            ?> 
+            <li class="nav-item">
+              <a href="{{ route('list.advertisements') }}" class="nav-link {{ (request()->segment(2) == 'list.advertisements') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-list-alt fa-lg"></i>
+                <p> {{$permission->name}}</p>
+              </a>
+            </li>
+            @endif
         @if($role->havePermission('Compliance',$role->role_id))
         <?php
 

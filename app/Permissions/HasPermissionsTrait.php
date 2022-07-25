@@ -92,7 +92,7 @@ trait HasPermissionsTrait {
    public function hasPermissions($permissions,$role) 
   {
     $permission = Permission::whereIn('slug',$permissions)->pluck('id');
-    return (bool) DB::table('roles_permissions')->where('role_id',$role)->count();
+    return (bool) DB::table('roles_permissions')->where('role_id',$role)->whereIn('permission_id',$permission)->count();
   }
 
 }

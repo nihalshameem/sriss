@@ -82,6 +82,7 @@
               <th>Address</th>
               <th>Category</th>
               <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody id="membersearch">
@@ -104,7 +105,10 @@
 
               <td>{!! html_entity_decode($value) !!}</td>
               <td>{{ $category->Category }}</td> 
-              <td>@if($member->active_flag=='Y')<span class="right badge badge-success">Yes</span>@else<span class="right badge badge-danger">No</span>@endif</td>           
+              <td>@if($member->Member_Active_Flag=='Y')<span class="right badge badge-success">Yes</span>@else<span class="right badge badge-danger">No</span>@endif</td>           
+              <td style="text-align:center;">
+              <a href="/MemberEdit/{{ $member->Member_Id }}"><i class="fa fa-wrench" aria-hidden="true"></i></a>
+              </td>
               
             </tr>
             @endforeach

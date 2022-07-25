@@ -225,11 +225,11 @@ class NotificationController extends ApiController
                     }
                     if($request->is_group=='N')
                     {
-                         $notification->broadcast_type='Geo';
+                         $notification->broadcast_type='Y';
                     }
                     else
                     {
-                        $notification->broadcast_type='Group';
+                        $notification->broadcast_type='N';
                     }
                     $notification->save();
 
@@ -1204,7 +1204,6 @@ class NotificationController extends ApiController
         public function editNotificationGroupBroadcast(){
             $Groups=MemberGroup::where('active','Y')->get();
             $notifications=Notification::where('Notification_id',Session::get('notificationId'))->first();
-            dd(session()->all());
             $NotificationGroupBroadcast = NotificationGroupBroadcast::where('Notification_id',Session::get('notificationId'))->get();
             
             
