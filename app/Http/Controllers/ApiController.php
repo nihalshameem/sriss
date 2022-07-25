@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Response;
 use \Illuminate\Http\Response as Res;
-
 /**
  * Class ApiController
  * @package App\Modules\Api\Lesson\Controllers
@@ -14,7 +13,6 @@ class ApiController extends Controller{
      *
      * @return void
      */
-
     /**
      * @var int
      */
