@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Response;
 use \Illuminate\Http\Response as Res;
+
 /**
  * Class ApiController
  * @package App\Modules\Api\Lesson\Controllers
@@ -13,10 +14,7 @@ class ApiController extends Controller{
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->beforeFilter('auth', ['on' => 'post']);
-    }
+
     /**
      * @var int
      */
@@ -41,7 +39,7 @@ class ApiController extends Controller{
     public function respondCreated($message, $data=null){
         return $this->respond([
             'status' => 'success',
-            'status_code' => Res::HTTP_CREATED,
+            'code' => Res::HTTP_CREATED,
             'message' => $message,
             'data' => $data
         ]);
@@ -63,7 +61,7 @@ class ApiController extends Controller{
         ]);
         return $this->respond([
             'status' => 'success',
-            'status_code' => Res::HTTP_OK,
+            'code' => Res::HTTP_OK,
             'message' => $message,
             'data' => $data
         ]);
@@ -72,7 +70,7 @@ class ApiController extends Controller{
     public function respondNotFound($message = 'Not Found!'){
         return $this->respond([
             'status' => 'error',
-            'status_code' => Res::HTTP_NOT_FOUND,
+            'code' => Res::HTTP_NOT_FOUND,
             'message' => $message,
         ]);
     }
@@ -80,14 +78,29 @@ class ApiController extends Controller{
     public function respondInternalError($message){
         return $this->respond([
             'status' => 'error',
-            'status_code' => Res::HTTP_INTERNAL_SERVER_ERROR,
+            'code' => Res::HTTP_INTERNAL_SERVER_ERROR,
             'message' => $message,
         ]);
     }
+    public function respondValidationError1($message, $errors){
+        return $this->respond([
+            'status' => 'error',
+            'code' => Res::HTTP_UNPROCESSABLE_ENTITY,
+            'message' => $message,
+        ]);
+    }
+    public function UnsucessfullError($message){
+        return $this->respond([
+            'status' => 'failure',
+            'code' => Res::HTTP_UNPROCESSABLE_ENTITY,
+            'message' => $message,
+        ]);
+    }
+    
     public function respondValidationError($message, $errors){
         return $this->respond([
             'status' => 'error',
-            'status_code' => Res::HTTP_UNPROCESSABLE_ENTITY,
+            'code' => Res::HTTP_UNPROCESSABLE_ENTITY,
             'message' => $message,
             'data' => $errors
         ]);
@@ -96,6 +109,14 @@ class ApiController extends Controller{
         return Response::json($data, $this->getStatusCode(), $headers);
     }
     public function respondWithError($message){
+        return $this->respond([
+            'status' => 'failure',
+            'code' => Res::HTTP_UNAUTHORIZED,
+            'message' => $message,
+        ]);
+    }
+
+    public function respondTokenError($message){
         return $this->respond([
             'status' => 'error',
             'status_code' => Res::HTTP_UNAUTHORIZED,

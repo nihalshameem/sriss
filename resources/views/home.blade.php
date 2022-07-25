@@ -1,403 +1,136 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-2">
-           
-    <div class="col-md-7 col-md-offset-4" style="margin-top: 20px">
-                <a class="col-md-8 " href="referral_reports" style="text-decoration: none;font-size: 20px;font-weight: bold;background-color: #0e56ce;color:white;padding:20px;border-radius:10px">
-                    <span style="margin-right: 50px;padding-left:50px">Total Referrals</span>{{ $total_referrals }}</a>
-            
-    </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" style="background-color:#F3F8FA;color:white">Dashboard</div>
-
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                  
-                    
-                    
-                    
-<div class="row">                         
-   <center>
-
-    <table width="70%"  style="border-collapse: separate; border-spacing: 50px 0;margin-top: -60px"> 
-
-        <!--today -->
-         <tr style="text-align: center;">
-            <td></td>
-            <td id="css1">&nbsp;&nbsp;&nbsp;&nbsp;Members&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td id="css2">Notifications</td>
-            <td id="css3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ads&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td id="css4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Polls&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        </tr>
-
-        <tr  style="font-size:20px;text-align: center;">
-            <td>Today</td>
-            <td style="padding-top: 38px"><a href="/today_members" id="link1">{{ $today_members }}</a></td> 
-            <td style="padding-top: 38px"><a href="/today_notifications" id="link2">{{ $today_notifications }}</a></td>                    
-            <td style="padding-top: 38px"><a href="/today_ads" id="link3"">{{ $today_ads }}</a>
-            </td> 
-            <td style="padding-top: 38px"><a href="/today_polls" id="link4">{{ $today_polls }}</a></td> 
-
-        </tr>
-
-        <tr style="text-align: center;height: 60px">
-            <td></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-        </tr>
-
-        <tr  style="font-size:20px;text-align: center;">
-            <td></td>
-            <td style=""></td> 
-            <td style=""></td>                    
-            <td style=""></td> 
-            <td style=""></td> 
-
-        </tr>
-        
-     
-     
-     
-     
-        
-        
-    <!--yesterday -->
-    
-    <tr style="text-align: center;">
-        <td></td>
-        <td id="css1">&nbsp;&nbsp;&nbsp;&nbsp;Members&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td id="css2">Notifications</td>
-        <td  id="css3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ads&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td id="css4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Polls&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    </tr>
-
-    <tr  style="font-size:20px;text-align: center;">
-        <td style="font-size:20px;text-align: center;">Yesterday</td>
-        <td style="padding-top: 38px"><a href="/yesterday_members" id="link1">{{ $yesterday_members }}</a></td> 
-         <td style="padding-top: 38px"><a href="/yesterday_notifications" id="link2">{{ $yesterday_notifications }}</a></td>                    
-        <td style="padding-top: 38px"><a href="/yesterday_ads" id="link3">{{ $yesterday_ads }}</a></td> 
-        <td style="padding-top: 38px"><a href="/yesterday_polls" id="link4">{{ $yesterday_polls }}</a></td> 
-
-    </tr> 
-    
-    <tr style="text-align: center;height: 60px"">
-        <td></td>
-        <td style="font-size:20px;font-weight: bold"></td>
-        <td style="font-size:20px;font-weight: bold"></td>
-        <td style="font-size:20px;font-weight: bold"></td>
-        <td style="font-size:20px;font-weight: bold"></td>
-    </tr>
-
-    <tr  style="font-size:20px;text-align: center;">
-        <td></td>
-        <td style=""></td> 
-        <td style=""></td>                    
-        <td style=""></td> 
-        <td style=""></td> 
-
-    </tr>
-
-  
-     
-        
-<!--This Month -->
-    
-    <tr style="text-align: center;">
-        <td></td>
-        <td id="css1">&nbsp;&nbsp;&nbsp;&nbsp;Members&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td id="css2">Notifications</td>
-        <td id="css3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ads&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td id="css4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Polls&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    </tr>
-    <tr  style="font-size:20px;text-align: center;">
-        <td style="font-size:20px;text-align: center;">This month</td>
-        <td style="padding-top: 38px"><a href="/thismonth_members" id="link1">{{ $thismonth_members }}</a></td> 
-        <td style="padding-top: 38px"><a href="/thismonth_notifications" id="link2">{{ $thismonth_notifications }}</a></td>                    
-        <td style="padding-top: 38px"><a href="/thismonth_ads" id="link3">{{ $thismonth_ads }}</a></td> 
-        <td style="padding-top: 38px"><a href="/thismonth_polls" id="link4">{{ $thismonth_polls }}</a></td> 
-
-    </tr> <br><br>
-     <tr style="text-align: center;height: 60px">
-        <td></td>
-        <td style="font-size:20px;font-weight: bold"></td>
-        <td style="font-size:20px;font-weight: bold"></td>
-        <td style="font-size:20px;font-weight: bold"></td>
-        <td style="font-size:20px;font-weight: bold"></td>
-    </tr>
-
-    <tr  style="font-size:20px;text-align: center;">
-        <td></td>
-        <td style=""></td> 
-        <td style=""></td>                    
-        <td style=""></td> 
-        <td style=""></td> 
-
-    </tr>
-    
-    
-    
-    <!--past month -->
-                    
-                        <tr style="text-align: center;">
-                            <td></td>
-                            <td id="css1">&nbsp;&nbsp;&nbsp;&nbsp;Members&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td id="css2">Notifications</td>
-                            <td id="css3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ads&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td id="css4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Polls&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                        <tr  style="font-size:20px;text-align: center;">
-                            <td style="font-size:20px;text-align: center;">Past Month</td>
-                            <td style="padding-top: 38px"><a href="/lastmonth_members" id="link1">{{ $lastmonth_members }}</a></td> 
-                            <td style="padding-top: 38px"><a href="/lastmonth_notifications" id="link2">{{ $lastmonth_notifications }}</a></td>                    
-                            <td style="padding-top: 38px"><a href="/lastmonth_ads" id="link3">{{ $lastmonth_ads }}</a></td> 
-                            <td style="padding-top: 38px"><a href="/lastmonth_polls" id="link4">{{ $lastmonth_polls }}</a></td> 
-
-                        </tr> <br><br>
-                         <tr style="text-align: center;height: 60px">
-                            <td></td>
-                            <td style="font-size:20px;font-weight: bold"></td>
-                            <td style="font-size:20px;font-weight: bold"></td>
-                            <td style="font-size:20px;font-weight: bold"></td>
-                            <td style="font-size:20px;font-weight: bold"></td>
-                        </tr>
-
-                        <tr  style="font-size:20px;text-align: center;">
-                            <td></td>
-                            <td style=""></td> 
-                            <td style=""></td>                    
-                            <td style=""></td> 
-                            <td style=""></td> 
-
-                        </tr>
-
-
-
-
-    <!--this year -->
-      
-        <tr style="text-align: center;">
-            <td></td>
-            <td id="css1">&nbsp;&nbsp;&nbsp;&nbsp;Members&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td id="css2">Notifications</td>
-            <td id="css3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ads&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td id="css4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Polls&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        </tr>
-        
-        
-        <tr  style="font-size:20px;text-align: center;">
-            <td>This year</td>
-            <td style="padding-top: 38px"><a href="/thisyear_members" id="link1">{{ $thisyear_members }}</a></td> 
-            <td style="padding-top: 38px"><a href="/thisyear_notifications" id="link2">{{ $thisyear_notifications }}</a></td>                    
-            <td style="padding-top: 38px"><a href="/thisyear_ads" id="link3">{{ $thisyear_ads }}</a></td> 
-            <td style="padding-top: 38px"><a href="/thisyear_polls" id="link4">{{ $thisyear_polls }}</a></td> 
-
-        </tr> <br><br>
-        
-        <tr style="text-align: center;height: 60px"">
-            <td></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-        </tr>
-
-        <tr  style="font-size:20px;text-align: center;">
-            <td></td>
-            <td style=""></td> 
-            <td style=""></td>                    
-            <td style=""></td> 
-            <td style=""></td> 
-
-        </tr>
-        
-        
-        
-    
-    <!--past year -->
-      
-        <tr style="text-align: center;">
-            <td></td>
-            <td id="css1">&nbsp;&nbsp;&nbsp;&nbsp;Members&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td id="css2">Notifications</td>
-            <td id="css3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ads&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td id="css4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Polls&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        </tr>
-        
-        
-        <tr  style="font-size:20px;text-align: center;">
-            <td>Past year</td>
-            <td style="padding-top: 38px"><a href="/lastyear_members" id="link1">{{ $lastyear_members }}</a></td> 
-            <td style="padding-top: 38px"><a href="/lastyear_notifications" id="link2">{{ $lastyear_notifications }}</a></td>                    
-            <td style="padding-top: 38px"><a href="/lastyear_ads" id="link3">{{ $lastyear_ads }}</a></td> 
-            <td style="padding-top: 38px"><a href="/lastyear_polls" id="link4">{{ $lastyear_polls }}</a></td> 
-
-        </tr> <br><br>
-        
-        <tr style="text-align: center;height: 60px"">
-            <td></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-            <td style="font-size:20px;font-weight: bold"></td>
-        </tr>
-
-        <tr  style="font-size:20px;text-align: center;">
-            <td></td>
-            <td style=""></td> 
-            <td style=""></td>                    
-            <td style=""></td> 
-            <td style=""></td> 
-
-        </tr>
-        
-        
-        
-        
-        
-    <!-- Total  -->
-
-    <tr style="text-align: center;">
-        <td></td>
-        <td id="css1">&nbsp;&nbsp;&nbsp;&nbsp;Members&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td id="css2">Notifications</td>
-        <td id="css3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ads&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td id="css4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Polls&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    </tr>
-    
-    
-    <tr  style="font-size:20px;text-align: center;">
-        <td>Total</td>
-        <td style="padding-top: 38px"><a href="/total_members" id="link1">{{ $total_members }}</a></td></td> 
-        <td style="padding-top: 38px"><a href="/total_notifications" id="link2">{{ $total_notifications }}</a></td>                    
-        <td style="padding-top: 38px"><a href="/total_ads" id="link3">{{ $total_ads }}</a></td> 
-        <td style="padding-top: 38px"><a href="/total_polls" id="link4">{{ $total_polls }}</a></td> 
-    </tr> 
-
-    </table>
-                    <br><br><br>
-
-    </center>                
-                    </div>
-                </div>             
-            </div>         
-        </div>     
-    </div> 
-</div> 
-
-
-<style>
-    #css1
-{
-	font-size:16px;
-	font-weight: bold;
-	background-color:#591a4c;
-	color:white;
-	padding:5px;
-}
-
-#css2{
-font-size:16px;
-font-weight: bold;
-background-color:#071f44;
-color:white;padding:5px;
-}
-
-#css3{
-font-size:16px;
-font-weight: bold;
-background-color:#0c2b03;
-color:white;padding:5px;
-}
-
-#css4{
-font-size:16px;
-font-weight: bold;
-background-color: #66290f;
-color:white;padding:7px;
-}
-
-#row1{
-font-size:20px;
-font-weight: bold;
-background-color: #874479;
-color:white;width:80px;
-height:60px;
-width:160px;
-padding:10px;
-}
-
-#row2{
-font-size:20px;
-font-weight: bold;
-background-color: #246ad6;
-color:white;width:100px;
-height:100px;
-padding:10px;
-}
-
-#row3{
-font-size:20px;
-font-weight: bold;
-background-color: #598c4a;
-color:white;width:120px;
-height:100px;
-padding:10px;
-}
-
-#row4{
-font-size:20px;
-font-weight: bold;
-background-color: #937569;
-color:white;
-width:120px;
-height:100px;
-padding:10px;
-}
-
-
-#link1{
-color:white;
-width:100px;
-height:100px;
-background-color:#874479;
-padding:40px;
-text-decoration:none;
-}
-
-#link2{
-color:white;
-width:100px;
-height:100px;
-background-color:#246ad6;
-padding:40px;
-text-decoration:none;
-}
-
-#link3{
-color:white;
-width:100px;
-height:100px;
-background-color:#598c4a;
-padding:40px;
-text-decoration:none;
-}
-
-#link4{
-color:white;
-width:100px;
-height:100px;
-background-color:#937569;
-padding:40px;
-text-decoration:none;
-}
+<!-- Content Wrapper. Contains page content -->
+<style type="text/css">
+  td{ font-weight: bold; }
 </style>
+  <div class="content-wrapper" style="padding-top:30px;">
+   <br>
+   <br>
+    <section class="content">
+        <div class="col-md-12">
+          <div class="col-12">
+
+            <div class="row mb-2">
+              <div class="col-sm-2">
+                <a href="/home" class="btn btn-back" style="float:left;border-radius: 3px;background-color: aqua;margin-top: -15px;margin-left: -19px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;</a>
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-4">
+                <h3 class="title-head">Dashboard</h3>
+            </div>
+            <div class="col-sm-3">
+            </div>
+            
+        </div>
+    </div>
+            <div class="row">
+        
+        
+          <div class="col-md-12 card">
+          
+            <div class="card-body">
+                
+              <table id="example2" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th style="width:150px;">Period</th>
+                  <th style="width:150px;text-align:center"><a href="/Reports/MembersListView"  style="color: black">Members</a></th>
+                  <th style="width:150px;text-align:center"><a href="/Notifications" style="color: black">Notifications</a></th>
+                  <th style="width:150px;text-align:center"><a href="{{ route('OnlineContributions') }}" style="color:black">Online Contributions</a></th>
+                  <th style="width:150px;text-align:center"><a href="{{ route('OfflineContributions') }}" style="color:black">Offline Contributions</a></th>
+                  <th style="width:150px;text-align:center"><a href="{{ route('listfeedback') }}" style="color:black">Feedback</a></th>
+                  <th style="width:150px;text-align:center"><a href="{{ route('volunteer.reportsview') }}" style="color:black">Volunteer Report</a></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td style="font-weight: normal;">Today</td>
+                  <td style="text-align:center">{{$Todaymember}}</td>
+                  <td style="text-align:center">{{$Todaynotification}}</td>
+                  <td style="text-align:center"> {{$Todayonline_amount}}</td>
+                  <td style="text-align:center">{{$Todayoffline_amount}}</td>
+                  <td style="text-align:center"> {{$Todayfeedback_count}}</td>
+                  <td style="text-align:center">{{$TodayprofileKaryakarthas}}</td>
+                </tr>
+                 <tr>
+                  <td style="font-weight: normal;">Yesterday</td>
+                  <td style="text-align:center">{{$Previousmember}}</td>
+                  <td style="text-align:center">{{$Previousnotification}}</td>
+                  <td style="text-align:center"> {{$Previousonline_amount}}</td>
+                  <td style="text-align:center">{{$Previousoffline_amount}}</td>
+                  <td style="text-align:center"> {{$Previousfeedback_count}}</td>
+                  <td style="text-align:center">{{$PreviousprofileKaryakarthas}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: normal;">This Week</td>
+                  <td style="text-align:center">{{$Thisweekmember}}</td>
+                  <td style="text-align:center">{{$Thisweeknotification}}</td>
+                  <td style="text-align:center"> {{$Thisweekonline_amount}}</td>
+                  <td style="text-align:center">{{$Thisweekoffline_amount}}</td>
+                  <td style="text-align:center"> {{$Thisweekfeedback_count}}</td>
+                  <td style="text-align:center">{{$ThisweekprofileKaryakarthas}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: normal;">This Month</td>
+                  <td style="text-align:center">{{$ThisMonthmember}}</td>
+                  <td style="text-align:center">{{$ThisMonthnotification}}</td>
+                  <td style="text-align:center"> {{$ThisMonthonline_amount}}</td>
+                  <td style="text-align:center">{{$ThisMonthoffline_amount}}</td>
+                  <td style="text-align:center"> {{$ThisMonthfeedback_count}}</td>
+                  <td style="text-align:center">{{$ThisMonthprofileKaryakarthas}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: normal;">Previous Month</td>
+                  <td style="text-align:center">{{$PreviousMonthmember}}</td>
+                  <td style="text-align:center">{{$Previousmonthnotification}}</td>
+                  <td style="text-align:center"> {{$Previousmonthonline_amount}}</td>
+                  <td style="text-align:center">{{$Previousmonthoffline_amount}}</td>
+                  <td style="text-align:center"> {{$Previousmonthfeedback_count}}</td>
+                  <td style="text-align:center">{{$PreviousMonthprofileKaryakarthas}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: normal;">This Year</td>
+                  <td style="text-align:center">{{$ThisYearmember}} </td>
+                  <td style="text-align:center">{{$ThisYearnotification}}</td>
+                  <td style="text-align:center"> {{$ThisYearonline_amount}}</td>
+                  <td style="text-align:center">{{$ThisYearoffline_amount}}</td>
+                  <td style="text-align:center"> {{$ThisYearfeedback_count}}</td>
+                  <td style="text-align:center">{{$ThisYearprofileKaryakarthas}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: normal;">All</td>
+                  <td style="text-align:center">{{$members_count}}</td>
+                  <td style="text-align:center">{{$Notification_count}}</td>
+                  <td style="text-align:center">{{$online_amount}}</td>
+                  <td style="text-align:center">{{$offline_amount}}</td>
+                  <td style="text-align:center">{{$feedback_count}}</td>
+                  <td style="text-align:center">{{$profileKaryakarthas}}</td>
+                </tr>
+             
+                </tbody>
+                
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+         
+
+          
+           
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
 @endsection
+
+

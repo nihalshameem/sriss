@@ -1,20 +1,27 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+            <div class="">
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                <div class="">
+                    @if( Session::has( 'success' ))
+            <div class="alert alert-success alert-block" style="    border-color: #8ac38b;
+        color: #388E3C;
+        background-color: #cde0c4;">
+                <p style="font-weight:600">{{ Session::get('success') }}</p>
+            </div>
+        @elseif( Session::has( 'warning' ))
+            <div class="alert alert-danger alert-block" style="border-color: #FFA07A;
+        color: #388E3C;">
+                <p style="font-weight:600">{{ Session::get('warning') }}</p>
+            </div>
 
-                    <form method="POST" action="{{ route('password.email') }}">
+         @endif
+
+                    <form method="POST" action="{{ route('send.email') }}">
                         @csrf
 
                         <div class="form-group row">

@@ -1,13 +1,18 @@
 <?php
 
-
-
 namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Validator;
+use JWTAuth;
+use Session;
+use App\Models\User;
+use App\Models\UserRoles;
 
 class LoginController extends Controller
 {
@@ -29,20 +34,41 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = RouteServiceProvider::HOME;
+  
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+
+    public function AdminLogin(Request $request)
     {
-        $this->middleware('guest')->except('logout');
-    }
-      
-    public function logout(Request $request) {
-      Auth::logout();
-      return redirect('/login')->with('message', 'You are not allowed to login!');
+        $this->validate($request, [
+            'email'   => 'required',
+            'password' => 'required|min:5'
+        ]);
+
+        $credentials = ['email' => $request->email, 'password' => $request->password];
+        if ( ! $token = JWTAuth::attempt($credentials)) {
+            return \Redirect::back()->withInput()->withWarning( 'User credentials are incorrect');
+        }
+        $credentials = ['email' => $request->email, 'password' => $request->password];
+        $token = JWTAuth::attempt($credentials);
+        $user = User::where('email',$request->email)->first();
+        $role = UserRoles::where('user_id',$user->id)->first();
+        Session::put('name',$user->name);
+        
+            if($role->role_id=='9')
+            {
+                return redirect()->intended('/Volunteer');
+            }
+            else
+            {
+                return redirect()->intended('/home');
+            }
+        
+        
     }
 }
