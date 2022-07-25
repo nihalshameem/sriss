@@ -1,415 +1,472 @@
-<style>
-  .navbar-default .navbar-nav>li>a {
-    color: #fff;
-}
-.nav-side-menu {
-  overflow: auto;
-  font-family: verdana;
-  font-size: 14px;
-  font-weight: 200;
-  background-color: #0091bf;
-  position: fixed;
-  top: 9%;
-  left: 0%;
-  width: 15%;
-  height: 100%;
-  color: white;
-}
-.nav-side-menu .brand {
-  background-color: #23282e;
-  line-height: 50px;
-  display: block;
-  text-align: center;
-  font-size: 14px;
-}
-.nav-side-menu .toggle-btn {
-  display: none;
-}
-.nav-side-menu ul,
-.nav-side-menu li {
-  list-style: none;
-  padding: 0px;
-  margin: 0px;
-  line-height: 35px;
-  cursor: pointer;
-  /*    
-    .collapsed{
-       .arrow:before{
-                 font-family: FontAwesome;
-                 content: "\f053";
-                 display: inline-block;
-                 padding-left:10px;
-                 padding-right: 10px;
-                 vertical-align: middle;
-                 float:right;
-            }
-     }
-*/
-}
-.menu-list
-{
-  margin-top: 1%;
-}
-.nav-side-menu ul :not(collapsed) .arrow:before,
-.nav-side-menu li :not(collapsed) .arrow:before {
-  font-family: FontAwesome;
-  content: "\f078";
-  display: inline-block;
-  padding-left: 10px;
-  padding-right: 10px;
-  vertical-align: middle;
-  float: right;
-}
+<aside class="main-sidebar elevation-4" style="background-color:#edf6fe; overflow: scroll;">
+  <!-- Brand Logo -->
+  <a href="#" class="brand-link">
+    <img src="{{ asset('/assets/login/images/logo.png') }}" alt="Samithi Logo" class=""
+    style="width:220px;height:80px">
+  </a>
 
-.nav-side-menu ul .sub-menu li:before,
-.nav-side-menu li .sub-menu li:before {
-  font-family: FontAwesome;
-  content: "\f105";
-  display: inline-block;
-  padding-left: 10px;
-  padding-right: 10px;
-  vertical-align: middle;
-}
-.nav-side-menu li {
-  padding: 5px;
-  margin-left:15px;
-    /*border-left: 3px solid #2e353d;
-    border: 1px solid #23282e;*/
-}
-
-.nav-side-menu li a {
-  text-decoration: none;
-  color: white;
-
-}
-.nav-side-menu li a i {
-  padding-left: 10px;
-  width: 20px;
-  padding-right: 20px;
-}
-
-@media (max-width: 767px) {
-  .navbar-default 
-  {
-    width: 100%;
-  }
-  .nav-side-menu {
-    position: relative;
-    width: 100%;
-    margin-bottom: 10px;
-    height:  20%;
-    left: 0%;
-  }
-  .nav-side-menu .toggle-btn {
-    display: block;
-    cursor: pointer;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    z-index: 10 !important;
-    padding: 3px;
-    background-color: #ffffff;
-    color: #000;
-    width: 40px;
-    text-align: center;
-  }
-  .brand {
-    text-align: left !important;
-    font-size: 22px;
-    padding-left: 20px;
-    line-height: 50px !important;
-    color: #fff;
-  }
-
-}
-@media (min-width: 767px) {
-  .nav-side-menu .menu-list .menu-content {
-    display: block;
-  }
-}
-body {
-  margin: 0px;
-  padding: 0px;
-}
-.navbar{ margin-bottom: 0; }
-.navbar-default {
-    background-color: white;
-    /*border-color: #0091bf;*/
-    position: fixed;
-  top: 0;
-  width: 100%;
+  <!-- Sidebar -->
+  <div class="sidebar" >
+    <!-- Sidebar user panel (optional) -->
     
-}
-.navbar-default .navbar-brand {
-color: #7A7A86;
-}
-.panel-primary { opacity: 0.9; }
-.red,.orange,.green,.blue .fa
-{
-  font-size: 30px;
-}
-.red .fa
-{ color: #FA2A02; }
-.orange .fa
-{ color: #FFB402; }
-.green .fa
-{ color: #19BC9C; }
-.blue .fa
-{ color: #21A7F0; }
+    <?php
 
-.panel-primary {
-    border-color: #19BC9C;
-}
-.panel-primary>.panel-heading {
-    color: #fff;
-    background-color: #19BC9C;
-    border-color: #19BC9C;
-}
-.panel-primary .panel-body th
-{ color: red; }
-.fa-pencil-square-o
-{ color: #0662FE; }
-.fa-trash-o
-{ color: red; }
-.red .panel-primary,.red .panel-primary .panel-heading
-{
-  background-color: #fff;
-  color: #000;
-  text-align: center;
-  border-color: #FA2A02;
-}
-.orange .panel-primary,.orange .panel-primary .panel-heading
-{
-background-color: #fff;
-  color: #000;
-  text-align: center;
-  border-color: #FFB402;
-}
-.green .panel-primary,.green .panel-primary .panel-heading
-{
-  background-color: #fff;
-  color: #000;
-  text-align: center;
-  border-color: #19BC9C;
-}
-.blue .panel-primary,.blue .panel-primary .panel-heading
-{
- background-color: #fff;
-  color: #000;
-  text-align: center;
-  border-color: #21A7F0;
-}
-.row
-{ margin-right: 0; }
-.fa-edit
-{
-  color:blue;
-  font-size: 20px;
-}
-.fa-check-square-o
-{
-  color:green;
-  font-size: 20px;
-}
+    $user = App\Models\User::where('name',Session::get('name'))->first();
+    $role = App\Models\UserRoles::where('user_id',$user->id)->first();
+    ?>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" style="height:auto;">
+
+       @if($role->havePermission('Dashboard',$role->role_id))
+       <?php
+
+       $permission = App\Models\Permission::where('slug','Dashboard')->first();
+       ?>
+          <!-- Add icons to the links using the .nav-icon class
+           with font-awesome or any other icon font library -->
+           <li class="nav-item">
+            <a href="{{ route('home') }}" class="nav-link {{ (request()->segment(2) == 'home') ? 'active' : '' }}" style="color:#3e3e3e">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p> {{$permission->name}}</p>
+            </a>
+          </li>
+          @endif
+          @if($role->hasPermissions(['News Letter','Member (Activate / De activate)','Search Members','Notifications','Polls','Contributions','Feedback','Member Approval','Volunteer','Member Group','Add Group Members'],$role->role_id))
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link" style="color:#3e3e3e">
+              <i class="nav-icon fas fa-tasks"></i>
+              <p>
+                Operations
+                <i class="fas fa-angle-down"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style=" padding-left:20px">
+             @if($role->havePermission('News Letter',$role->role_id)) 
+             <?php
+
+             $permission = App\Models\Permission::where('slug','News Letter')->first();
+             ?>
+             <li class="nav-item">
+              <a href="{{ route('list.newsletter') }}" class="nav-link {{ (request()->segment(2) == 'list.newsletter') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-envelope  fa-lg"></i>
+                <p>  {{$permission->name}}</p>
+              </a>
+            </li>
+            @endif 
+            @if($role->havePermission('Member (Activate / De activate)',$role->role_id))
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Member (Activate / De activate)')->first();
+            ?>
+            <li class="nav-item">
+              <a href="{{ route('MemberEdit') }}" class="nav-link {{ (request()->segment(2) == 'MemberEdit') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-user fa-lg"></i>
+                <p>  {{$permission->name}}</p>
+              </a>
+            </li> 
+            @endif
+            @if($role->havePermission('Search Members',$role->role_id))
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Search Members')->first();
+            ?>
+            <li class="nav-item">
+              <a href="{{ route('list.MemberDetails') }}" class="nav-link {{ (request()->segment(2) == 'list.MemberDetails') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-search fa-lg"></i>
+                <p>  {{$permission->name}}</p>
+              </a>
+            </li> 
+            @endif
+            @if($role->havePermission('Notifications',$role->role_id))
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Notifications')->first();
+            ?>
+            <li class="nav-item">
+              <a href="{{ route('list.notification') }}" class="nav-link {{ (request()->segment(2) == 'list.notification') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-bell fa-lg"></i>
+                <p>  {{$permission->name}}</p>
+              </a>
+            </li> 
+            @endif
+            @if($role->havePermission('Polls',$role->role_id))
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Polls')->first();
+            ?>
+
+            <li class="nav-item">
+              <a href="{{ route('list.polls') }}" class="nav-link {{ (request()->segment(2) == 'list.polls') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-hand-o-up fa-lg"></i>
+                <p>  {{$permission->name}}</p>
+              </a>
+            </li> 
+            @endif
+            @if($role->havePermission('Contributions',$role->role_id))
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Contributions')->first();
+            ?>
+            <li class="nav-item">
+              <a href="{{ route('listContributions') }}" class="nav-link {{ (request()->segment(2) == 'listContributions') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-gift fa-lg"></i>
+                <p> {{$permission->name}}</p>
+              </a>
+            </li>
+            @endif
+            @if($role->havePermission('Feedback',$role->role_id))
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Feedback')->first();
+            ?>
+            <li class="nav-item">
+              <a href="{{ route('listfeedback') }}" class="nav-link {{ (request()->segment(2) == 'listfeedback') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-comments-o fa-lg"></i>
+                <p> {{$permission->name}}</p>
+              </a>
+            </li> 
+
+            @endif
+            @if($role->havePermission('Member Approval',$role->role_id))
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Member Approval')->first();
+            ?> 
+            <li class="nav-item">
+              <a href="{{ route('MemberPending.list') }}" class="nav-link {{ (request()->segment(2) == 'list.admin') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-check fa-lg"></i>
+                <p>  {{$permission->name}}</p>
+              </a>
+            </li>
+            @endif
+            @if($role->havePermission('Volunteer',$role->role_id))
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Volunteer')->first();
+            ?> 
+            <li class="nav-item">
+              <a href="{{ route('list.volunteer') }}" class="nav-link {{ (request()->segment(2) == 'list.volunteer') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-users fa-lg"></i>
+                <p> {{$permission->name}}</p>
+              </a>
+            </li> 
+
+            @endif
+            
+            @if($role->havePermission('Member Group',$role->role_id))
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Member Group')->first();
+            ?> 
+            <li class="nav-item">
+              <a href="{{ route('list.memberGroup') }}" class="nav-link {{ (request()->segment(2) == 'memberGroup') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-user fa-lg"></i>
+                <p>{{$permission->name}}</p>
+              </a>
+            </li> 
+            @endif
+            @if($role->havePermission('Add Group Members',$role->role_id))
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Add Group Members')->first();
+            ?> 
+            <li class="nav-item">
+              <a href="{{ route('add.groupMember') }}" class="nav-link {{ (request()->segment(2) == 'groupMember') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-user fa-lg"></i>
+                <p>{{$permission->name}}</p>
+              </a>
+            </li> 
+            @endif
 
 
-
-
- /*sidebar navbar*/
-
-.dropbtn {
-    background-color:  #0091bf;
-    color: white;
-    padding: 16px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-}
-
-.dropbtn:hover, .dropbtn:focus {
-    background-color:  #0091bf;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color:  #0091bf;
-    min-width: 160px;
-    overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown a:hover {background-color: white;}
-
-.show {display: block;}
-
-
-</style>
-<div class="col-md-2">
-    <div class="nav-side-menu">
-      <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-
-      <div class="menu-list">
-        @if(Auth::user())    
-            @if(Auth::user()->user_type == "ADMIN" || (in_array("LOCATION", explode(",",(Auth::user()->user_type)))))
-              <li data-toggle="collapse" data-target="#home" class="collapsed"  style="margin-top:30px">
-              <a href="{{ url('/home') }}"><i class="fa fa-dashboard fa-lg"></i> Reports </a></li>
-            @endif
-               
-            @if(Auth::user()->user_type == "ADMIN" || (in_array("LOCATION", explode(",",(Auth::user()->user_type)))))
-              <li data-toggle="collapse" data-target="#locations" class="collapsed">
-              <a href="{{ url('zone_details') }}"><i class="fa fa-globe fa-lg"></i> Locations </a></li>
-            @endif
-            
-           @if(Auth::user()->user_type == "ADMIN" || (in_array("NOTIFICATION", explode(",",(Auth::user()->user_type)))))
-              <li data-toggle="collapse" data-target="#notifications" class="collapsed">
-              <a href="{{ url('notification_details') }}"><i class="fa fa-bell fa-lg"></i> Notifications </a></li>
-             @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" || (in_array("ADVERTISEMENT", explode(",",(Auth::user()->user_type)))))
-              <li data-toggle="collapse" data-target="#advertisement" class="collapsed">
-              <a href="{{ url('advertisement_details') }}"><i class="fa fa-bullhorn fa-lg"></i> Advertisement </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" || (in_array("ACT", explode(",",(Auth::user()->user_type)))))
-             <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('aos_details') }}"><i class="fa fa-book fa-lg"></i> ACT </a></li>    
-            @endif
-            
-           @if(Auth::user()->user_type == "ADMIN" || (in_array("POLL", explode(",",(Auth::user()->user_type)))))
-             <li data-toggle="collapse" data-target="#poll" class="collapsed">
-              <a href="{{ url('poll_details') }}"><i class="fa fa-hand-o-up fa-lg"></i> Polls </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" || (in_array("MEMBERDEACT", explode(",",(Auth::user()->user_type)))))
-             <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('member_edit') }}"><i class="fa fa-user fa-lg"></i> Member DeAct </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" || (in_array("ROLE", explode(",",(Auth::user()->user_type)))))
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('user_roles_assign') }}"><i class="fa fa-check fa-lg"></i> Role Assign </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('userAdd') }}"><i class="fa fa-upload fa-lg"></i> Member Upload </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('member_details') }}"><i class="fa fa-search fa-lg"></i> Member Search </a></li>
-            @endif
-            
-            <!--@if(Auth::user()->user_type == "ADMIN" ) -->
-            <!--  <li data-toggle="collapse" data-target="#aos" class="collapsed">-->
-            <!--  <a href="{{ url('reports') }}"><i class="fa fa-pie-chart fa-lg"></i> Reports </a></li>-->
-            <!--@endif-->
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('vision_details') }}"><i class="fa fa-eye fa-lg"></i> Vision </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )              
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('why_factor_details') }}"><i class="fa fa-question fa-lg"></i> Why VruKShaM? </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('faq_details') }}"><i class="fa fa-question-circle fa-lg"></i> FAQ </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('terms_condition_details') }}"><i class="fa fa-info-circle fa-lg"></i> T&C </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('privacy_policy_details') }}"><i class="fa fa-lock fa-lg"></i> Privacy Policy </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('idcard_vision_details') }}"><i class="fa fa-credit-card fa-lg"></i> ID Card Vision </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('feedback_details') }}"><i class="fa fa-comments fa-lg"></i> Feedback </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('category') }}"><i class="fa fa-list fa-lg"></i> Category </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('donation_details') }}"><i class="fa fa-gift fa-lg"></i> Donations </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('sanadhanam_details') }}"><i class="fa fa-book fa-lg"></i> Sanadhanam </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('shopping_details') }}"><i class="fa fa-cart-plus	 fa-lg"></i> Shopping Cart </a></li>
-            @endif
-            
-             @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href="{{ url('memberIdFormat') }}"><i class="fa fa-list-alt fa-lg"></i> Format ID </a></li>
-            @endif
-            
-            @if(Auth::user()->user_type == "ADMIN" )
-              <li data-toggle="collapse" data-target="#aos" class="collapsed">
-              <a href=""><i class="fa fa-credit-card fa-lg"></i> ID Card Vision </a></li>
-            @endif
+          </ul>
+        </li>
         @endif
-            
+
+        @if($role->hasPermissions(['Reports View & Download','Reports'],$role->role_id))
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link" style="color:#3e3e3e">
+            <i class="nav-icon fas fa-file-excel"></i>
+            <p>
+              Reports
+              <i class="fas fa-angle-down"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview" style=" padding-left:20px">
+           @if($role->havePermission('Reports View & Download',$role->role_id))
+           <?php
+
+           $permission = App\Models\Permission::where('slug','Reports View & Download')->first();
+           ?> 
+           <li class="nav-item">
+            <a href="{{ route('list.reports') }}" class="nav-link {{ (request()->segment(2) == 'list.reports') ? 'active' : '' }}" style="color:#3e3e3e">
+              <i class="nav-icon fa fa-users fa-lg"></i>
+              <p> {{$permission->name}}</p>
+            </a>
+          </li> 
+
+          @endif
+          @if($role->havePermission('Reports',$role->role_id))
+          <?php
+
+          $permission = App\Models\Permission::where('slug','Reports')->first();
+          ?> 
+          <li class="nav-item">
+            <a href="{{ route('list.reportsview') }}" class="nav-link {{ (request()->segment(2) == 'list.reports') ? 'active' : '' }}" style="color:#3e3e3e">
+              <i class="nav-icon fa fa-users fa-lg"></i>
+              <p> {{$permission->name}}</p>
+            </a>
+          </li> 
+
+          @endif
+          
+
         </ul>
-      </div>
-    </div>
-  </div>
+      </li>
+      @endif
+
+      @if($role->hasPermissions(['SSS Org Structure','Assign Volunteer To Geo'],$role->role_id))
+      <li class="nav-item has-treeview">
+        <a href="#" class="nav-link" style="color:#3e3e3e">
+          <i class="nav-icon fas fa-user-friends"></i>
+          <p>
+            Masters
+            <i class="fas fa-angle-down"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview" style=" padding-left:20px">
+         @if($role->havePermission('SSS Org Structure',$role->role_id))
+         <?php
+
+         $permission = App\Models\Permission::where('slug','SSS Org Structure')->first();
+         ?> 
+         <li class="nav-item">
+          <a href="{{ route('listGeo') }}" class="nav-link {{ (request()->segment(2) == 'listGeo') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-map-marker fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li>
+        @endif
+        @if($role->havePermission('Assign Volunteer To Geo',$role->role_id))
+        <?php
+
+        $permission = App\Models\Permission::where('slug','Assign Volunteer To Geo')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('Volunteer') }}" class="nav-link {{ (request()->segment(2) == 'Volunteer') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-users fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li> 
+
+        @endif
+
+        @if($role->havePermission('Political Category',$role->role_id)) 
+        <?php
+
+        $permission = App\Models\Permission::where('slug','Political Category')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('list.political.category') }}" class="nav-link {{ (request()->segment(2) == 'list.political.category') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-list-alt fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li>
+        @endif    
+        
+        
+        
+        @if($role->havePermission('Religious Leader',$role->role_id)) 
+        <?php
+
+        $permission = App\Models\Permission::where('slug','Religious Leader')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('list.Religious') }}" class="nav-link {{ (request()->segment(2) == 'list.Religious') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-list-alt fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li>
+        @endif    
+        
+        
+        @if($role->havePermission('Caste Leader',$role->role_id)) 
+        <?php
+
+        $permission = App\Models\Permission::where('slug','Caste Leader')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('list.Caste') }}" class="nav-link {{ (request()->segment(2) == 'list.Caste') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-list-alt fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li>
+        @endif    
+        
+        
+        
+        @if($role->havePermission('Party Leader',$role->role_id)) 
+        <?php
+
+        $permission = App\Models\Permission::where('slug','Party Leader')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('list.Party') }}" class="nav-link {{ (request()->segment(2) == 'list.Party') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-list-alt fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li>
+        @endif    
 
 
-  <script>
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
+      </ul>
+    </li>
+    @endif   
 
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-</script>
+    @if($role->hasPermissions(['App Image','About Us','Advertisement','Compliance','Language Permission','App Icon','Profile Configuration','AddUser','Member Category -SA'],$role->role_id))
+    <li class="nav-item has-treeview">
+      <a href="#" class="nav-link" style="color:#3e3e3e">
+        <i class="nav-icon fas fa-cogs"></i>
+        <p>
+          Configurations
+          <i class="fas fa-angle-down"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview" style=" padding-left:20px">
+        @if($role->havePermission('About Us',$role->role_id))
+        <?php
+
+        $permission = App\Models\Permission::where('slug','About Us')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('aboutus') }}" class="nav-link {{ (request()->segment(2) == 'aboutus') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-info-circle  fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li> 
+        @endif
+        @if($role->havePermission('Advertisement',$role->role_id)) 
+            <?php
+
+            $permission = App\Models\Permission::where('slug','Advertisement')->first();
+            ?> 
+            <li class="nav-item">
+              <a href="{{ route('list.advertisements') }}" class="nav-link {{ (request()->segment(2) == 'list.advertisements') ? 'active' : '' }}" style="color:#3e3e3e">
+                <i class="nav-icon fa fa-list-alt fa-lg"></i>
+                <p> {{$permission->name}}</p>
+              </a>
+            </li>
+            @endif
+        @if($role->havePermission('Compliance',$role->role_id))
+        <?php
+
+        $permission = App\Models\Permission::where('slug','Compliance')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('list.compliance') }}" class="nav-link {{ (request()->segment(2) == 'list.compliance') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-ellipsis-v  fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li>
+        @endif
+
+
+        @if($role->havePermission('Language Permission',$role->role_id))
+        <?php
+
+        $permission = App\Models\Permission::where('slug','Language Permission')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('list.languageLock') }}" class="nav-link {{ (request()->segment(2) == 'list.languageLock') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-language fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li> 
+        @endif
+        @if($role->havePermission('App Image',$role->role_id))
+        <?php
+
+        $permission = App\Models\Permission::where('slug','App Image')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('list.AppList') }}" class="nav-link {{ (request()->segment(2) == 'list.AppList') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-file-image-o fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li>
+        @endif
+        @if($role->havePermission('App Icon',$role->role_id))   
+        <?php
+
+        $permission = App\Models\Permission::where('slug','App Icon')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('list.appIcon') }}" class="nav-link {{ (request()->segment(2) == 'list.appIcon') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-wrench fa-lg"></i>
+            <p>  {{$permission->name}}</p>
+          </a>
+        </li>
+        @endif
+        @if($role->havePermission('Profile Configuration',$role->role_id))
+        <?php
+
+        $permission = App\Models\Permission::where('slug','Profile Configuration')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('list.ProfileDetails') }}" class="nav-link {{ (request()->segment(2) == 'list.ProfileDetails') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-user fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li> 
+        @endif    
+        @if($role->havePermission('AddUser',$role->role_id))
+        <?php
+
+        $permission = App\Models\Permission::where('slug','AddUser')->first();
+        ?>  
+        <li class="nav-item">
+          <a href="{{ route('list.admin') }}" class="nav-link {{ (request()->segment(2) == 'list.admin') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-check fa-lg"></i>
+            <p>  {{$permission->name}}</p>
+          </a>
+        </li>
+        @endif
+        @if($role->havePermission('Member Category -SA',$role->role_id)) 
+        <?php
+
+        $permission = App\Models\Permission::where('slug','Member Category -SA')->first();
+        ?> 
+        <li class="nav-item">
+          <a href="{{ route('MemberCategory.list') }}" class="nav-link {{ (request()->segment(2) == 'MemberCategory.list') ? 'active' : '' }}" style="color:#3e3e3e">
+            <i class="nav-icon fa fa-list-alt fa-lg"></i>
+            <p> {{$permission->name}}</p>
+          </a>
+        </li>
+        @endif 
+
+
+
+      </ul>
+    </li>
+    @endif
+
+
+
+
+
+
+
+
+
+
+
+    <br><br><br>
+  </ul>
+</nav>
+<!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->
+</aside>

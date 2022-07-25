@@ -1,13 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
 {
-    protected $table    ='state';
-    protected $fillable =[	'county_id',
-    						'name',
-    						];
+    use HasFactory;
+
+     protected $fillable = [
+        'State_desc','State_active'
+    ];
+    protected $table = 'sss_state_tbl';
 }
